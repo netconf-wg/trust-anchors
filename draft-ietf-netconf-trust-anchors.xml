@@ -1,0 +1,267 @@
+<?xml version='1.0'?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+
+<?rfc toc="yes"?>
+<?rfc symrefs="yes"?>
+<?rfc sortrefs="yes" ?>
+<?rfc compact="yes"?>
+<?rfc subcompact="no"?>
+<?rfc linkmailto="no" ?>
+<?rfc editing="no" ?>
+<?rfc comments="yes" ?>
+<?rfc inline="yes"?>
+<?rfc rfcedstyle="yes"?>
+<?rfc-ext allow-markup-in-artwork="yes" ?>
+<?rfc-ext include-index="no" ?>
+<!--<?rfc strict="no"?> -->
+
+<rfc category="std"
+     ipr="trust200902"
+     docName="draft-ietf-netconf-trust-anchors-latest" >
+    <front>
+        <title>YANG Data Model for Global Trust Anchors</title>
+        <author initials="K.W." surname="Watsen" fullname="Kent Watsen">
+            <organization>Juniper Networks</organization>
+            <address>
+                <email>kwatsen@juniper.net</email>
+            </address>
+        </author>
+        <date/>
+        <area>Operations</area>
+        <workgroup>NETCONF Working Group</workgroup>
+        <abstract>
+          <t>This document defines a YANG 1.1 data model for configuring
+          global sets of X.509 certificates and SSH host-keys that
+          can be referenced by other data models for trust.  While
+          the SSH host-keys are uniquely for the SSH protocol, the
+          X.509 certificates may have multiple uses, including
+          authenticating protocol peers and verifying signatures.</t>
+
+        </abstract>
+        <note title="Editorial Note (To be removed by RFC Editor)">
+          <t>This draft contains many placeholder values that need to be replaced
+          with finalized values at the time of publication.  This note summarizes
+          all of the substitutions that are needed.  No other RFC Editor 
+          instructions are specified elsewhere in this document.</t>
+
+          <t>Artwork in this document contains shorthand references to drafts in 
+          progress.  Please apply the following replacements:
+            <list  style="symbols">
+              <t><spanx style="verb">XXXX</spanx> --&gt; the assigned RFC value for this draft</t>
+              <t><spanx style="verb">YYYY</spanx> --&gt; the assigned RFC value for draft-ietf-netconf-crypto-types</t>
+            </list>
+          </t>
+          <t>Artwork in this document contains placeholder values for the date
+          of publication of this draft.  Please apply the following replacement:
+            <list  style="symbols">
+              <t><spanx style="verb">YYYY-MM-DD</spanx> --&gt; the publication date of this draft</t>
+            </list>
+          </t>
+          <t>The following Appendix section is to be removed prior to publication:
+            <list  style="symbols">
+              <t>Appendix A.  Change Log</t>
+            </list>
+          </t>
+        </note>
+    </front>
+    <middle>
+      <section title="Introduction">
+
+        <t>This document defines a YANG 1.1 <xref target="RFC7950"/> data
+        model for configuring global sets of X.509 certificates and SSH
+        host-keys that can be referenced by other data models for trust.
+        While the SSH host-keys are uniquely for the SSH protocol, the
+        X.509 certificates may be used for multiple uses, including
+        authenticating protocol peers and verifying signatures.</t>
+
+        <t>This document in compliant with Network Management Datastore Architecture
+        (NMDA) <xref target="RFC8342"/>.  For instance, to support trust anchors
+        installed during manufacturing, it is expected that such data may appear
+        only in &lt;operational&gt;.</t>
+
+        <section title="Requirements Language" anchor="requirements-language">
+          <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL
+          NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED",
+          "MAY", and "OPTIONAL" in this document are to be interpreted as
+          described in BCP 14 <xref target="RFC2119"/> <xref target="RFC8174"/>
+          when, and only when, they appear in all capitals, as shown here.</t>
+        </section>
+
+        <section title="Tree Diagram Notation">
+          <t>Tree diagrams used in this document follow the notation
+          defined in <xref target="RFC8340"/>.</t>
+        </section>
+
+      </section>
+
+      <section title="The Trust Anchors Model">
+  
+        <section title="Tree Diagram">
+          <t>The following tree diagram provides an overview of the
+          "ietf-trust-anchors" module.</t>
+          <t>
+            <figure>
+              <artwork><![CDATA[
+  INSERT_TEXT_FROM_FILE(refs/ietf-trust-anchors-tree.txt)
+  ]]></artwork>
+            </figure>
+          </t>
+        </section>
+  
+        <section title="Example Usage">
+          <t>The following example illustrates trust anchors in &lt;operational&gt; as described
+          by Section 5.3 in <xref target="RFC8342"/>.  This datastore view illustrates 
+          data set by the manufacturing process alongside conventional configuration.  This
+          trust anchors instance has five sets of pinned certificates and one set of pinned
+          host keys.</t>
+          <t>
+            <figure>
+              <artwork><![CDATA[
+  INSERT_TEXT_FROM_FILE(refs/ex-trust-anchors.xml)
+  ]]></artwork>
+            </figure>
+          </t>
+  
+          <t>The following example illustrates the "certificate-expiration"
+          notification in use with the NETCONF protocol.</t>
+          <t>
+            <figure>
+              <artwork><![CDATA[
+  INSERT_TEXT_FROM_FILE(refs/ex-notification-ce.xml)
+  ]]></artwork>
+            </figure>
+          </t>
+  
+        </section>
+  
+        <section title="YANG Module" anchor="yang-module">
+          <t>This YANG module imports modules from <xref target="RFC6536"/>, <xref target="RFC6991"/>
+          and <xref target="I-D.ietf-netconf-crypto-types"/>.</t>
+          <t>
+            <figure>
+              <artwork><![CDATA[
+  <CODE BEGINS> file "ietf-trust-anchors@YYYY-MM-DD.yang"
+  INSERT_TEXT_FROM_FILE(ietf-trust-anchors@YYYY-MM-DD.yang)
+  <CODE ENDS>
+  ]]></artwork>
+            </figure>
+          </t>
+        </section>
+      </section>
+
+      <section title="Security Considerations">
+
+        <t>The YANG module defined in this document is designed to be accessed via YANG
+        based management protocols, such as NETCONF <xref target="RFC6241"/> and
+        RESTCONF <xref target="RFC8040"/>.  Both of these protocols have mandatory-to-implement
+        secure transport layers (e.g., SSH, TLS) with mutual authentication.</t>
+ 
+        <t>The NETCONF access control model (NACM) <xref target="RFC6536"/> provides the means
+        to restrict access for particular users to a pre-configured subset of all available
+        protocol operations and content.</t>
+ 
+        <t>There are a number of data nodes defined in this YANG module that are 
+        writable/creatable/deletable (i.e., config true, which is the default). These data
+        nodes may be considered sensitive or vulnerable in some network environments. Write
+        operations (e.g., edit-config) to these data nodes without proper protection can
+        have a negative effect on network operations. These are the subtrees and data nodes
+        and their sensitivity/vulnerability:
+          <list style="hanging" hangIndent="6">
+            <t hangText="   /:">The entire data tree defined by this module is sensitive to
+              write operations.  For instance, the addition or removal of any trust anchor
+              may dramatically alter the implemented security policy.  However, no NACM
+              annotations are applied as the data SHOULD be editable by users other than
+              a designated 'recovery session'.</t>
+          </list>
+        </t>
+ 
+        <t>None of the readable data nodes in this YANG module are considered sensitive
+        or vulnerable in network environments.</t>
+ 
+        <t>This module does not define any RPCs, actions, or notifications, and thus the
+        security consideration for such is not provided here.</t>
+      </section>
+
+      <section title="IANA Considerations">
+        <section title="The IETF XML Registry">
+          <t>This document registers one URI in the "ns" subregistry of
+          the IETF XML Registry <xref target="RFC3688"/>.  Following the
+          format in <xref target="RFC3688"/>, the following registration
+          is requested:</t>
+          <t>
+            <figure>
+                <artwork><![CDATA[
+   URI: urn:ietf:params:xml:ns:yang:ietf-trust-anchors
+   Registrant Contact: The NETCONF WG of the IETF.
+   XML: N/A, the requested URI is an XML namespace.
+]]></artwork>
+            </figure>
+          </t>
+        </section>
+        <section title="The YANG Module Names Registry">
+          <t>This document registers one YANG module in the
+          YANG Module Names registry <xref target="RFC6020"/>.
+          Following the format in <xref target="RFC6020"/>, the
+          the following registration is requested:</t>
+          <t>
+            <figure>
+                <artwork><![CDATA[
+   name:         ietf-trust-anchors
+   namespace:    urn:ietf:params:xml:ns:yang:ietf-trust-anchors
+   prefix:       ta
+   reference:    RFC XXXX
+
+]]></artwork>
+            </figure>
+          </t>
+        </section>
+      </section>
+
+
+    </middle>
+
+    <back>
+      <references title="Normative References">
+        <?rfc include="reference.RFC.2119.xml"?>
+        <?rfc include="reference.RFC.6536.xml"?>
+        <?rfc include="reference.RFC.6991.xml"?>
+        <?rfc include="reference.RFC.7950.xml"?>
+        <?rfc include="reference.RFC.8174.xml"?>
+        <?rfc include="reference.I-D.ietf-netconf-crypto-types"?>
+      </references>
+      <references title="Informative References">
+        <?rfc include="reference.RFC.3688.xml"?>
+        <?rfc include="reference.RFC.6020.xml"?>
+        <?rfc include="reference.RFC.6241.xml"?>
+        <?rfc include="reference.RFC.8040.xml"?>
+        <?rfc include="reference.RFC.8340.xml"?>
+        <?rfc include="reference.RFC.8342.xml"?>
+      </references>
+
+      <section title="Change Log">
+        <section title="I-D to 00">
+          <t>
+            <list style="symbols">
+              <t>Now imports and uses the crypto-types module.</t>
+              <t>FIXME</t>
+              <t>FIXME</t>
+              <t>FIXME: added notification example...</t>
+            </list>
+          </t>
+        </section>
+      </section>
+
+      <section title="Acknowledgements" numbered="no">
+        <t>The authors would like to thank for following for
+        lively discussions on list and in the halls (ordered
+        by last name):
+Martin Bjorklund,
+Balázs Kovács,
+Eric Voit,
+and Liang Xia.
+        </t>
+      </section>
+
+    </back>
+</rfc>
+
