@@ -10,6 +10,12 @@ module ietf-trust-anchors {
       "RFC 6991: Common YANG Data Types";
   }
 
+  import ietf-netconf-acm {
+    prefix nacm;
+    reference
+      "RFC 8341: Network Configuration Access Control Model";
+  }
+
   import ietf-crypto-types {
     prefix ct;
     reference
@@ -55,6 +61,24 @@ module ietf-trust-anchors {
   }
 
 
+
+  /************************************************************/
+  /*   Typedefs for leafrefs to commonly referenced objects   */
+  /************************************************************/
+
+  feature x509-certificates {
+    description
+     "The 'x509-certificates' feature indicates that the server 
+      implements the /trust-anchors/pinned-certificates subtree.";
+  }
+
+  feature ssh-host-keys {
+    description
+     "The 'ssh-host-keys' feature indicates that the server 
+      implements the /trust-anchors/pinned-host-keys subtree.";
+  }
+
+
   /************************************************************/
   /*   Typedefs for leafrefs to commonly referenced objects   */
   /************************************************************/
@@ -93,10 +117,13 @@ module ietf-trust-anchors {
   /*********************************/
 
   container trust-anchors {
+    nacm:default-deny-write;
+
     description
       "Contains sets of X.509 certificates and SSH host keys.";
 
     list pinned-certificates {
+      if-feature "x509-certificates";
       key name;
       description
         "A list of pinned certificates.  These certificates can be
@@ -161,6 +188,7 @@ module ietf-trust-anchors {
       }
     }
     list pinned-host-keys {
+      if-feature "ssh-host-keys";
       key name;
       description
         "A list of pinned host keys.  These pinned host-keys can
