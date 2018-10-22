@@ -4,12 +4,6 @@ module ietf-trust-anchors {
   namespace "urn:ietf:params:xml:ns:yang:ietf-trust-anchors";
   prefix "ta";
 
-  import ietf-yang-types {
-    prefix yang;
-    reference
-      "RFC 6991: Common YANG Data Types";
-  }
-
   import ietf-netconf-acm {
     prefix nacm;
     reference
@@ -131,14 +125,13 @@ module ietf-trust-anchors {
          to authenticate servers.  Each list of pinned certificates
          SHOULD be specific to a purpose, as the list as a whole
          may be referenced by other modules.  For instance, a
-         NETCONF server's configuration might use a specific list
-         of pinned certificates for when authenticating NETCONF 
+         RESTCONF server's configuration might use a specific list
+         of pinned certificates for when authenticating RESTCONF 
          client connections.";
       leaf name {
         type string;
         description
-          "An arbitrary name for this list of pinned
-           certificates.";
+          "An arbitrary name for this list of pinned certificates.";
       }
       leaf description {
         type string;
@@ -158,35 +151,14 @@ module ietf-trust-anchors {
              certificates (not just this list) so that leafrefs
              from another module can resolve to unique values.";
         }
-        leaf cert { 
-          type ct:trust-anchor-cert-cms;
-          mandatory true;
-          description
-            "The binary certificate data for this pinned
-             certificate.";
-          reference
-            "RFC YYYY: Common YANG Data Types for Cryptography";
-        }
-        notification certificate-expiration {
-          description
-           "A notification indicating that the configured trust
-            anchor is either about to expire or has already expired.
-            When to send notifications is an implementation specific
-            decision, but it is RECOMMENDED that a notification be
-            sent once a month for 3 months, then once a week for
-            four weeks, and then once a day thereafter until the
-            issue is resolved.";
-          leaf expiration-date {
-            type yang:date-and-time;
-            // https://github.com/CESNET/libyang/issues/512
-            //mandatory true;
-            description
-              "Identifies the expiration date on the certificate.";
+        uses ct:trust-anchor-cert-grouping {
+          refine cert {
+            mandatory true;
           }
         }
-
       }
     }
+
     list pinned-host-keys {
       if-feature "ssh-host-keys";
       key name;
