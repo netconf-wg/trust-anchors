@@ -254,6 +254,14 @@
             </list>
           </t>
         </section>
+        <section title="02 to 03">
+          <t>
+            <list style="symbols">
+              <t>Updated copyright date, boilerplate template, affiliation,
+                folding algorithm, and reformatted the YANG module.</t>
+            </list>
+          </t>
+        </section>
       </section>
 
       <section title="Acknowledgements" numbered="no">
