@@ -262,16 +262,28 @@
             </list>
           </t>
         </section>
+        <section title="03 to 04">
+          <t>
+            <list style="symbols">
+              <t>Added groupings 'local-or-truststore-certs-grouping'
+                and 'local-or-truststore-host-keys-grouping', matching
+                similar definitions in the keystore draft.  Note new
+                (and incomplete) "truststore" usage!</t>
+              <t>Related to above, also added features 'truststore-supported'
+                and 'local-trust-anchors-supported'.</t>
+            </list>
+          </t>
+        </section>
       </section>
 
       <section title="Acknowledgements" numbered="no">
         <t>The authors would like to thank for following for
         lively discussions on list and in the halls (ordered
         by last name):
-Martin Bjorklund,
-Balázs Kovács,
-Eric Voit,
-and Liang Xia.
+          Martin Bjorklund,
+          Balázs Kovács,
+          Eric Voit,
+          and Liang Xia.
         </t>
       </section>
 
