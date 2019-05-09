@@ -1,17 +1,16 @@
 <notification
   xmlns="urn:ietf:params:xml:ns:netconf:notification:1.0">
   <eventTime>2018-05-25T00:01:00Z</eventTime>
-  <trust-anchors
-    xmlns="urn:ietf:params:xml:ns:yang:ietf-trust-anchors">
-    <pinned-certificates>
+  <truststore xmlns="urn:ietf:params:xml:ns:yang:ietf-truststore">
+    <certificates>
       <name>explicitly-trusted-client-certs</name>
-      <pinned-certificate>
+      <certificate>
         <name>George Jetson</name>
         <certificate-expiration>
           <expiration-date>2018-08-05T14:18:53-05:00</expiration-date>
         </certificate-expiration>
-      </pinned-certificate>
-    </pinned-certificates>
-  </trust-anchors>
+      </certificate>
+    </certificates>
+  </truststore>
 </notification>
 

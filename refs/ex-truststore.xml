@@ -1,9 +1,9 @@
-<trust-anchors
-   xmlns="urn:ietf:params:xml:ns:yang:ietf-trust-anchors"
+<truststore
+   xmlns="urn:ietf:params:xml:ns:yang:ietf-truststore"
    xmlns:or="urn:ietf:params:xml:ns:yang:ietf-origin">
 
   <!-- Manufacturer's trusted root CA certs -->
-  <pinned-certificates or:origin="or:system">
+  <certificates or:origin="or:system">
     <name>manufacturers-root-ca-certs</name>
     <description>
       Certificates built into the device for authenticating
@@ -11,32 +11,32 @@
       vouchers, etc.  Note, though listed here, these are not
       configurable; any attempt to do so will be denied.
     </description>
-    <pinned-certificate>
+    <certificate>
       <name>Manufacturer Root CA cert 1</name>
       <cert>base64encodedvalue==</cert>
-    </pinned-certificate>
-    <pinned-certificate>
+    </certificate>
+    <certificate>
       <name>Manufacturer Root CA cert 2</name>
       <cert>base64encodedvalue==</cert>
-    </pinned-certificate>
-  </pinned-certificates>
+    </certificate>
+  </certificates>
 
   <!-- specific end-entity certs for authenticating servers -->
-  <pinned-certificates or:origin="or:intended">
+  <certificates or:origin="or:intended">
     <name>explicitly-trusted-server-certs</name>
     <description>
       Specific server authentication certificates for explicitly
       trusted servers.  These are needed for server certificates
-      that are not signed by a pinned CA.
+      that are not signed by a CA.
     </description>
-    <pinned-certificate>
+    <certificate>
       <name>Fred Flintstone</name>
       <cert>base64encodedvalue==</cert>
-    </pinned-certificate>
-  </pinned-certificates>
+    </certificate>
+  </certificates>
 
   <!-- trusted CA certs for authenticating servers -->
-  <pinned-certificates or:origin="or:intended">
+  <certificates or:origin="or:intended">
     <name>explicitly-trusted-server-ca-certs</name>
     <description>
       Trust anchors (i.e. CA certs) that are used to authenticate 
@@ -44,28 +44,28 @@
       certificate has a chain of trust to one of these CA
       certificates.
     </description>
-    <pinned-certificate>
+    <certificate>
       <name>ca.example.com</name>
       <cert>base64encodedvalue==</cert>
-    </pinned-certificate>
-  </pinned-certificates>
+    </certificate>
+  </certificates>
 
   <!-- specific end-entity certs for authenticating clients -->
-  <pinned-certificates or:origin="or:intended">
+  <certificates or:origin="or:intended">
     <name>explicitly-trusted-client-certs</name>
     <description>
       Specific client authentication certificates for explicitly
       trusted clients.  These are needed for client certificates
-      that are not signed by a pinned CA.
+      that are not signed by a CA.
     </description>
-    <pinned-certificate>
+    <certificate>
       <name>George Jetson</name>
       <cert>base64encodedvalue==</cert>
-    </pinned-certificate>
-  </pinned-certificates>
+    </certificate>
+  </certificates>
 
   <!-- trusted CA certs for authenticating clients -->
-  <pinned-certificates or:origin="or:intended">
+  <certificates or:origin="or:intended">
     <name>explicitly-trusted-client-ca-certs</name>
     <description>
       Trust anchors (i.e. CA certs) that are used to authenticate 
@@ -73,38 +73,38 @@
       certificate has a chain of trust to one of these CA
       certificates.
     </description>
-    <pinned-certificate>
+    <certificate>
       <name>ca.example.com</name>
       <cert>base64encodedvalue==</cert>
-    </pinned-certificate>
-  </pinned-certificates>
+    </certificate>
+  </certificates>
 
   <!-- trusted CA certs for random HTTPS servers on Internet -->
-  <pinned-certificates or:origin="or:system">
+  <certificates or:origin="or:system">
     <name>common-ca-certs</name>
     <description>
       Trusted certificates to authenticate common HTTPS servers.
       These certificates are similar to those that might be
       shipped with a web browser.
     </description>
-    <pinned-certificate>
+    <certificate>
       <name>ex-certificate-authority</name>
       <cert>base64encodedvalue==</cert>
-    </pinned-certificate>
-  </pinned-certificates>
+    </certificate>
+  </certificates>
 
   <!-- specific SSH host keys for authenticating clients -->
-  <pinned-host-keys or:origin="or:intended">
+  <host-keys or:origin="or:intended">
     <name>explicitly-trusted-ssh-host-keys</name>
     <description>
       Trusted SSH host keys used to authenticate SSH servers.
       These host keys would be analogous to those stored in
       a known_hosts file in OpenSSH.
     </description>
-    <pinned-host-key>
+    <host-key>
       <name>corp-fw1</name>
       <host-key>base64encodedvalue==</host-key>
-    </pinned-host-key>
-  </pinned-host-keys>
+    </host-key>
+  </host-keys>
 
-</trust-anchors>
+</truststore>

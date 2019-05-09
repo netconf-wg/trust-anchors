@@ -1,3 +1,3 @@
 
-pyang -p ../ -f tree --tree-line-length 69 --tree-print-groupings ../ietf-trust-anchors@*.yang > ietf-trust-anchors-tree.txt
+pyang -p ../ -f tree --tree-line-length 69 --tree-print-groupings ../ietf-truststore@*.yang > ietf-truststore-tree.txt
 
