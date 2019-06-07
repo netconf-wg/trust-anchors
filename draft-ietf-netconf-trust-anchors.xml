@@ -277,8 +277,12 @@
         <section title="04 to 05">
           <t>
             <list style="symbols">
-              <t>renamed "trust-anchors" to "truststore"</t>
-              <t>removed "pinned." prefix everywhere, to match truststore rename</t>
+              <t>Renamed "trust-anchors" to "truststore"</t>
+              <t>Removed "pinned." prefix everywhere, to match truststore rename</t>
+              <t>Moved everything under a top-level 'grouping' to enable use in other contexts.</t>
+              <t>Renamed feature from 'local-trust-anchors-supported' to 'local-definitions-supported' (same name used in keystore)</t>
+              <t>Removed the "require-instance false" statement from the "*-ref" typedefs.</t>
+              <t>Added missing "ssh-host-keys" and "x509-certificates" if-feature statements</t>
             </list>
           </t>
         </section>
