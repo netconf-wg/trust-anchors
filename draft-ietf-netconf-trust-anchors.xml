@@ -139,11 +139,11 @@
           and <xref target="I-D.ietf-netconf-crypto-types"/>.</t>
           <t>
             <figure>
+              <preamble>&lt;CODE BEGINS&gt; file "ietf-truststore@YYYY-MM-DD.yang"</preamble>
               <artwork><![CDATA[
-  <CODE BEGINS> file "ietf-truststire@YYYY-MM-DD.yang"
-  INSERT_TEXT_FROM_FILE(ietf-truststore@YYYY-MM-DD.yang)
-  <CODE ENDS>
-  ]]></artwork>
+INSERT_TEXT_FROM_FILE(ietf-truststore@YYYY-MM-DD.yang)
+]]></artwork>
+              <postamble>&lt;CODE ENDS&gt;</postamble>
             </figure>
           </t>
         </section>
@@ -283,6 +283,13 @@
               <t>Renamed feature from 'local-trust-anchors-supported' to 'local-definitions-supported' (same name used in keystore)</t>
               <t>Removed the "require-instance false" statement from the "*-ref" typedefs.</t>
               <t>Added missing "ssh-host-keys" and "x509-certificates" if-feature statements</t>
+            </list>
+          </t>
+        </section>
+        <section title="04 to 05">
+          <t>
+            <list style="symbols">
+              <t>Editorial changes only.</t>
             </list>
           </t>
         </section>
