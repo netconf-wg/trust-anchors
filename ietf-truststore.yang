@@ -85,6 +85,18 @@ module ietf-truststore {
        implements the /truststore/host-keys subtree.";
   }
 
+  feature psks {
+    description
+      "The 'psks' feature indicates that the server
+       implements the /truststore/psks subtree.";
+  }
+
+  feature raw-public-keys {
+    description
+      "The 'raw-public-keys' feature indicates that the server
+       implements the /truststore/raw-public-keys subtree.";
+  }
+
   /****************/
   /*   Typedefs   */
   /****************/
@@ -105,6 +117,24 @@ module ietf-truststore {
     description
       "This typedef enables modules to easily define a reference
        to a set of host keys defined in the truststore.";
+  }
+
+  typedef psks-ref {
+    type leafref {
+      path "/ts:truststore/ts:psks/ts:name";
+    }
+    description
+      "This typedef enables modules to easily define a reference
+       to a set of PSKs defined in the truststore.";
+  }
+
+  typedef raw-public-keys-ref {
+    type leafref {
+      path "/ts:truststore/ts:raw-public-keys/ts:name";
+    }
+    description
+      "This typedef enables modules to easily define a reference
+       to a set of raw-public-keys defined in the truststore.";
   }
 
   /*****************/
@@ -166,6 +196,7 @@ module ietf-truststore {
             reference
               "RFC YYYY: Common YANG Data Types for Cryptography";
           }
+          uses ct:trust-anchor-certs-grouping;
         }
       }
       case truststore {
@@ -173,7 +204,7 @@ module ietf-truststore {
         if-feature "ssh-host-keys";
         leaf truststore-reference {
           type ts:host-keys-ref;
-          description
+	  description
             "A reference to a set of trust anchors that exists
              in the truststore.";
         }
@@ -184,6 +215,87 @@ module ietf-truststore {
     }
   }
 
+  grouping local-or-truststore-psks-grouping {
+    description
+      "A grouping that expands to allow PSKs (pairwise-symmetric or
+       pre-shared keys) to be available either locally, within the using
+       data model, or be a reference to PSKs stored in the truststore.";
+    choice local-or-truststore {
+      mandatory true;
+      case local {
+        if-feature "local-definitions-supported";
+        container local-definition {
+          description
+            "Container to hold the local trust anchor definitions.
+             A list is defined so as to be symmetric with the
+             truststore definition.";
+          leaf-list psk {
+            nacm:default-deny-write;
+            type ct:psk;
+            description
+              "The binary data for this PSK.";
+            reference
+              "RFC YYYY: Common YANG Data Types for Cryptography";
+          }
+          uses ct:trust-anchor-certs-grouping;
+        }
+      }
+      case truststore {
+        if-feature "truststore-supported";
+        if-feature "psks";
+        leaf truststore-reference {
+          type ts:psks-ref;
+	  description
+            "A reference to a set of trust anchors that exists
+             in the truststore.";
+        }
+      }
+      description
+        "A choice between an inlined definition and a definition
+         that exists in the truststore.";
+    }
+  }
+
+  grouping local-or-truststore-raw-pub-keys-grouping {
+    description
+      "A grouping that expands to allow raw-public-keys to be available
+       either locally, within the using data model, or be a reference to
+       raw-public-keys stored in the truststore.";
+    choice local-or-truststore {
+      mandatory true;
+      case local {
+        if-feature "local-definitions-supported";
+        container local-definition {
+          description
+            "Container to hold the local trust anchor definitions.
+             A list is defined so as to be symmetric with the
+             truststore definition.";
+          leaf-list raw-public-key {
+            nacm:default-deny-write;
+            type ct:raw-public-key;
+            description
+              "The binary data for this raw-public-key.";
+            reference
+              "RFC YYYY: Common YANG Data Types for Cryptography";
+          }
+          uses ct:trust-anchor-certs-grouping;
+        }
+      }
+      case truststore {
+        if-feature "truststore-supported";
+        if-feature "raw-public-keys";
+        leaf truststore-reference {
+          type ts:raw-public-keys-ref;
+	  description
+            "A reference to a set of trust anchors that exists
+             in the truststore.";
+        }
+      }
+      description
+        "A choice between an inlined definition and a definition
+         that exists in the truststore.";
+    }
+  }
 
   grouping truststore-grouping {
     description
@@ -211,7 +323,7 @@ module ietf-truststore {
       leaf description {
         type string;
         description
-          "An arbitrary description for this list of 
+          "An arbitrary description for this list of
            certificates.";
       }
       list certificate {
@@ -222,7 +334,7 @@ module ietf-truststore {
           type string;
           description
             "An arbitrary name for this certificate. The
-             name must be unique across all lists of 
+             name must be unique across all lists of
              certificates (not just this list) so that leafrefs
              from another module can resolve to unique values.";
         }
@@ -278,6 +390,92 @@ module ietf-truststore {
         }
       }
     }
+    list psks {
+      if-feature "psks";
+      key "name";
+      description
+        "A list of PSKs (pairwise-symmetric or pre-shared keys).
+         These symmetric keys can be used to enable authentication
+         between one or more sets of TLS endpoints establishing
+         a TLS connection.  Each list of PSKs SHOULD be specific
+         to a purpose, so the list as a whole may be referenced by
+         other modules.  For instance, a NETCONF client's configuration
+         might point to a specific list of PSKs for when authenticating
+         specific TLS endpoints.";
+      leaf name {
+        type string;
+        description
+          "An arbitrary name for this list of PSKs.";
+      }
+      leaf description {
+        type string;
+        description
+          "An arbitrary description for this list PSKs.";
+      }
+      list psk {
+        key "name";
+        description
+          "A single PSK name and value.";
+        leaf name {
+          type string;
+          description
+            "An arbitrary name for this PSK. Must be unique across all
+             lists of PSKs (not just this list) so that a leafref to it
+             from another module can resolve to unique values.";
+        }
+        leaf psk {
+          type ct:psk;
+          mandatory true;
+          description
+            "The binary data for this PSK.";
+          reference
+            "RFC YYYY: Common YANG Data Types for Cryptography";
+        }
+      }
+    }
+    list raw-public-keys {
+      if-feature "raw-public-keys";
+      key "name";
+      description
+        "A list of raw-public-keys. These raw-public-keys can can be
+         used by a server to authenticate clients, or by a client
+         to authenticate servers. Each list of raw-public-keys SHOULD be
+         specific to a purpose, so the list as a whole may be referenced
+         by other modules.  For instance, a NETCONF client's configuration
+         might point to a specific list of raw-public-keys for when
+         authenticating specific TLS endpoints.";
+      leaf name {
+        type string;
+        description
+          "An arbitrary name for this list of raw-public-keys.";
+      }
+      leaf description {
+        type string;
+        description
+          "An arbitrary description for this list raw-public-keys.";
+      }
+      list raw-public-key {
+        key "name";
+        description
+          "A single raw-public-key name and value.";
+        leaf name {
+          type string;
+          description
+            "An arbitrary name for this raw-public-key. Must be unique
+             across all lists of raw-public-key (not just this list) so
+             that a leafref to it from another module can resolve to
+             unique values.";
+        }
+        leaf raw-public-key {
+          type ct:raw-public-key;
+          mandatory true;
+          description
+            "The binary data for this raw-public-key.";
+          reference
+            "RFC YYYY: Common YANG Data Types for Cryptography";
+        }
+      }
+    }
   }
 
   /*********************************/
@@ -291,5 +489,4 @@ module ietf-truststore {
        SSH host keys.";
     uses truststore-grouping;
   }
-
 }
