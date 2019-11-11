@@ -20,23 +20,29 @@
      docName="draft-ietf-netconf-trust-anchors-latest" >
     <front>
         <title>A YANG Data Model for a Truststore</title>
-        <author initials="K." surname="Watsen" fullname="Kent Watsen">
-            <organization>Watsen Networks</organization>
-            <address>
-                <email>kent+ietf@watsen.net</email>
-            </address>
+        <author initials="K.W." surname="Watsen" fullname="Kent Watsen">
+          <organization>Watsen Networks</organization>
+          <address>
+            <email>kent+ietf@watsen.net</email>
+          </address>
+        </author>
+        <author initials="H.B." surname="Birkholz" fullname="Henk Birkholz">
+          <organization>Fraunhofer SIT</organization>
+          <address>
+            <email>henk.birkholz@sit.fraunhofer.de</email>
+          </address>
         </author>
         <date/>
         <area>Operations</area>
         <workgroup>NETCONF Working Group</workgroup>
         <abstract>
           <t>This document defines a YANG 1.1 data model for configuring
-          global sets of X.509 certificates and SSH host-keys that
-          can be referenced by other data models for trust.  While
-          the SSH host-keys are uniquely for the SSH protocol, the
-          X.509 certificates may have multiple uses, including
-          authenticating protocol peers and verifying signatures.</t>
-
+            global sets of X.509 certificates, SSH host-keys, raw public keys,
+            and PSKs (pairwise-symmetric or pre-shared keys) that
+            can be referenced by other data models for trust.  While
+            the SSH host-keys are uniquely for the SSH protocol, certificates,
+            raw public keys, and PSKs may have multiple uses, including
+            authenticating protocol peers and verifying signatures.</t>
         </abstract>
         <note title="Editorial Note (To be removed by RFC Editor)">
           <t>This draft contains many placeholder values that need to be replaced
@@ -67,16 +73,17 @@
     <middle>
       <section title="Introduction">
 
-        <t>This document defines a YANG 1.1 <xref target="RFC7950"/> data
-        model for configuring global sets of X.509 certificates and SSH
-        host-keys that can be referenced by other data models for trust.
-        While the SSH host-keys are uniquely for the SSH protocol, the
-        X.509 certificates may be used for multiple uses, including
-        authenticating protocol peers and verifying signatures.</t>
+        <t>This document defines a YANG 1.1  <xref target="RFC7950"/>  data model
+          for configuring global sets of X.509 certificates, SSH host-keys, raw
+          public keys, and PSKs (pairwise-symmetric or pre-shared keys) that can
+          be referenced by other data models for trust.  While the SSH host-keys
+          are uniquely for the SSH protocol, certificates, raw public keys, and
+          PSKs may have multiple uses, including authenticating protocol peers
+          and verifying signatures.</t>
 
         <t>This document in compliant with Network Management Datastore Architecture
         (NMDA) <xref target="RFC8342"/>.  For instance, to support trust anchors
-        installed during manufacturing, it is expected that such data may appear
+        installed during manufacturing, it is expected that such data would appear
         only in &lt;operational&gt;.</t>
 
         <section title="Requirements Language" anchor="requirements-language">
@@ -286,10 +293,18 @@ INSERT_TEXT_FROM_FILE(ietf-truststore@YYYY-MM-DD.yang)
             </list>
           </t>
         </section>
-        <section title="04 to 05">
+        <section title="05 to 06">
           <t>
             <list style="symbols">
               <t>Editorial changes only.</t>
+            </list>
+          </t>
+        </section>
+        <section title="06 to 07">
+          <t>
+            <list style="symbols">
+              <t>Added Henk Birkholz as a co-author (thanks Henk!)</t>
+              <t>Added PSKs and raw public keys to Truststore.</t>
             </list>
           </t>
         </section>
