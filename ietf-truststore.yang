@@ -186,7 +186,7 @@ module ietf-truststore {
         if-feature "ssh-host-keys";
         leaf truststore-reference {
           type ts:host-keys-ref;
-      description
+          description
             "A reference to a set of host keys that exist in
              the truststore.";
         }
@@ -220,7 +220,6 @@ module ietf-truststore {
             }
             uses ct:public-key-grouping;
           }
-          uses ct:trust-anchor-certs-grouping;
         }
       }
       case truststore {

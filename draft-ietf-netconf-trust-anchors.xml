@@ -26,12 +26,6 @@
             <email>kent+ietf@watsen.net</email>
           </address>
         </author>
-        <author initials="H.B." surname="Birkholz" fullname="Henk Birkholz">
-          <organization>Fraunhofer SIT</organization>
-          <address>
-            <email>henk.birkholz@sit.fraunhofer.de</email>
-          </address>
-        </author>
         <date/>
         <area>Operations</area>
         <workgroup>NETCONF Working Group</workgroup>
@@ -82,9 +76,9 @@
           and verifying signatures.</t>
 
         <t>This document in compliant with Network Management Datastore Architecture
-        (NMDA) <xref target="RFC8342"/>.  For instance, to support trust anchors
-        installed during manufacturing, it is expected that such data would appear
-        only in &lt;operational&gt;.</t>
+          (NMDA) <xref target="RFC8342"/>.  For instance, trust anchors installed
+          during manufacturing (e.g., for trusted well-known services), are expected
+          to appear in &lt;operational&gt; (see <xref target="built-ins"/>).</t>
 
         <section title="Requirements Language" anchor="requirements-language">
           <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL
@@ -115,12 +109,10 @@
           </t>
         </section>
   
-        <section title="Example Usage">
-          <t>The following example illustrates trust anchors in &lt;operational&gt; as described
-          by Section 5.3 in <xref target="RFC8342"/>.  This datastore view illustrates 
-          data set by the manufacturing process alongside conventional configuration.  This
-          trust anchors instance has six sets of pinned certificates and one set of pinned
-          host keys.</t>
+        <section title="Example Usage" anchor="examples">
+          <t>The following example illustrates trust anchors in &lt;intended&gt;.
+            Please see <xref target="built-ins"/> for an example illustrating
+            built-in values in &lt;operational&gt;.</t>
           <t>
             <figure>
               <artwork><![CDATA[
@@ -154,6 +146,27 @@ INSERT_TEXT_FROM_FILE(ietf-truststore@YYYY-MM-DD.yang)
             </figure>
           </t>
         </section>
+      </section>
+
+      <section title="Support for Built-in Trust Anchors" anchor="built-ins">
+        <t>In some implementations, the operating system a device is running, may
+          define some built-in trust anchors.  For instance, there may be built-in trust
+          anchors enabling the device to securely connect to well-known services (e.g., an
+          SZTP <xref target="RFC8572"/> bootstap server) or trust anchors to connect to
+          arbitrary services using public PKI.</t>
+        <t>Built-in trust anchors are expected to be set by a vendor-specific process.
+          Any ability for operators to modify built-in trust anchors is outside the
+          scope of this docuemnt.</t>
+        <t>As built-in trust anchors are provided by the system (not configuration), they
+          are present in &lt;operational&gt;. The following example illustrates bui;t-in
+          trust anchors in &lt;operational&gt;.</t>
+        <t>(FIXME: add illustration with origin="system" here)</t>
+        <t>In order for the built-in trust anchors to be referenced by configuration, they must
+          first be copied into &lt;intended&gt; as the example in <xref target="examples"/>
+          illustrates for the built-in trust anchors above.  Note that this strategy is
+          chosen, rather then setting "require-instance false" for the various leafrefs,
+          as built-in trust anchors are relatively few in number and hence not worth
+          relaxing the validation for.</t>
       </section>
 
       <section title="Security Considerations">
@@ -241,6 +254,7 @@ INSERT_TEXT_FROM_FILE(ietf-truststore@YYYY-MM-DD.yang)
         <?rfc include="reference.RFC.8040.xml"?>
         <?rfc include="reference.RFC.8340.xml"?>
         <?rfc include="reference.RFC.8342.xml"?>
+        <?rfc include="reference.RFC.8572.xml"?>
       </references>
 
       <section title="Change Log">
@@ -308,12 +322,26 @@ INSERT_TEXT_FROM_FILE(ietf-truststore@YYYY-MM-DD.yang)
             </list>
           </t>
         </section>
+        <section title="07 to 08">
+          <t>
+            <list style="symbols">
+              <t>Added new "Support for Built-in Trust Anchors" section.</t>
+              <t>Removed spurious "uses ct:trust-anchor-certs-grouping" line.</t>
+            </list>
+          </t>
+        </section>
       </section>
 
       <section title="Acknowledgements" numbered="no">
-        <t>The authors would like to thank for following for
-        lively discussions on list and in the halls (ordered
-        by last name):
+        <t>The authors especially thank Henk Birkholz for contributing YANG 
+          to the ietf-truststore module supporting raw public keys and PSKs
+          (pre-shared or pairwise-symmetric keys).  While these contributions
+          were eventually replaced by reusing the existing support for
+          asymmetric and symmetric trust anchors, respectively, it was only
+          thru Henk's initiative that the WG was able to come to that result.</t>
+
+        <t>The authors additionally thank the following for helping give shape
+          to this work (ordered by last name):
           Martin Bjorklund,
           Nick Hancock,
           Balázs Kovács,
