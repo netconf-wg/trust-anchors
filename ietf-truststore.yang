@@ -27,8 +27,7 @@ module ietf-truststore {
   description
     "This module defines a truststore to centralize management
      of trust anchors including X.509 certificates, SSH host
-     keys, raw public keys, and PSKs (pairwise-symmetric or
-     pre-shared keys).
+     keys, raw public keys.
 
      Copyright (c) 2019 IETF Trust and the persons identified
      as authors of the code. All rights reserved.

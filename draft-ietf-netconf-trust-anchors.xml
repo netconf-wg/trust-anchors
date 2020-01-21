@@ -31,12 +31,11 @@
         <workgroup>NETCONF Working Group</workgroup>
         <abstract>
           <t>This document defines a YANG 1.1 data model for configuring
-            global sets of X.509 certificates, SSH host-keys, raw public keys,
-            and PSKs (pairwise-symmetric or pre-shared keys) that
-            can be referenced by other data models for trust.  While
+            global sets of X.509 certificates, SSH host-keys, and raw public
+            keys that can be referenced by other data models for trust.  While
             the SSH host-keys are uniquely for the SSH protocol, certificates,
-            raw public keys, and PSKs may have multiple uses, including
-            authenticating protocol peers and verifying signatures.</t>
+            and raw public keys may have multiple uses, including authenticating
+            protocol peers and verifying signatures.</t>
         </abstract>
         <note title="Editorial Note (To be removed by RFC Editor)">
           <t>This draft contains many placeholder values that need to be replaced
@@ -67,13 +66,12 @@
     <middle>
       <section title="Introduction">
 
-        <t>This document defines a YANG 1.1  <xref target="RFC7950"/>  data model
-          for configuring global sets of X.509 certificates, SSH host-keys, raw
-          public keys, and PSKs (pairwise-symmetric or pre-shared keys) that can
-          be referenced by other data models for trust.  While the SSH host-keys
-          are uniquely for the SSH protocol, certificates, raw public keys, and
-          PSKs may have multiple uses, including authenticating protocol peers
-          and verifying signatures.</t>
+        <t>This document defines a YANG 1.1 <xref target="RFC7950"/> data model for configuring
+           global sets of X.509 certificates, SSH host-keys, and raw public
+           keys that can be referenced by other data models for trust.  While
+           the SSH host-keys are uniquely for the SSH protocol, certificates,
+           and raw public keys may have multiple uses, including authenticating
+           protocol peers and verifying signatures.</t>
 
         <t>This document in compliant with Network Management Datastore Architecture
           (NMDA) <xref target="RFC8342"/>.  For instance, trust anchors installed
@@ -327,6 +325,14 @@ INSERT_TEXT_FROM_FILE(ietf-truststore@YYYY-MM-DD.yang)
             <list style="symbols">
               <t>Added new "Support for Built-in Trust Anchors" section.</t>
               <t>Removed spurious "uses ct:trust-anchor-certs-grouping" line.</t>
+              <t>Removed PSK from model.</t>
+            </list>
+          </t>
+        </section>
+        <section title="08 to 09">
+          <t>
+            <list style="symbols">
+              <t>Removed remaining PSK references from text.</t>
             </list>
           </t>
         </section>
