@@ -333,6 +333,7 @@ INSERT_TEXT_FROM_FILE(ietf-truststore@YYYY-MM-DD.yang)
           <t>
             <list style="symbols">
               <t>Removed remaining PSK references from text.</t>
+              <t>Wrapped each bag with a container.</t>
             </list>
           </t>
         </section>

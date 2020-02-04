@@ -1,110 +1,237 @@
 <truststore
-   xmlns="urn:ietf:params:xml:ns:yang:ietf-truststore"
-   xmlns:or="urn:ietf:params:xml:ns:yang:ietf-origin">
+  xmlns="urn:ietf:params:xml:ns:yang:ietf-truststore"
+  xmlns:or="urn:ietf:params:xml:ns:yang:ietf-origin"
+  xmlns:ct="urn:ietf:params:xml:ns:yang:ietf-crypto-types">
 
-  <!-- Manufacturer's trusted root CA certs -->
-  <certificates or:origin="or:system">
-    <name>manufacturers-root-ca-certs</name>
-    <description>
-      Certificates built into the device for authenticating
-      manufacturer-signed objects, such as TLS server certificates,
-      vouchers, etc.  Note, though listed here, these are not
-      configurable; any attempt to do so will be denied.
-    </description>
-    <certificate>
-      <name>Manufacturer Root CA cert 1</name>
-      <cert>base64encodedvalue==</cert>
-    </certificate>
-    <certificate>
-      <name>Manufacturer Root CA cert 2</name>
-      <cert>base64encodedvalue==</cert>
-    </certificate>
-  </certificates>
+  <!-- A bag of Certificate Bags -->
+  <certificate-bags or:origin="or:system">
 
-  <!-- specific end-entity certs for authenticating servers -->
-  <certificates or:origin="or:intended">
-    <name>explicitly-trusted-server-certs</name>
-    <description>
-      Specific server authentication certificates for explicitly
-      trusted servers.  These are needed for server certificates
-      that are not signed by a CA.
-    </description>
-    <certificate>
-      <name>Fred Flintstone</name>
-      <cert>base64encodedvalue==</cert>
-    </certificate>
-  </certificates>
+    <!-- Manufacturer's Trusted Root CA Certs -->
+    <certificate-bag>
+      <name>manufacturers-root-ca-certs</name>
+      <description>
+        Certificates built into the device for authenticating
+        manufacturer-signed objects, such as TLS server certificates,
+        vouchers, etc.  Note, though listed here, these are not
+        configurable; any attempt to do so will be denied.
+      </description>
+      <certificate>
+        <name>Manufacturer Root CA cert 1</name>
+        <cert>base64encodedvalue==</cert>
+      </certificate>
+      <certificate>
+        <name>Manufacturer Root CA cert 2</name>
+        <cert>base64encodedvalue==</cert>
+      </certificate>
+    </certificate-bag>
+  
+    <!-- CA Certs for Public (e.g., Internet-based) HTTPS Servers -->
+    <certificate-bag>
+      <name>common-ca-certs</name>
+      <description>
+        Trust anchors (i.e. CA certs) used to authenticate server
+        certificates.  A server certificate is authenticated if its
+        end-entity certificate has a chain of trust to one of these
+        certificates.
+      </description>
+      <certificate>
+        <name>Go Daddy Class 2 Certification Authority</name>
+        <cert>base64encodedvalue==</cert>
+      </certificate>
+      <certificate>
+        <name>VeriSign Universal Root Certification Authority</name>
+        <cert>base64encodedvalue==</cert>
+      </certificate>
+    </certificate-bag>
 
-  <!-- trusted CA certs for authenticating servers -->
-  <certificates or:origin="or:intended">
-    <name>explicitly-trusted-server-ca-certs</name>
-    <description>
-      Trust anchors (i.e. CA certs) that are used to authenticate 
-      server connections.  Servers are authenticated if their
-      certificate has a chain of trust to one of these CA
-      certificates.
-    </description>
-    <certificate>
-      <name>ca.example.com</name>
-      <cert>base64encodedvalue==</cert>
-    </certificate>
-  </certificates>
+    <!-- CA Certs for Authenticating Servers Using Private PKIs -->
+    <certificate-bag>
+      <name>trusted-server-ca-certs</name>
+      <description>
+        Trust anchors (i.e. CA certs) used to authenticate server
+        certificates.  A server certificate is authenticated if its
+        end-entity certificate has a chain of trust to one of these
+        certificates.
+      </description>
+      <certificate>
+        <name>Server Cert Issuer #1</name>
+        <cert>base64encodedvalue==</cert>
+      </certificate>
+      <certificate>
+        <name>Server Cert Issuer #2</name>
+        <cert>base64encodedvalue==</cert>
+      </certificate>
+    </certificate-bag>
+  
+    <!-- Pinned End Entity Certs for Authenticating Servers -->
+    <certificate-bag>
+      <name>trusted-server-ee-certs</name>
+      <description>
+        Specific end-entity certificates used to authenticate server
+        certificates.  A server certificate is authenticated if its
+        end-entity certificate is an exact match to one of these
+        certificates.
+      </description>
+      <certificate>
+        <name>My Application #1</name>
+        <cert>base64encodedvalue==</cert>
+      </certificate>
+      <certificate>
+        <name>My Application #2</name>
+        <cert>base64encodedvalue==</cert>
+      </certificate>
+    </certificate-bag>
+  
+    <!-- CA Certs for Authenticating Clients -->
+    <certificate-bag>
+      <name>trusted-client-ca-certs</name>
+      <description>
+        Trust anchors (i.e. CA certs) used to authenticate client
+        certificates.  A client certificate is authenticated if its
+        end-entity certificate has a chain of trust to one of these
+        certificates.
+      </description>
+      <certificate>
+        <name>Client Identity Issuer #1</name>
+        <cert>base64encodedvalue==</cert>
+      </certificate>
+      <certificate>
+        <name>Client Identity Issuer #2</name>
+        <cert>base64encodedvalue==</cert>
+      </certificate>
+    </certificate-bag>
+  
+    <!-- Pinned End Entity Certs for Authenticating Clients -->
+    <certificate-bag>
+      <name>trusted-client-ee-certs</name>
+      <description>
+        Specific end-entity certificates used to authenticate client
+        certificates.  A client certificate is authenticated if its
+        end-entity certificate is an exact match to one of these
+        certificates.
+      </description>
+      <certificate>
+        <name>George Jetson</name>
+        <cert>base64encodedvalue==</cert>
+      </certificate>
+      <certificate>
+        <name>Fred Flintstone</name>
+        <cert>base64encodedvalue==</cert>
+      </certificate>
+    </certificate-bag>
+  </certificate-bags>
 
-  <!-- specific end-entity certs for authenticating clients -->
-  <certificates or:origin="or:intended">
-    <name>explicitly-trusted-client-certs</name>
-    <description>
-      Specific client authentication certificates for explicitly
-      trusted clients.  These are needed for client certificates
-      that are not signed by a CA.
-    </description>
-    <certificate>
-      <name>George Jetson</name>
-      <cert>base64encodedvalue==</cert>
-    </certificate>
-  </certificates>
 
-  <!-- trusted CA certs for authenticating clients -->
-  <certificates or:origin="or:intended">
-    <name>explicitly-trusted-client-ca-certs</name>
-    <description>
-      Trust anchors (i.e. CA certs) that are used to authenticate 
-      client connections.  Clients are authenticated if their
-      certificate has a chain of trust to one of these CA
-      certificates.
-    </description>
-    <certificate>
-      <name>ca.example.com</name>
-      <cert>base64encodedvalue==</cert>
-    </certificate>
-  </certificates>
+  <!-- A Bag of SSH Host Key Bags -->
+  <host-key-bags or:origin="or:intended">
 
-  <!-- trusted CA certs for random HTTPS servers on Internet -->
-  <certificates or:origin="or:system">
-    <name>common-ca-certs</name>
-    <description>
-      Trusted certificates to authenticate common HTTPS servers.
-      These certificates are similar to those that might be
-      shipped with a web browser.
-    </description>
-    <certificate>
-      <name>ex-certificate-authority</name>
-      <cert>base64encodedvalue==</cert>
-    </certificate>
-  </certificates>
+    <!-- SSH Host Keys for Authenticating SSH Servers -->
+    <host-key-bag>
+      <name>trusted-ssh-public-keys</name>
+      <description>
+        Specific SSH host keys used to authenticate SSH server
+        host keys.  An SSH server host key is authenticated if its
+        host key is an exact match to one of these host keys.
 
-  <!-- specific SSH host keys for authenticating clients -->
-  <host-keys or:origin="or:intended">
-    <name>explicitly-trusted-ssh-host-keys</name>
-    <description>
-      Trusted SSH host keys used to authenticate SSH servers.
-      These host keys would be analogous to those stored in
-      a known_hosts file in OpenSSH.
-    </description>
-    <host-key>
-      <name>corp-fw1</name>
-      <host-key>base64encodedvalue==</host-key>
-    </host-key>
-  </host-keys>
+        These host keys are analogous to those stored in OpenSSH's
+        "/etc/ssh/ssh_known_hosts" file.
+      </description>
+      <host-key>
+        <name>corp-fw1</name>
+        <host-key>base64encodedvalue==</host-key>
+      </host-key>
+      <host-key>
+        <name>corp-fw2</name>
+        <host-key>base64encodedvalue==</host-key>
+      </host-key>
+    </host-key-bag>
+
+    <!-- SSH Host Keys for Authenticating User A -->
+    <host-key-bag>
+      <name>SSH Public Keys for User A</name>
+      <description>
+        SSH host keys used to authenticate a user A's SSH host keys.
+        An SSH host key is authenticated if its host key is an exact
+        match to one of these host keys.
+
+        These host keys are analogous to those stored in OpenSSH's
+        "~A/.ssh/authorized_keys" file.
+      </description>
+      <host-key>
+        <name>From Source #1</name>
+        <host-key>base64encodedvalue==</host-key>
+      </host-key>
+      <host-key>
+        <name>From Source #2</name>
+        <host-key>base64encodedvalue==</host-key>
+      </host-key>
+    </host-key-bag>
+
+    <!-- SSH Host Keys for Authenticating User B -->
+    <host-key-bag>
+      <name>SSH Public Keys for User B</name>
+      <description>
+        SSH host keys used to authenticate a user B's SSH host keys.
+        An SSH host key is authenticated if its host key is an exact
+        match to one of these host keys.
+
+        These host keys are analogous to those stored in OpenSSH's
+        "~B/.ssh/authorized_keys" file.
+      </description>
+      <host-key>
+        <name>From Source #1</name>
+        <host-key>base64encodedvalue==</host-key>
+      </host-key>
+      <host-key>
+        <name>From Source #2</name>
+        <host-key>base64encodedvalue==</host-key>
+      </host-key>
+    </host-key-bag>
+  </host-key-bags>
+
+
+  <!-- A Bag of Raw Public Key Bags -->
+  <raw-public-key-bags or:origin="or:intended">
+
+    <!-- Raw Public Keys for FIXME... -->
+    <raw-public-key-bag>
+      <name>Raw Public Keys for FIXME 1</name>
+      <description>
+        FIXME...
+      </description>
+      <raw-public-key>
+        <name>Raw Public Key #1</name>
+        <algorithm>rsa2048</algorithm>
+        <public-key-format>ct:subject-public-key-info-format</public-key-format>
+        <public-key>base64encodedvalue==</public-key>
+      </raw-public-key>
+      <raw-public-key>
+        <name>Raw Public Key #2</name>
+        <algorithm>rsa2048</algorithm>
+        <public-key-format>ct:subject-public-key-info-format</public-key-format>
+        <public-key>base64encodedvalue==</public-key>
+      </raw-public-key>
+    </raw-public-key-bag>
+
+    <!-- Raw Public Keys for FIXME... -->
+    <raw-public-key-bag>
+      <name>Raw Public Keys for FIXME 2</name>
+      <description>
+        FIXME...
+      </description>
+      <raw-public-key>
+        <name>Raw Public Key #1</name>
+        <algorithm>rsa2048</algorithm>
+        <public-key-format>ct:subject-public-key-info-format</public-key-format>
+        <public-key>base64encodedvalue==</public-key>
+      </raw-public-key>
+      <raw-public-key>
+        <name>Raw Public Key #2</name>
+        <algorithm>rsa2048</algorithm>
+        <public-key-format>ct:subject-public-key-info-format</public-key-format>
+        <public-key>base64encodedvalue==</public-key>
+      </raw-public-key>
+    </raw-public-key-bag>
+  </raw-public-key-bags>
 
 </truststore>

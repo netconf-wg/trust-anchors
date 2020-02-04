@@ -96,31 +96,73 @@ module ietf-truststore {
   /*   Typedefs   */
   /****************/
 
-  typedef certificates-ref {
+  typedef certificate-bag-ref {
     type leafref {
-      path "/ts:truststore/ts:certificates/ts:name";
+      path "/ts:truststore/ts:certificate-bags/"
+           + "ts:certificate-bag/ts:name";
     }
     description
-      "This typedef enables modules to easily define a reference
-       to a set of certificates  defined in the truststore.";
+      "This typedef defines a reference to a certificate bag
+       defined in the truststore.";
   }
 
-  typedef host-keys-ref {
+  typedef certificate-ref {
     type leafref {
-      path "/ts:truststore/ts:host-keys/ts:name";
+      path "/ts:truststore/certificate-bags/certificate-bag" +
+           "[name = current()/../certificate-bag]/certificate/name";
     }
     description
-      "This typedef enables modules to easily define a reference
-       to a set of host keys defined in the truststore.";
+      "This typedef define a reference to a specific certificate
+       in a certificate bag defined in the truststore.  This
+       typedef requires that there exist a sibling 'leaf' node
+       called 'certificate-bag' that SHOULD have the typedef
+       'certificate-bag-ref'.";
   }
 
-  typedef raw-public-keys-ref {
+  typedef host-key-bag-ref {
     type leafref {
-      path "/ts:truststore/ts:raw-public-keys/ts:name";
+      path "/ts:truststore/ts:host-key-bags/ts:host-key-bag/ts:name";
     }
     description
-      "This typedef enables modules to easily define a reference
-       to a set of raw public keys defined in the truststore.";
+      "This typedef defines a reference to a host key bag defined
+       in the truststore.";
+  }
+
+  typedef host-key-ref {
+    type leafref {
+      path "/ts:truststore/host-key-bags/host-key-bag" +
+           "[name = current()/../host-key-bag]/host-key/name";
+    }
+    description
+      "This typedef define a reference to a specific host key
+       in a host key bag defined in the truststore.  This
+       typedef requires that there exist a sibling 'leaf' node
+       called 'host-key-bag' that SHOULD have the typedef
+       'host-key-bag-ref'.";
+  }
+
+  typedef raw-public-key-bag-ref {
+    type leafref {
+      path "/ts:truststore/ts:raw-public-key-bags/"
+           + "ts:raw-public-key-bag/ts:name";
+    }
+    description
+      "This typedef define a reference to a raw public key bag
+       defined in the truststore.";
+  }
+
+  typedef raw-public-key-ref {
+    type leafref {
+      path "/ts:truststore/raw-public-key-bags/raw-public-key-bag" +
+           "[name = current()/../raw-public-key-bag]/" +
+           "raw-public-key/name";
+    }
+    description
+      "This typedef define a reference to a specific raw public key
+       in a raw public key bag defined in the truststore.  This
+       typedef requires that there exist a sibling 'leaf' node
+       called 'raw-public-key-bag' that SHOULD have the typedef
+       'raw-public-key-bag-ref'.";
   }
 
   /*****************/
@@ -129,16 +171,17 @@ module ietf-truststore {
 
   grouping local-or-truststore-certs-grouping {
     description
-      "A grouping that expands to allow trust anchors to be
-       either stored locally, within the using data model, or be
-       a reference to trust anchors stored in the truststore.";
+      "A grouping that allows the certificates to be either
+       configured locally, within the using data model, or be a
+       reference to a certificate bag stored in the truststore.";
     choice local-or-truststore {
       mandatory true;
       case local {
         if-feature "local-definitions-supported";
         container local-definition {
           description
-            "Container to hold the local trust anchor definitions.";
+            "A container for locally configured trust anchor
+             certificates.";
           uses ct:trust-anchor-certs-grouping;
         }
       }
@@ -146,10 +189,10 @@ module ietf-truststore {
         if-feature "truststore-supported";
         if-feature "x509-certificates";
         leaf truststore-reference {
-          type ts:certificates-ref;
+          type ts:certificate-bag-ref;
           description
-            "A reference to a set of trust anchors that exists
-             in the truststore.";
+            "A reference to a certificate bag that exists in the
+             truststore.";
         }
       }
       description
@@ -158,11 +201,11 @@ module ietf-truststore {
     }
   }
 
-  grouping local-or-truststore-host-keys-grouping {
+  grouping local-or-truststore-host-keys-grouping { // FIXME: bagify
     description
-      "A grouping that expands to allow host keys to be
-       either stored locally, within the using data model, or be
-       a reference to host keys stored in the truststore.";
+      "A grouping that allows the host keys to be either
+       configured locally, within the using data model, or be a
+       reference to a host key bag stored in the truststore.";
     choice local-or-truststore {
       mandatory true;
       case local {
@@ -184,9 +227,9 @@ module ietf-truststore {
         if-feature "truststore-supported";
         if-feature "ssh-host-keys";
         leaf truststore-reference {
-          type ts:host-keys-ref;
+          type ts:host-key-bag-ref;
           description
-            "A reference to a set of host keys that exist in
+            "A reference to a bag of host keys that exist in
              the truststore.";
         }
       }
@@ -198,9 +241,9 @@ module ietf-truststore {
 
   grouping local-or-truststore-raw-pub-keys-grouping {
     description
-      "A grouping that expands to allow raw public keys to be
-       available either locally, within the using data model, or
-       be a reference to raw public keys stored in the truststore.";
+      "A grouping that allows the raw public keys to be either
+       configured locally, within the using data model, or be a
+       reference to a raw public key bag stored in the truststore.";
     choice local-or-truststore {
       mandatory true;
       case local {
@@ -225,9 +268,9 @@ module ietf-truststore {
         if-feature "truststore-supported";
         if-feature "raw-public-keys";
         leaf truststore-reference {
-          type ts:raw-public-keys-ref;
+          type ts:raw-public-key-bag-ref;
           description
-            "A reference to a set of raw public keys that exist
+            "A reference to a bag of raw public keys that exist
              in the truststore.";
         }
       }
@@ -239,125 +282,138 @@ module ietf-truststore {
 
   grouping truststore-grouping {
     description
-      "Grouping definition enables use in other contexts.  If ever
-       done, implementations SHOULD augment new 'case' statements
-       into local-or-keystore 'choice' statements to supply leafrefs
-       to the new location.";
-    list certificates {
+      "Grouping definition enables use in other contexts.  Where
+       used, implementations SHOULD augment new 'case' statements
+       into the local-or-truststore 'choice' statements to supply
+       leafrefs to the model-specific location.";
+    container certificate-bags {
       if-feature "x509-certificates";
-      key "name";
+      presence
+        "Indicates that certificate bags have been configured.";
       description
-        "A list of certificates.  These certificates can be
-         used by a server to authenticate clients, or by a client
-         to authenticate servers.  Each list of certificates
-         SHOULD be specific to a purpose, as the list as a whole
-         may be referenced by other modules.  For instance, a
-         RESTCONF server's configuration might use a specific list
-         of certificates for when authenticating RESTCONF
-         client connections.";
-      leaf name {
-        type string;
-        description
-          "An arbitrary name for this list of certificates.";
-      }
-      leaf description {
-        type string;
-        description
-          "An arbitrary description for this list of
-           certificates.";
-      }
-      list certificate {
+        "A collection of certificate bags.";
+      list certificate-bag {
         key "name";
+        min-elements 1;
         description
-          "A certificate.";
+          "A bag of certificates.  Each bag of certificates SHOULD
+           be for a specific purpose.  For instance, one bag could
+           be used to authenticate a specific set of servers, while
+           another could be used to authenticate a specific set of
+           clients.";
         leaf name {
           type string;
           description
-            "An arbitrary name for this certificate. The
-             name must be unique across all lists of
-             certificates (not just this list) so that leafrefs
-             from another module can resolve to unique values.";
+            "An arbitrary name for this bag of certificates.";
         }
-        uses ct:trust-anchor-cert-grouping {
-          refine "cert" {
-            mandatory true;
+        leaf description {
+          type string;
+          description
+            "A description for this bag of certificates.  The
+            intended purpose for the bag SHOULD be described.";
+        }
+        list certificate {
+          key "name";
+          min-elements 1;
+          description
+            "A trust anchor certificate.";
+          leaf name {
+            type string;
+            description
+              "An arbitrary name for this certificate.";
+          }
+          uses ct:trust-anchor-cert-grouping {
+            refine "cert" {
+              mandatory true;
+            }
           }
         }
       }
     }
-    list host-keys {
+    container host-key-bags {
       if-feature "ssh-host-keys";
-      key "name";
+      presence
+        "Indicates that host keys have been configured.";
       description
-        "A list of host keys.  These host-keys can be used by
-         clients to authenticate SSH servers.  Each list of host
-         keys SHOULD be specific to a purpose, so the list as a
-         whole may be referenced by other modules.  For instance,
-         a client's configuration might point to a specific list
-         of host keys for when authenticating specific SSH servers.";
-      leaf name {
-        type string;
-        description
-          "An arbitrary name for this list of SSH
-           host keys.";
-      }
-      leaf description {
-        type string;
-        description
-          "An arbitrary description for this list of SSH
-           host keys.";
-      }
-      list host-key {
+        "A collection of host key bags.";
+      list host-key-bag {
         key "name";
+        min-elements 1;
         description
-          "A host key.";
+          "A bag of host keys.  Each bag of host keys SHOULD be for
+           a specific purpose.  For instance, one bag could be used
+           authenticate a specific set of servers, while another
+           could be used to authenticate a specific set of clients.";
         leaf name {
           type string;
           description
-            "An arbitrary name for this host-key.";
+            "An arbitrary name for this bag of SSH
+             host keys.";
         }
-        leaf host-key {
-          type ct:ssh-host-key;
-          mandatory true;
+        leaf description {
+          type string;
           description
-            "The binary public key data for this host key.";
-          reference
-            "RFC YYYY: Common YANG Data Types for Cryptography";
+            "A description for this bag of SSH host keys.  The
+             intended purpose for the bag SHOULD be described.";
+        }
+        list host-key {
+          key "name";
+          min-elements 1;
+          description
+            "A host key.";
+          leaf name {
+            type string;
+            description
+              "An arbitrary name for this host-key.";
+          }
+          leaf host-key {
+            type ct:ssh-host-key;
+            mandatory true;
+            description
+              "The binary public key data for this host key.";
+            reference
+              "RFC YYYY: Common YANG Data Types for Cryptography";
+          }
         }
       }
     }
-    list raw-public-keys {
+    container raw-public-key-bags {
       if-feature "raw-public-keys";
-      key "name";
+      presence
+        "Indicates that raw public keys have been configured.";
       description
-        "A list of raw public keys. These raw public keys can be
-         used by a server to authenticate clients, or by a client
-         to authenticate servers. Each list of raw public keys
-         SHOULD be specific to a purpose, so the list as a whole
-         may be referenced by other modules.  For instance, a
-         client's configuration might point to a specific list
-         of raw public keys for when authenticating specific TLS
-         endpoints.";
-      leaf name {
-        type string;
-        description
-          "An arbitrary name for this list of raw public keys.";
-      }
-      leaf description {
-        type string;
-        description
-          "An arbitrary description for this list raw public keys.";
-      }
-      list raw-public-key {
+        "A collection of raw public key bags.";
+      list raw-public-key-bag {
         key "name";
+        min-elements 1;
         description
-          "A raw public key.";
+          "A bag of raw public keys.  Each bag of keys SHOULD be for
+           a specific purpose.  For instance, one bag could be used
+           authenticate a specific set of servers, while another
+           could be used to authenticate a specific set of clients.";
         leaf name {
           type string;
           description
-            "An arbitrary name for this raw public key.";
+            "An arbitrary name for this bag of raw public keys.";
         }
-        uses ct:public-key-grouping;
+        leaf description {
+          type string;
+          description
+            "A description for this bag raw public keys.  The
+             intended purpose for the bag SHOULD be described.";
+        }
+        list raw-public-key {
+          key "name";
+          min-elements 1;
+          description
+            "A raw public key.";
+          leaf name {
+            type string;
+            description
+              "An arbitrary name for this raw public key.";
+          }
+          uses ct:public-key-grouping;
+        }
       }
     }
   }
