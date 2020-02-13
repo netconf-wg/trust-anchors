@@ -4,10 +4,10 @@
   xmlns:ct="urn:ietf:params:xml:ns:yang:ietf-crypto-types">
 
   <!-- A bag of Certificate Bags -->
-  <certificate-bags or:origin="or:system">
+  <certificate-bags or:origin="or:intended">
 
-    <!-- Manufacturer's Trusted Root CA Certs -->
-    <certificate-bag>
+    <!-- Manufacturer's Trusted Root CA Certs (in <operational>)-->
+    <certificate-bag or:origin="or:system">
       <name>manufacturers-root-ca-certs</name>
       <description>
         Certificates built into the device for authenticating
@@ -123,71 +123,83 @@
 
 
   <!-- A Bag of SSH Host Key Bags -->
-  <host-key-bags or:origin="or:intended">
+  <ssh-public-key-bags or:origin="or:intended">
 
     <!-- SSH Host Keys for Authenticating SSH Servers -->
-    <host-key-bag>
+    <ssh-public-key-bag>
       <name>trusted-ssh-public-keys</name>
       <description>
-        Specific SSH host keys used to authenticate SSH server
-        host keys.  An SSH server host key is authenticated if its
-        host key is an exact match to one of these host keys.
+        Specific SSH public keys used to authenticate SSH server
+        public keys.  An SSH server public key is authenticated if
+        its public key is an exact match to one of these public keys.
 
-        These host keys are analogous to those stored in OpenSSH's
+        This list of SSH public keys is analogous to OpenSSH's
         "/etc/ssh/ssh_known_hosts" file.
       </description>
-      <host-key>
+      <ssh-public-key>
         <name>corp-fw1</name>
-        <host-key>base64encodedvalue==</host-key>
-      </host-key>
-      <host-key>
+        <algorithm>secp256r1</algorithm>
+        <public-key-format>ct:ssh-public-key-format</public-key-format>
+        <public-key>base64encodedvalue==</public-key>
+      </ssh-public-key>
+      <ssh-public-key>
         <name>corp-fw2</name>
-        <host-key>base64encodedvalue==</host-key>
-      </host-key>
-    </host-key-bag>
+        <algorithm>secp256r1</algorithm>
+        <public-key-format>ct:ssh-public-key-format</public-key-format>
+        <public-key>base64encodedvalue==</public-key>
+      </ssh-public-key>
+    </ssh-public-key-bag>
 
     <!-- SSH Host Keys for Authenticating User A -->
-    <host-key-bag>
+    <ssh-public-key-bag>
       <name>SSH Public Keys for User A</name>
       <description>
-        SSH host keys used to authenticate a user A's SSH host keys.
-        An SSH host key is authenticated if its host key is an exact
-        match to one of these host keys.
+        SSH public keys used to authenticate a user A's SSH public
+        keys.  An SSH public key is authenticated if it is an exact
+        match to one of these public keys.
 
-        These host keys are analogous to those stored in OpenSSH's
+        This list of public keys is analogous to OpenSSH's
         "~A/.ssh/authorized_keys" file.
       </description>
-      <host-key>
+      <ssh-public-key>
         <name>From Source #1</name>
-        <host-key>base64encodedvalue==</host-key>
-      </host-key>
-      <host-key>
+        <algorithm>secp256r1</algorithm>
+        <public-key-format>ct:ssh-public-key-format</public-key-format>
+        <public-key>base64encodedvalue==</public-key>
+      </ssh-public-key>
+      <ssh-public-key>
         <name>From Source #2</name>
-        <host-key>base64encodedvalue==</host-key>
-      </host-key>
-    </host-key-bag>
+        <algorithm>secp256r1</algorithm>
+        <public-key-format>ct:ssh-public-key-format</public-key-format>
+        <public-key>base64encodedvalue==</public-key>
+      </ssh-public-key>
+    </ssh-public-key-bag>
 
     <!-- SSH Host Keys for Authenticating User B -->
-    <host-key-bag>
+    <ssh-public-key-bag>
       <name>SSH Public Keys for User B</name>
       <description>
-        SSH host keys used to authenticate a user B's SSH host keys.
-        An SSH host key is authenticated if its host key is an exact
-        match to one of these host keys.
+        SSH public keys used to authenticate a user A's SSH public
+        keys.  An SSH public key is authenticated if it is an exact
+        match to one of these public keys.
 
-        These host keys are analogous to those stored in OpenSSH's
+        This list of public keys is analogous to OpenSSH's
         "~B/.ssh/authorized_keys" file.
       </description>
-      <host-key>
+      <ssh-public-key>
         <name>From Source #1</name>
-        <host-key>base64encodedvalue==</host-key>
-      </host-key>
-      <host-key>
+        <algorithm>secp256r1</algorithm>
+        <public-key-format>ct:ssh-public-key-format</public-key-format>
+        <public-key>base64encodedvalue==</public-key>
+      </ssh-public-key>
+      <ssh-public-key>
         <name>From Source #2</name>
-        <host-key>base64encodedvalue==</host-key>
-      </host-key>
-    </host-key-bag>
-  </host-key-bags>
+        <algorithm>secp256r1</algorithm>
+        <public-key-format>ct:ssh-public-key-format</public-key-format>
+        <public-key>base64encodedvalue==</public-key>
+      </ssh-public-key>
+    </ssh-public-key-bag>
+  </ssh-public-key-bags>
 
 
   <!-- A Bag of Raw Public Key Bags -->

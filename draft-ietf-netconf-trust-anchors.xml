@@ -334,6 +334,9 @@ INSERT_TEXT_FROM_FILE(ietf-truststore@YYYY-MM-DD.yang)
             <list style="symbols">
               <t>Removed remaining PSK references from text.</t>
               <t>Wrapped each bag with a container.</t>
+              <t>Replace leaf-list "host-key" having type "ct:ssh-host-key" with a list
+                "ssh-public-key" that uses "ct:public-key-grouping" while refining
+                that the "public-key-format" must be "ct:ssh-public-key-format".</t>
             </list>
           </t>
         </section>

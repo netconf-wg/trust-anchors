@@ -26,7 +26,7 @@ module ietf-truststore {
 
   description
     "This module defines a truststore to centralize management
-     of trust anchors including X.509 certificates, SSH host
+     of trust anchors including X.509 certificates, SSH public
      keys, raw public keys.
 
      Copyright (c) 2019 IETF Trust and the persons identified
@@ -77,19 +77,19 @@ module ietf-truststore {
   feature x509-certificates {
     description
       "The 'x509-certificates' feature indicates that the server
-       implements the /truststore/certificates subtree.";
+       implements the /truststore/certificate-bags subtree.";
   }
 
-  feature ssh-host-keys {
+  feature ssh-public-keys {
     description
-      "The 'ssh-host-keys' feature indicates that the server
-       implements the /truststore/host-keys subtree.";
+      "The 'ssh-public-keys' feature indicates that the server
+       implements the /truststore/ssh-public-key-bags subtree.";
   }
 
   feature raw-public-keys {
     description
       "The 'raw-public-keys' feature indicates that the server
-       implements the /truststore/raw-public-keys subtree.";
+       implements the /truststore/raw-public-key-bags subtree.";
   }
 
   /****************/
@@ -119,26 +119,28 @@ module ietf-truststore {
        'certificate-bag-ref'.";
   }
 
-  typedef host-key-bag-ref {
+  typedef ssh-public-key-bag-ref {
     type leafref {
-      path "/ts:truststore/ts:host-key-bags/ts:host-key-bag/ts:name";
+      path "/ts:truststore/ts:ssh-public-key-bags"
+           + "/ts:ssh-public-key-bag/ts:name";
     }
     description
-      "This typedef defines a reference to a host key bag defined
-       in the truststore.";
+      "This typedef defines a reference to an SSH public key bag
+       defined in the truststore.";
   }
 
-  typedef host-key-ref {
+  typedef ssh-public-key-ref {
     type leafref {
-      path "/ts:truststore/host-key-bags/host-key-bag" +
-           "[name = current()/../host-key-bag]/host-key/name";
+      path "/ts:truststore/ssh-public-key-bags/ssh-public-key-bag" +
+           "[name = current()/../ssh-public-key-bag]" +
+           "/ssh-public-key/name";
     }
     description
-      "This typedef define a reference to a specific host key
-       in a host key bag defined in the truststore.  This
+      "This typedef define a reference to a specific SSH public key
+       in a SSH public key bag defined in the truststore.  This
        typedef requires that there exist a sibling 'leaf' node
-       called 'host-key-bag' that SHOULD have the typedef
-       'host-key-bag-ref'.";
+       called 'ssh-public-key-bag' that SHOULD have the typedef
+       'ssh-public-key-bag-ref'.";
   }
 
   typedef raw-public-key-bag-ref {
@@ -201,35 +203,43 @@ module ietf-truststore {
     }
   }
 
-  grouping local-or-truststore-host-keys-grouping { // FIXME: bagify
+  grouping local-or-truststore-ssh-public-keys-grouping {
     description
-      "A grouping that allows the host keys to be either
+      "A grouping that allows the ssh public keys to be either
        configured locally, within the using data model, or be a
-       reference to a host key bag stored in the truststore.";
+       reference to a ssh public key bag stored in the truststore.";
     choice local-or-truststore {
       mandatory true;
       case local {
         if-feature "local-definitions-supported";
         container local-definition {
           description
-            "Container to hold local host key definitions.";
-          leaf-list host-key {
-            nacm:default-deny-write;
-            type ct:ssh-host-key;
+            "Container to hold local ssh public key definitions.";
+          list ssh-public-key {
+            key name;
+            min-elements 1;
             description
-              "The binary public key data for this host key.";
-            reference
-              "RFC YYYY: Common YANG Data Types for Cryptography";
+              "A ssh public key.";
+            leaf name {
+              type string;
+              description
+                "An arbitrary name for this ssh public key.";
+            }
+            uses ct:public-key-grouping {
+              refine "public-key-format" {
+                must '. = "ct:ssh-public-key-format"';
+              }
+            }
           }
         }
       }
       case truststore {
         if-feature "truststore-supported";
-        if-feature "ssh-host-keys";
+        if-feature "ssh-public-keys";
         leaf truststore-reference {
-          type ts:host-key-bag-ref;
+          type ts:ssh-public-key-bag-ref;
           description
-            "A reference to a bag of host keys that exist in
+            "A reference to a bag of SSH public keys that exist in
              the truststore.";
         }
       }
@@ -330,49 +340,46 @@ module ietf-truststore {
         }
       }
     }
-    container host-key-bags {
-      if-feature "ssh-host-keys";
+    container ssh-public-key-bags {
+      if-feature "ssh-public-keys";
       presence
-        "Indicates that host keys have been configured.";
+        "Indicates that SSH public keys have been configured.";
       description
-        "A collection of host key bags.";
-      list host-key-bag {
+        "A collection of SSH public key bags.";
+      list ssh-public-key-bag {
         key "name";
         min-elements 1;
         description
-          "A bag of host keys.  Each bag of host keys SHOULD be for
-           a specific purpose.  For instance, one bag could be used
-           authenticate a specific set of servers, while another
-           could be used to authenticate a specific set of clients.";
+          "A bag of SSH public keys.  Each bag of SSH public keys
+           SHOULD be for a specific purpose.  For instance, one
+           bag could be used authenticate a specific set of servers
+           (i.e., host keys), while another bag could be used to
+           authenticate a specific client or set of clients.";
         leaf name {
           type string;
           description
-            "An arbitrary name for this bag of SSH
-             host keys.";
+            "An arbitrary name for this bag of SSH public keys.";
         }
         leaf description {
           type string;
           description
-            "A description for this bag of SSH host keys.  The
+            "A description for this bag of SSH public keys.  The
              intended purpose for the bag SHOULD be described.";
         }
-        list host-key {
+        list ssh-public-key {
           key "name";
           min-elements 1;
           description
-            "A host key.";
+            "An SSH public key.";
           leaf name {
             type string;
             description
-              "An arbitrary name for this host-key.";
+              "An arbitrary name for this SSH public key.";
           }
-          leaf host-key {
-            type ct:ssh-host-key;
-            mandatory true;
-            description
-              "The binary public key data for this host key.";
-            reference
-              "RFC YYYY: Common YANG Data Types for Cryptography";
+          uses ct:public-key-grouping {
+            refine "public-key-format" {
+              must '. = "ct:ssh-public-key-format"';
+            }
           }
         }
       }
@@ -412,7 +419,12 @@ module ietf-truststore {
             description
               "An arbitrary name for this raw public key.";
           }
-          uses ct:public-key-grouping;
+          uses ct:public-key-grouping {
+            refine "public-key-format" {
+              must '. = "ct:subject-public-key-info-format"';
+            }
+          }
+          //uses ct:public-key-grouping;
         }
       }
     }
@@ -425,8 +437,8 @@ module ietf-truststore {
   container truststore {
     nacm:default-deny-write;
     description
-      "The truststore contains sets of X.509 certificates and
-       SSH host keys.";
+      "The truststore contains sets of X.509 certificates, SSH
+       public keys, and raw public keys.";
     uses truststore-grouping;
   }
 }
