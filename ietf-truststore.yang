@@ -92,6 +92,12 @@ module ietf-truststore {
        implements the /truststore/raw-public-key-bags subtree.";
   }
 
+  feature public-keys {
+    description
+      "The 'public-keys' feature indicates that the server
+       implements the /truststore/public-key-bags subtree.";
+  }
+
   /****************/
   /*   Typedefs   */
   /****************/
@@ -166,6 +172,31 @@ module ietf-truststore {
        called 'raw-public-key-bag' that SHOULD have the typedef
        'raw-public-key-bag-ref'.";
   }
+
+  typedef public-key-bag-ref {
+    type leafref {
+      path "/ts:truststore/ts:public-key-bags/"
+           + "ts:public-key-bag/ts:name";
+    }
+    description
+      "This typedef define a reference to a public key bag
+       defined in the truststore.";
+  }
+
+  typedef public-key-ref {
+    type leafref {
+      path "/ts:truststore/public-key-bags/public-key-bag" +
+           "[name = current()/../public-key-bag]/" +
+           "public-key/name";
+    }
+    description
+      "This typedef define a reference to a specific public key
+       in a public key bag defined in the truststore.  This
+       typedef requires that there exist a sibling 'leaf' node
+       called 'public-key-bag' that SHOULD have the typedef
+       'public-key-bag-ref'.";
+  }
+
 
   /*****************/
   /*   Groupings   */
@@ -249,6 +280,7 @@ module ietf-truststore {
     }
   }
 
+
   grouping local-or-truststore-raw-pub-keys-grouping {
     description
       "A grouping that allows the raw public keys to be either
@@ -281,6 +313,48 @@ module ietf-truststore {
           type ts:raw-public-key-bag-ref;
           description
             "A reference to a bag of raw public keys that exist
+             in the truststore.";
+        }
+      }
+      description
+        "A choice between an inlined definition and a definition
+         that exists in the truststore.";
+    }
+  }
+
+
+  grouping local-or-truststore-public-keys-grouping {
+    description
+      "A grouping that allows the public keys to be either
+       configured locally, within the using data model, or be a
+       reference to a public key bag stored in the truststore.";
+    choice local-or-truststore {
+      mandatory true;
+      case local {
+        if-feature "local-definitions-supported";
+        container local-definition {
+          description
+            "Container to hold local public key definitions.";
+          list public-key {
+            key name;
+            description
+              "A public key definition.";
+            leaf name {
+              type string;
+              description
+                "An arbitrary name for this public key.";
+            }
+            uses ct:public-key-grouping;
+          }
+        }
+      }
+      case truststore {
+        if-feature "truststore-supported";
+        if-feature "public-keys";
+        leaf truststore-reference {
+          type ts:public-key-bag-ref;
+          description
+            "A reference to a bag of public keys that exist
              in the truststore.";
         }
       }
@@ -425,6 +499,45 @@ module ietf-truststore {
             }
           }
           //uses ct:public-key-grouping;
+        }
+      }
+    }
+    container public-key-bags {
+      if-feature "public-keys";
+      presence
+        "Indicates that public keys have been configured.";
+      description
+        "A collection of public key bags.";
+      list public-key-bag {
+        key "name";
+        min-elements 1;
+        description
+          "A bag of public keys.  Each bag of keys SHOULD be for
+           a specific purpose.  For instance, one bag could be used
+           authenticate a specific set of servers, while another
+           could be used to authenticate a specific set of clients.";
+        leaf name {
+          type string;
+          description
+            "An arbitrary name for this bag of public keys.";
+        }
+        leaf description {
+          type string;
+          description
+            "A description for this bag public keys.  The
+             intended purpose for the bag SHOULD be described.";
+        }
+        list public-key {
+          key "name";
+          min-elements 1;
+          description
+            "A public key.";
+          leaf name {
+            type string;
+            description
+              "An arbitrary name for this public key.";
+          }
+          uses ct:public-key-grouping;
         }
       }
     }

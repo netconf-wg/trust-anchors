@@ -333,10 +333,11 @@ INSERT_TEXT_FROM_FILE(ietf-truststore@YYYY-MM-DD.yang)
           <t>
             <list style="symbols">
               <t>Removed remaining PSK references from text.</t>
-              <t>Wrapped each bag with a container.</t>
-              <t>Replace leaf-list "host-key" having type "ct:ssh-host-key" with a list
-                "ssh-public-key" that uses "ct:public-key-grouping" while refining
-                that the "public-key-format" must be "ct:ssh-public-key-format".</t>
+              <t>Wrapped each top-level list with a container.</t>
+              <t>Introduced "bag" term.</t>
+              <t>Merged "SSH Public Keys" and "Raw Public Keys" in a single "Public Keys" bag.
+                Consuming downstream modules (i.e., "ietf-[ssh/tls]-[client/server]) refinei
+                the "public-key-format" to be either SSH or TLS specific as needed.</t>
             </list>
           </t>
         </section>

@@ -121,12 +121,11 @@
     </certificate-bag>
   </certificate-bags>
 
+  <!-- A List of Public Key Bags -->
+  <public-key-bags or:origin="or:intended">
 
-  <!-- A Bag of SSH Host Key Bags -->
-  <ssh-public-key-bags or:origin="or:intended">
-
-    <!-- SSH Host Keys for Authenticating SSH Servers -->
-    <ssh-public-key-bag>
+    <!-- Public Keys for Authenticating SSH Servers -->
+    <public-key-bag>
       <name>trusted-ssh-public-keys</name>
       <description>
         Specific SSH public keys used to authenticate SSH server
@@ -136,22 +135,22 @@
         This list of SSH public keys is analogous to OpenSSH's
         "/etc/ssh/ssh_known_hosts" file.
       </description>
-      <ssh-public-key>
+      <public-key>
         <name>corp-fw1</name>
         <algorithm>secp256r1</algorithm>
         <public-key-format>ct:ssh-public-key-format</public-key-format>
         <public-key>base64encodedvalue==</public-key>
-      </ssh-public-key>
-      <ssh-public-key>
+      </public-key>
+      <public-key>
         <name>corp-fw2</name>
         <algorithm>secp256r1</algorithm>
         <public-key-format>ct:ssh-public-key-format</public-key-format>
         <public-key>base64encodedvalue==</public-key>
-      </ssh-public-key>
-    </ssh-public-key-bag>
+      </public-key>
+    </public-key-bag>
 
-    <!-- SSH Host Keys for Authenticating User A -->
-    <ssh-public-key-bag>
+    <!-- SSH Public Keys for Authenticating User A -->
+    <public-key-bag>
       <name>SSH Public Keys for User A</name>
       <description>
         SSH public keys used to authenticate a user A's SSH public
@@ -161,89 +160,83 @@
         This list of public keys is analogous to OpenSSH's
         "~A/.ssh/authorized_keys" file.
       </description>
-      <ssh-public-key>
+      <public-key>
         <name>From Source #1</name>
         <algorithm>secp256r1</algorithm>
         <public-key-format>ct:ssh-public-key-format</public-key-format>
         <public-key>base64encodedvalue==</public-key>
-      </ssh-public-key>
-      <ssh-public-key>
+      </public-key>
+      <public-key>
         <name>From Source #2</name>
         <algorithm>secp256r1</algorithm>
         <public-key-format>ct:ssh-public-key-format</public-key-format>
         <public-key>base64encodedvalue==</public-key>
-      </ssh-public-key>
-    </ssh-public-key-bag>
+      </public-key>
+    </public-key-bag>
 
-    <!-- SSH Host Keys for Authenticating User B -->
-    <ssh-public-key-bag>
+    <!-- SSH Public Keys for Authenticating User B -->
+    <public-key-bag>
       <name>SSH Public Keys for User B</name>
       <description>
-        SSH public keys used to authenticate a user A's SSH public
+        SSH public keys used to authenticate a user B's SSH public
         keys.  An SSH public key is authenticated if it is an exact
         match to one of these public keys.
 
         This list of public keys is analogous to OpenSSH's
         "~B/.ssh/authorized_keys" file.
       </description>
-      <ssh-public-key>
+      <public-key>
         <name>From Source #1</name>
         <algorithm>secp256r1</algorithm>
         <public-key-format>ct:ssh-public-key-format</public-key-format>
         <public-key>base64encodedvalue==</public-key>
-      </ssh-public-key>
-      <ssh-public-key>
+      </public-key>
+      <public-key>
         <name>From Source #2</name>
         <algorithm>secp256r1</algorithm>
         <public-key-format>ct:ssh-public-key-format</public-key-format>
         <public-key>base64encodedvalue==</public-key>
-      </ssh-public-key>
-    </ssh-public-key-bag>
-  </ssh-public-key-bags>
-
-
-  <!-- A Bag of Raw Public Key Bags -->
-  <raw-public-key-bags or:origin="or:intended">
+      </public-key>
+    </public-key-bag>
 
     <!-- Raw Public Keys for FIXME... -->
-    <raw-public-key-bag>
-      <name>Raw Public Keys for FIXME 1</name>
+    <public-key-bag>
+      <name>Raw Public Keys for Servers</name>
       <description>
         FIXME...
       </description>
-      <raw-public-key>
+      <public-key>
         <name>Raw Public Key #1</name>
         <algorithm>rsa2048</algorithm>
         <public-key-format>ct:subject-public-key-info-format</public-key-format>
         <public-key>base64encodedvalue==</public-key>
-      </raw-public-key>
-      <raw-public-key>
+      </public-key>
+      <public-key>
         <name>Raw Public Key #2</name>
         <algorithm>rsa2048</algorithm>
         <public-key-format>ct:subject-public-key-info-format</public-key-format>
         <public-key>base64encodedvalue==</public-key>
-      </raw-public-key>
-    </raw-public-key-bag>
+      </public-key>
+    </public-key-bag>
 
     <!-- Raw Public Keys for FIXME... -->
-    <raw-public-key-bag>
-      <name>Raw Public Keys for FIXME 2</name>
+    <public-key-bag>
+      <name>Raw Public Keys for Clients</name>
       <description>
         FIXME...
       </description>
-      <raw-public-key>
+      <public-key>
         <name>Raw Public Key #1</name>
         <algorithm>rsa2048</algorithm>
         <public-key-format>ct:subject-public-key-info-format</public-key-format>
         <public-key>base64encodedvalue==</public-key>
-      </raw-public-key>
-      <raw-public-key>
+      </public-key>
+      <public-key>
         <name>Raw Public Key #2</name>
         <algorithm>rsa2048</algorithm>
         <public-key-format>ct:subject-public-key-info-format</public-key-format>
         <public-key>base64encodedvalue==</public-key>
-      </raw-public-key>
-    </raw-public-key-bag>
-  </raw-public-key-bags>
-
+      </public-key>
+    </public-key-bag>
+  </public-key-bags>
 </truststore>
