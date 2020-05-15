@@ -20,7 +20,7 @@
      docName="draft-ietf-netconf-trust-anchors-latest" >
     <front>
         <title>A YANG Data Model for a Truststore</title>
-        <author initials="K.W." surname="Watsen" fullname="Kent Watsen">
+        <author initials="K." surname="Watsen" fullname="Kent Watsen">
           <organization>Watsen Networks</organization>
           <address>
             <email>kent+ietf@watsen.net</email>
@@ -338,6 +338,13 @@ INSERT_TEXT_FROM_FILE(ietf-truststore@YYYY-MM-DD.yang)
               <t>Merged "SSH Public Keys" and "Raw Public Keys" in a single "Public Keys" bag.
                 Consuming downstream modules (i.e., "ietf-[ssh/tls]-[client/server]) refinei
                 the "public-key-format" to be either SSH or TLS specific as needed.</t>
+            </list>
+          </t>
+        </section>
+        <section title="09 to 10">
+          <t>
+            <list style="symbols">
+              <t>Removed 'algorithm' node from examples.</t>
             </list>
           </t>
         </section>
