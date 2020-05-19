@@ -1,0 +1,28 @@
+<truststore
+  xmlns="urn:ietf:params:xml:ns:yang:ietf-truststore"
+  xmlns:ct="urn:ietf:params:xml:ns:yang:ietf-crypto-types">
+  <certificate-bags>
+
+    <certificate-bag>
+      <name>Built-In Public CA Certificates</name>
+      <description>
+        Certificates built into the device for authenticating
+        certificates issued by public certificate authorities,
+        such as the end-entity certificate for webservers.
+
+        Only the subset of the certificates that are referenced
+        by other configuration nodes need to be copied.  For
+        instance, only "Public Root CA Cert 3" is present here.
+
+        No new certificates can be added, nor existing certificate
+        values changed.  Missing certficates have no effect on
+        "operational" when the configuration is applied.
+      </description>
+      <certificate>
+        <name>Public Root CA Cert 3</name>
+        <cert>base64encodedvalue==</cert>
+      </certificate>
+    </certificate-bag>
+
+  </certificate-bags>
+</truststore>

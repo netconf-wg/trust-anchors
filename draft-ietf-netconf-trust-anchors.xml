@@ -19,49 +19,48 @@
      ipr="trust200902"
      docName="draft-ietf-netconf-trust-anchors-latest" >
     <front>
-        <title>A YANG Data Model for a Truststore</title>
-        <author initials="K." surname="Watsen" fullname="Kent Watsen">
-          <organization>Watsen Networks</organization>
-          <address>
-            <email>kent+ietf@watsen.net</email>
-          </address>
-        </author>
-        <date/>
-        <area>Operations</area>
-        <workgroup>NETCONF Working Group</workgroup>
-        <abstract>
-          <t>This document defines a YANG 1.1 data model for configuring
-            global sets of X.509 certificates, SSH host-keys, and raw public
-            keys that can be referenced by other data models for trust.  While
-            the SSH host-keys are uniquely for the SSH protocol, certificates,
-            and raw public keys may have multiple uses, including authenticating
-            protocol peers and verifying signatures.</t>
-        </abstract>
-        <note title="Editorial Note (To be removed by RFC Editor)">
-          <t>This draft contains many placeholder values that need to be replaced
+      <title>A YANG Data Model for a Truststore</title>
+      <author initials="K." surname="Watsen" fullname="Kent Watsen">
+        <organization>Watsen Networks</organization>
+        <address>
+          <email>kent+ietf@watsen.net</email>
+        </address>
+      </author>
+      <date/>
+      <area>Operations</area>
+      <workgroup>NETCONF Working Group</workgroup>
+      <abstract>
+        <t>This document defines a YANG 1.1 data model for configuring
+          global sets of X.509 certificates, SSH host-keys, and raw public
+          keys that can be referenced by other data models for trust.  While
+          the SSH host-keys are uniquely for the SSH protocol, certificates,
+          and raw public keys may have multiple uses, including authenticating
+          protocol peers and verifying signatures.</t>
+      </abstract>
+      <note title="Editorial Note (To be removed by RFC Editor)">
+        <t>This draft contains placeholder values that need to be replaced
           with finalized values at the time of publication.  This note summarizes
           all of the substitutions that are needed.  No other RFC Editor 
           instructions are specified elsewhere in this document.</t>
-
-          <t>Artwork in this document contains shorthand references to drafts in 
+        <t>Artwork in this document contains shorthand references to drafts in
           progress.  Please apply the following replacements:
-            <list  style="symbols">
-              <t><spanx style="verb">XXXX</spanx> --&gt; the assigned RFC value for this draft</t>
-              <t><spanx style="verb">YYYY</spanx> --&gt; the assigned RFC value for draft-ietf-netconf-crypto-types</t>
-            </list>
-          </t>
-          <t>Artwork in this document contains placeholder values for the date
+          <list style="symbols">
+            <t><spanx style="verb">AAAA</spanx> --&gt; the assigned RFC value for draft-ietf-netconf-crypto-types</t>
+            <t><spanx style="verb">BBBB</spanx> --&gt; the assigned RFC value for this draft</t>
+          </list>
+        </t>
+        <t>Artwork in this document contains placeholder values for the date
           of publication of this draft.  Please apply the following replacement:
-            <list  style="symbols">
-              <t><spanx style="verb">YYYY-MM-DD</spanx> --&gt; the publication date of this draft</t>
-            </list>
-          </t>
-          <t>The following Appendix section is to be removed prior to publication:
-            <list  style="symbols">
-              <t>Appendix A.  Change Log</t>
-            </list>
-          </t>
-        </note>
+          <list  style="symbols">
+            <t><spanx style="verb">YYYY-MM-DD</spanx> --&gt; the publication date of this draft</t>
+          </list>
+        </t>
+        <t>The following Appendix section is to be removed prior to publication:
+          <list  style="symbols">
+            <t>Appendix A.  Change Log</t>
+          </list>
+        </t>
+      </note>
     </front>
     <middle>
       <section title="Introduction">
@@ -147,24 +146,41 @@ INSERT_TEXT_FROM_FILE(ietf-truststore@YYYY-MM-DD.yang)
       </section>
 
       <section title="Support for Built-in Trust Anchors" anchor="built-ins">
-        <t>In some implementations, the operating system a device is running, may
-          define some built-in trust anchors.  For instance, there may be built-in trust
-          anchors enabling the device to securely connect to well-known services (e.g., an
-          SZTP <xref target="RFC8572"/> bootstap server) or trust anchors to connect to
-          arbitrary services using public PKI.</t>
+        <t>In some implementations, a server may define some built-in trust anchors.
+          For instance, there may be built-in trust anchors enabling the server to
+          securely connect to well-known services (e.g., an SZTP <xref target="RFC8572"/>
+          bootstrap server) or public CA certificates to connect to arbitrary services
+          using public PKI.</t>
         <t>Built-in trust anchors are expected to be set by a vendor-specific process.
           Any ability for operators to modify built-in trust anchors is outside the
-          scope of this docuemnt.</t>
-        <t>As built-in trust anchors are provided by the system (not configuration), they
-          are present in &lt;operational&gt;. The following example illustrates bui;t-in
-          trust anchors in &lt;operational&gt;.</t>
-        <t>(FIXME: add illustration with origin="system" here)</t>
-        <t>In order for the built-in trust anchors to be referenced by configuration, they must
-          first be copied into &lt;intended&gt; as the example in <xref target="examples"/>
-          illustrates for the built-in trust anchors above.  Note that this strategy is
-          chosen, rather then setting "require-instance false" for the various leafrefs,
-          as built-in trust anchors are relatively few in number and hence not worth
-          relaxing the validation for.</t>
+          scope of this document.</t>
+        <t>As built-in trust anchors are provided by the system, they are present in 
+          &lt;operational&gt;. The example below illustrates what the truststore in
+          &lt;operational&gt; might look like for a server in its factory default
+          state.</t>
+        <t>
+          <figure>
+            <artwork><![CDATA[
+INSERT_TEXT_FROM_FILE(refs/ex-truststore-default-operational.xml)
+]]></artwork>
+          </figure>
+        </t>
+        <t>In order for the built-in trust anchors to be referenced by configuration,
+          the referenced nodes MUST first be copied into &lt;running&gt;.  They SHOULD
+          be copied into &lt;running&gt; using the same "key" values, so that the
+          system can bind the references to the built-in entries.  Only the referenced
+          nodes need to be copied.  When using the same key values as in &lt;operational&gt;
+          no new values can be added and no existing values can be changed; that which
+          is in &lt;running&gt; can only be a subset of that which is in &lt;operational&gt;.</t>  
+        <t>For instance, the following example illustrates how a single built-in public
+          CA certificate from the previous example has been propogated to &lt;running&gt;:</t>
+        <t>
+          <figure>
+            <artwork><![CDATA[
+INSERT_TEXT_FROM_FILE(refs/ex-truststore-default-running.xml)
+]]></artwork>
+          </figure>
+        </t>
       </section>
 
       <section title="Security Considerations">
@@ -226,7 +242,7 @@ INSERT_TEXT_FROM_FILE(ietf-truststore@YYYY-MM-DD.yang)
    name:         ietf-truststore
    namespace:    urn:ietf:params:xml:ns:yang:ietf-truststore
    prefix:       ta
-   reference:    RFC XXXX
+   reference:    RFC BBBB
 
 ]]></artwork>
             </figure>

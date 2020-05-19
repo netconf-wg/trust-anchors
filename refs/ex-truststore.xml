@@ -1,48 +1,9 @@
 <truststore
   xmlns="urn:ietf:params:xml:ns:yang:ietf-truststore"
-  xmlns:or="urn:ietf:params:xml:ns:yang:ietf-origin"
   xmlns:ct="urn:ietf:params:xml:ns:yang:ietf-crypto-types">
 
   <!-- A bag of Certificate Bags -->
-  <certificate-bags or:origin="or:intended">
-
-    <!-- Manufacturer's Trusted Root CA Certs (in <operational>)-->
-    <certificate-bag or:origin="or:system">
-      <name>manufacturers-root-ca-certs</name>
-      <description>
-        Certificates built into the device for authenticating
-        manufacturer-signed objects, such as TLS server certificates,
-        vouchers, etc.  Note, though listed here, these are not
-        configurable; any attempt to do so will be denied.
-      </description>
-      <certificate>
-        <name>Manufacturer Root CA cert 1</name>
-        <cert>base64encodedvalue==</cert>
-      </certificate>
-      <certificate>
-        <name>Manufacturer Root CA cert 2</name>
-        <cert>base64encodedvalue==</cert>
-      </certificate>
-    </certificate-bag>
-  
-    <!-- CA Certs for Public (e.g., Internet-based) HTTPS Servers -->
-    <certificate-bag>
-      <name>common-ca-certs</name>
-      <description>
-        Trust anchors (i.e. CA certs) used to authenticate server
-        certificates.  A server certificate is authenticated if its
-        end-entity certificate has a chain of trust to one of these
-        certificates.
-      </description>
-      <certificate>
-        <name>Go Daddy Class 2 Certification Authority</name>
-        <cert>base64encodedvalue==</cert>
-      </certificate>
-      <certificate>
-        <name>VeriSign Universal Root Certification Authority</name>
-        <cert>base64encodedvalue==</cert>
-      </certificate>
-    </certificate-bag>
+  <certificate-bags>
 
     <!-- CA Certs for Authenticating Servers Using Private PKIs -->
     <certificate-bag>
@@ -122,7 +83,7 @@
   </certificate-bags>
 
   <!-- A List of Public Key Bags -->
-  <public-key-bags or:origin="or:intended">
+  <public-key-bags>
 
     <!-- Public Keys for Authenticating SSH Servers -->
     <public-key-bag>

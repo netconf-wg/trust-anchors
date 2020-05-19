@@ -32,7 +32,17 @@ run_unix_cmd $LINENO "$command" 0
 printf "okay.\n"
 
 printf "Testing ex-truststore.xml..."
-command="yanglint -s ../ietf-truststore\@*.yang ../ietf-crypto-types\@*.yang ./ietf-origin.yang ex-truststore.xml"
+command="yanglint -s ../ietf-truststore\@*.yang ../ietf-crypto-types\@*.yang ex-truststore.xml"
+run_unix_cmd $LINENO "$command" 0
+printf "okay.\n"
+
+printf "Testing ex-truststore-default-operational.xml..."
+command="yanglint -s ../ietf-truststore\@*.yang ../ietf-crypto-types\@*.yang ./ietf-origin.yang ex-truststore-default-operational.xml"
+run_unix_cmd $LINENO "$command" 0
+printf "okay.\n"
+
+printf "Testing ex-truststore-default-running.xml..."
+command="yanglint -s ../ietf-truststore\@*.yang ../ietf-crypto-types\@*.yang ex-truststore-default-running.xml"
 run_unix_cmd $LINENO "$command" 0
 printf "okay.\n"
 

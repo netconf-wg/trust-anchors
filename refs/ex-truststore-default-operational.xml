@@ -1,0 +1,43 @@
+<truststore
+  xmlns="urn:ietf:params:xml:ns:yang:ietf-truststore"
+  xmlns:ct="urn:ietf:params:xml:ns:yang:ietf-crypto-types"
+  xmlns:or="urn:ietf:params:xml:ns:yang:ietf-origin"
+  or:origin="or:intended">
+  <certificate-bags>
+
+    <certificate-bag or:origin="or:system">
+      <name>Built-In Manufacturer CA Certificates</name>
+      <description>
+        Certificates built into the device for authenticating
+        manufacturer-signed objects, such as TLS server certificates,
+        vouchers, etc.
+      </description>
+      <certificate>
+        <name>Manufacturer Root CA Cert</name>
+        <cert>base64encodedvalue==</cert>
+      </certificate>
+    </certificate-bag>
+
+    <certificate-bag or:origin="or:system">
+      <name>Built-In Public CA Certificates</name>
+      <description>
+        Certificates built into the device for authenticating
+        certificates issued by public certificate authorities,
+        such as the end-entity certificate for webservers.
+      </description>
+      <certificate>
+        <name>Public Root CA Cert 1</name>
+        <cert>base64encodedvalue==</cert>
+      </certificate>
+      <certificate>
+        <name>Public Root CA Cert 2</name>
+        <cert>base64encodedvalue==</cert>
+      </certificate>
+      <certificate>
+        <name>Public Root CA Cert 3</name>
+        <cert>base64encodedvalue==</cert>
+      </certificate>
+    </certificate-bag>
+
+  </certificate-bags>
+</truststore>
