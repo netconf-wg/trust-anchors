@@ -61,6 +61,7 @@
           </list>
         </t>
       </note>
+INSERT_TEXT_FROM_FILE(../client-server-overview-snippet.xml,158)
     </front>
     <middle>
       <section title="Introduction">
@@ -361,6 +362,7 @@ INSERT_TEXT_FROM_FILE(refs/ex-truststore-default-running.xml)
           <t>
             <list style="symbols">
               <t>Removed 'algorithm' node from examples.</t>
+              <t>Added a "Note to Reviewers" note to first page.</t>
             </list>
           </t>
         </section>
