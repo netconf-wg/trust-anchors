@@ -25,9 +25,8 @@ module ietf-truststore {
      Author  : Henk Birkholz <henk.birkholz@sit.fraunhofer.de>";
 
   description
-    "This module defines a truststore to centralize management
-     of trust anchors including X.509 certificates, SSH public
-     keys, raw public keys.
+    "This module defines a Truststore to centralize management
+     of trust anchors including certificates and public keys.
 
      Copyright (c) 2020 IETF Trust and the persons identified
      as authors of the code. All rights reserved.
@@ -64,7 +63,7 @@ module ietf-truststore {
   feature truststore-supported {
     description
       "The 'truststore-supported' feature indicates that the
-       server supports the truststore (i.e., implements the
+       server supports the Truststore (i.e., implements the
        'ietf-truststore' module).";
   }
 
@@ -74,22 +73,10 @@ module ietf-truststore {
        the server supports locally-defined trust anchors.";
   }
 
-  feature x509-certificates {
+  feature certificates {
     description
-      "The 'x509-certificates' feature indicates that the server
+      "The 'certificates' feature indicates that the server
        implements the /truststore/certificate-bags subtree.";
-  }
-
-  feature ssh-public-keys {
-    description
-      "The 'ssh-public-keys' feature indicates that the server
-       implements the /truststore/ssh-public-key-bags subtree.";
-  }
-
-  feature raw-public-keys {
-    description
-      "The 'raw-public-keys' feature indicates that the server
-       implements the /truststore/raw-public-key-bags subtree.";
   }
 
   feature public-keys {
@@ -109,7 +96,7 @@ module ietf-truststore {
     }
     description
       "This typedef defines a reference to a certificate bag
-       defined in the truststore.";
+       defined in the Truststore.";
   }
 
   typedef certificate-ref {
@@ -119,58 +106,10 @@ module ietf-truststore {
     }
     description
       "This typedef define a reference to a specific certificate
-       in a certificate bag defined in the truststore.  This
+       in a certificate bag defined in the Truststore.  This
        typedef requires that there exist a sibling 'leaf' node
        called 'certificate-bag' that SHOULD have the typedef
        'certificate-bag-ref'.";
-  }
-
-  typedef ssh-public-key-bag-ref {
-    type leafref {
-      path "/ts:truststore/ts:ssh-public-key-bags"
-           + "/ts:ssh-public-key-bag/ts:name";
-    }
-    description
-      "This typedef defines a reference to an SSH public key bag
-       defined in the truststore.";
-  }
-
-  typedef ssh-public-key-ref {
-    type leafref {
-      path "/ts:truststore/ssh-public-key-bags/ssh-public-key-bag" +
-           "[name = current()/../ssh-public-key-bag]" +
-           "/ssh-public-key/name";
-    }
-    description
-      "This typedef define a reference to a specific SSH public key
-       in a SSH public key bag defined in the truststore.  This
-       typedef requires that there exist a sibling 'leaf' node
-       called 'ssh-public-key-bag' that SHOULD have the typedef
-       'ssh-public-key-bag-ref'.";
-  }
-
-  typedef raw-public-key-bag-ref {
-    type leafref {
-      path "/ts:truststore/ts:raw-public-key-bags/"
-           + "ts:raw-public-key-bag/ts:name";
-    }
-    description
-      "This typedef define a reference to a raw public key bag
-       defined in the truststore.";
-  }
-
-  typedef raw-public-key-ref {
-    type leafref {
-      path "/ts:truststore/raw-public-key-bags/raw-public-key-bag" +
-           "[name = current()/../raw-public-key-bag]/" +
-           "raw-public-key/name";
-    }
-    description
-      "This typedef define a reference to a specific raw public key
-       in a raw public key bag defined in the truststore.  This
-       typedef requires that there exist a sibling 'leaf' node
-       called 'raw-public-key-bag' that SHOULD have the typedef
-       'raw-public-key-bag-ref'.";
   }
 
   typedef public-key-bag-ref {
@@ -180,7 +119,7 @@ module ietf-truststore {
     }
     description
       "This typedef define a reference to a public key bag
-       defined in the truststore.";
+       defined in the Truststore.";
   }
 
   typedef public-key-ref {
@@ -191,7 +130,7 @@ module ietf-truststore {
     }
     description
       "This typedef define a reference to a specific public key
-       in a public key bag defined in the truststore.  This
+       in a public key bag defined in the Truststore.  This
        typedef requires that there exist a sibling 'leaf' node
        called 'public-key-bag' that SHOULD have the typedef
        'public-key-bag-ref'.";
@@ -206,7 +145,7 @@ module ietf-truststore {
     description
       "A grouping that allows the certificates to be either
        configured locally, within the using data model, or be a
-       reference to a certificate bag stored in the truststore.";
+       reference to a certificate bag stored in the Truststore.";
     choice local-or-truststore {
       mandatory true;
       case local {
@@ -220,105 +159,17 @@ module ietf-truststore {
       }
       case truststore {
         if-feature "truststore-supported";
-        if-feature "x509-certificates";
+        if-feature "certificates";
         leaf truststore-reference {
           type ts:certificate-bag-ref;
           description
             "A reference to a certificate bag that exists in the
-             truststore.";
+             Truststore.";
         }
       }
       description
         "A choice between an inlined definition and a definition
-         that exists in the truststore.";
-    }
-  }
-
-  grouping local-or-truststore-ssh-public-keys-grouping {
-    description
-      "A grouping that allows the ssh public keys to be either
-       configured locally, within the using data model, or be a
-       reference to a ssh public key bag stored in the truststore.";
-    choice local-or-truststore {
-      mandatory true;
-      case local {
-        if-feature "local-definitions-supported";
-        container local-definition {
-          description
-            "Container to hold local ssh public key definitions.";
-          list ssh-public-key {
-            key name;
-            min-elements 1;
-            description
-              "A ssh public key.";
-            leaf name {
-              type string;
-              description
-                "An arbitrary name for this ssh public key.";
-            }
-            uses ct:public-key-grouping {
-              refine "public-key-format" {
-                must '. = "ct:ssh-public-key-format"';
-              }
-            }
-          }
-        }
-      }
-      case truststore {
-        if-feature "truststore-supported";
-        if-feature "ssh-public-keys";
-        leaf truststore-reference {
-          type ts:ssh-public-key-bag-ref;
-          description
-            "A reference to a bag of SSH public keys that exist in
-             the truststore.";
-        }
-      }
-      description
-        "A choice between an inlined definition and a definition
-         that exists in the truststore.";
-    }
-  }
-
-
-  grouping local-or-truststore-raw-pub-keys-grouping {
-    description
-      "A grouping that allows the raw public keys to be either
-       configured locally, within the using data model, or be a
-       reference to a raw public key bag stored in the truststore.";
-    choice local-or-truststore {
-      mandatory true;
-      case local {
-        if-feature "local-definitions-supported";
-        container local-definition {
-          description
-            "Container to hold local raw public key definitions.";
-          list raw-public-key {
-            key name;
-            description
-              "A raw public key definition.";
-            leaf name {
-              type string;
-              description
-                "An arbitrary name for this raw public key.";
-            }
-            uses ct:public-key-grouping;
-          }
-        }
-      }
-      case truststore {
-        if-feature "truststore-supported";
-        if-feature "raw-public-keys";
-        leaf truststore-reference {
-          type ts:raw-public-key-bag-ref;
-          description
-            "A reference to a bag of raw public keys that exist
-             in the truststore.";
-        }
-      }
-      description
-        "A choice between an inlined definition and a definition
-         that exists in the truststore.";
+         that exists in the Truststore.";
     }
   }
 
@@ -327,7 +178,7 @@ module ietf-truststore {
     description
       "A grouping that allows the public keys to be either
        configured locally, within the using data model, or be a
-       reference to a public key bag stored in the truststore.";
+       reference to a public key bag stored in the Truststore.";
     choice local-or-truststore {
       mandatory true;
       case local {
@@ -355,12 +206,12 @@ module ietf-truststore {
           type ts:public-key-bag-ref;
           description
             "A reference to a bag of public keys that exist
-             in the truststore.";
+             in the Truststore.";
         }
       }
       description
         "A choice between an inlined definition and a definition
-         that exists in the truststore.";
+         that exists in the Truststore.";
     }
   }
 
@@ -371,7 +222,7 @@ module ietf-truststore {
        into the local-or-truststore 'choice' statements to supply
        leafrefs to the model-specific location.";
     container certificate-bags {
-      if-feature "x509-certificates";
+      if-feature "certificates";
       presence
         "Indicates that certificate bags have been configured.";
       description
@@ -411,94 +262,6 @@ module ietf-truststore {
               mandatory true;
             }
           }
-        }
-      }
-    }
-    container ssh-public-key-bags {
-      if-feature "ssh-public-keys";
-      presence
-        "Indicates that SSH public keys have been configured.";
-      description
-        "A collection of SSH public key bags.";
-      list ssh-public-key-bag {
-        key "name";
-        min-elements 1;
-        description
-          "A bag of SSH public keys.  Each bag of SSH public keys
-           SHOULD be for a specific purpose.  For instance, one
-           bag could be used authenticate a specific set of servers
-           (i.e., host keys), while another bag could be used to
-           authenticate a specific client or set of clients.";
-        leaf name {
-          type string;
-          description
-            "An arbitrary name for this bag of SSH public keys.";
-        }
-        leaf description {
-          type string;
-          description
-            "A description for this bag of SSH public keys.  The
-             intended purpose for the bag SHOULD be described.";
-        }
-        list ssh-public-key {
-          key "name";
-          min-elements 1;
-          description
-            "An SSH public key.";
-          leaf name {
-            type string;
-            description
-              "An arbitrary name for this SSH public key.";
-          }
-          uses ct:public-key-grouping {
-            refine "public-key-format" {
-              must '. = "ct:ssh-public-key-format"';
-            }
-          }
-        }
-      }
-    }
-    container raw-public-key-bags {
-      if-feature "raw-public-keys";
-      presence
-        "Indicates that raw public keys have been configured.";
-      description
-        "A collection of raw public key bags.";
-      list raw-public-key-bag {
-        key "name";
-        min-elements 1;
-        description
-          "A bag of raw public keys.  Each bag of keys SHOULD be for
-           a specific purpose.  For instance, one bag could be used
-           authenticate a specific set of servers, while another
-           could be used to authenticate a specific set of clients.";
-        leaf name {
-          type string;
-          description
-            "An arbitrary name for this bag of raw public keys.";
-        }
-        leaf description {
-          type string;
-          description
-            "A description for this bag raw public keys.  The
-             intended purpose for the bag SHOULD be described.";
-        }
-        list raw-public-key {
-          key "name";
-          min-elements 1;
-          description
-            "A raw public key.";
-          leaf name {
-            type string;
-            description
-              "An arbitrary name for this raw public key.";
-          }
-          uses ct:public-key-grouping {
-            refine "public-key-format" {
-              must '. = "ct:subject-public-key-info-format"';
-            }
-          }
-          //uses ct:public-key-grouping;
         }
       }
     }
@@ -550,8 +313,8 @@ module ietf-truststore {
   container truststore {
     nacm:default-deny-write;
     description
-      "The truststore contains sets of X.509 certificates, SSH
-       public keys, and raw public keys.";
+      "The Truststore contains bags of certificates and
+       public keys.";
     uses truststore-grouping;
   }
 }

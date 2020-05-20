@@ -23,7 +23,7 @@
       <description>
         Certificates built into the device for authenticating
         certificates issued by public certificate authorities,
-        such as the end-entity certificate for webservers.
+        such as the end-entity certificate for web servers.
       </description>
       <certificate>
         <name>Public Root CA Cert 1</name>

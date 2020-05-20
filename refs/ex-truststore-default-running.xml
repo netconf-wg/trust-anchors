@@ -8,14 +8,14 @@
       <description>
         Certificates built into the device for authenticating
         certificates issued by public certificate authorities,
-        such as the end-entity certificate for webservers.
+        such as the end-entity certificate for web servers.
 
         Only the subset of the certificates that are referenced
         by other configuration nodes need to be copied.  For
         instance, only "Public Root CA Cert 3" is present here.
 
         No new certificates can be added, nor existing certificate
-        values changed.  Missing certficates have no effect on
+        values changed.  Missing certificates have no effect on
         "operational" when the configuration is applied.
       </description>
       <certificate>

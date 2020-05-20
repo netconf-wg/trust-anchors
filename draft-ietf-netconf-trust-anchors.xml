@@ -31,11 +31,8 @@
       <workgroup>NETCONF Working Group</workgroup>
       <abstract>
         <t>This document defines a YANG 1.1 data model for configuring
-          global sets of X.509 certificates, SSH host-keys, and raw public
-          keys that can be referenced by other data models for trust.  While
-          the SSH host-keys are uniquely for the SSH protocol, certificates,
-          and raw public keys may have multiple uses, including authenticating
-          protocol peers and verifying signatures.</t>
+          globally-accessible bags of certificates and public keys that can be referenced
+          by other data models for trust.</t>
       </abstract>
       <note title="Editorial Note (To be removed by RFC Editor)">
         <t>This draft contains placeholder values that need to be replaced
@@ -67,11 +64,8 @@ INSERT_TEXT_FROM_FILE(../client-server-overview-snippet.xml,158)
       <section title="Introduction">
 
         <t>This document defines a YANG 1.1 <xref target="RFC7950"/> data model for configuring
-           global sets of X.509 certificates, SSH host-keys, and raw public
-           keys that can be referenced by other data models for trust.  While
-           the SSH host-keys are uniquely for the SSH protocol, certificates,
-           and raw public keys may have multiple uses, including authenticating
-           protocol peers and verifying signatures.</t>
+          globally-accessible bags of certificates and public keys that can be referenced by
+          other data models for trust.</t>
 
         <t>This document in compliant with Network Management Datastore Architecture
           (NMDA) <xref target="RFC8342"/>.  For instance, trust anchors installed
@@ -156,7 +150,7 @@ INSERT_TEXT_FROM_FILE(ietf-truststore@YYYY-MM-DD.yang)
           Any ability for operators to modify built-in trust anchors is outside the
           scope of this document.</t>
         <t>As built-in trust anchors are provided by the system, they are present in 
-          &lt;operational&gt;. The example below illustrates what the truststore in
+          &lt;operational&gt;. The example below illustrates what the Truststore in
           &lt;operational&gt; might look like for a server in its factory default
           state.</t>
         <t>
@@ -174,7 +168,7 @@ INSERT_TEXT_FROM_FILE(refs/ex-truststore-default-operational.xml)
           no new values can be added and no existing values can be changed; that which
           is in &lt;running&gt; can only be a subset of that which is in &lt;operational&gt;.</t>  
         <t>For instance, the following example illustrates how a single built-in public
-          CA certificate from the previous example has been propogated to &lt;running&gt;:</t>
+          CA certificate from the previous example has been propagated to &lt;running&gt;:</t>
         <t>
           <figure>
             <artwork><![CDATA[
@@ -353,7 +347,7 @@ INSERT_TEXT_FROM_FILE(refs/ex-truststore-default-running.xml)
               <t>Wrapped each top-level list with a container.</t>
               <t>Introduced "bag" term.</t>
               <t>Merged "SSH Public Keys" and "Raw Public Keys" in a single "Public Keys" bag.
-                Consuming downstream modules (i.e., "ietf-[ssh/tls]-[client/server]) refinei
+                Consuming downstream modules (i.e., "ietf-[ssh/tls]-[client/server]) refine
                 the "public-key-format" to be either SSH or TLS specific as needed.</t>
             </list>
           </t>
@@ -361,7 +355,8 @@ INSERT_TEXT_FROM_FILE(refs/ex-truststore-default-running.xml)
         <section title="09 to 10">
           <t>
             <list style="symbols">
-              <t>Removed 'algorithm' node from examples.</t>
+              <t>Removed "algorithm" node from examples.</t>
+              <t>Removed the no longer used statements supporting the old "ssh-public-key" and "raw-public-key" nodes.</t>
               <t>Added a "Note to Reviewers" note to first page.</t>
             </list>
           </t>

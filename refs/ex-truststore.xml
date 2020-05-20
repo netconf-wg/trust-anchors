@@ -154,7 +154,7 @@
       </public-key>
     </public-key-bag>
 
-    <!-- Raw Public Keys for FIXME... -->
+    <!-- Raw Public Keys for TLS Servers -->
     <public-key-bag>
       <name>Raw Public Keys for TLS Servers</name>
       <public-key>
@@ -169,7 +169,7 @@
       </public-key>
     </public-key-bag>
 
-    <!-- Raw Public Keys for FIXME... -->
+    <!-- Raw Public Keys for TLS Clients -->
     <public-key-bag>
       <name>Raw Public Keys for TLS Clients</name>
       <public-key>
