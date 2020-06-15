@@ -236,7 +236,7 @@ INSERT_TEXT_FROM_FILE(refs/ex-truststore-default-running.xml)
                 <artwork><![CDATA[
    name:         ietf-truststore
    namespace:    urn:ietf:params:xml:ns:yang:ietf-truststore
-   prefix:       ta
+   prefix:       ts
    reference:    RFC BBBB
 
 ]]></artwork>
@@ -358,6 +358,13 @@ INSERT_TEXT_FROM_FILE(refs/ex-truststore-default-running.xml)
               <t>Removed "algorithm" node from examples.</t>
               <t>Removed the no longer used statements supporting the old "ssh-public-key" and "raw-public-key" nodes.</t>
               <t>Added a "Note to Reviewers" note to first page.</t>
+            </list>
+          </t>
+        </section>
+        <section title="10 to 11">
+          <t>
+            <list style="symbols">
+              <t>Corrected module prefix registered in the IANA Considerations section.</t>
             </list>
           </t>
         </section>
