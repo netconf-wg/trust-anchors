@@ -12,7 +12,7 @@ module ietf-truststore {
   import ietf-crypto-types {
     prefix ct;
     reference
-      "RFC AAAA: Common YANG Data Types for Cryptography";
+      "RFC AAAA: YANG Data Types and Groupings for Cryptography";
   }
 
   organization
@@ -21,8 +21,7 @@ module ietf-truststore {
   contact
     "WG Web  : <http://datatracker.ietf.org/wg/netconf/>
      WG List : <mailto:netconf@ietf.org>
-     Author  : Kent Watsen <kent+ietf@watsen.net>
-     Author  : Henk Birkholz <henk.birkholz@sit.fraunhofer.de>";
+     Author  : Kent Watsen <kent+ietf@watsen.net>";
 
   description
     "This module defines a Truststore to centralize management
@@ -154,7 +153,22 @@ module ietf-truststore {
           description
             "A container for locally configured trust anchor
              certificates.";
-          uses ct:trust-anchor-certs-grouping;
+          list certificate {
+            key "name";
+            min-elements 1;
+            description
+              "A trust anchor certificate.";
+            leaf name {
+              type string;
+              description
+                "An arbitrary name for this certificate.";
+            }
+            uses ct:trust-anchor-cert-grouping {
+              refine "cert" {
+                mandatory true;
+              }
+            }
+          }
         }
       }
       case truststore {

@@ -1,0 +1,58 @@
+<truststore-usage
+  xmlns="http://example.com/ns/example-truststore-usage"
+  xmlns:ct="urn:ietf:params:xml:ns:yang:ietf-crypto-types">
+
+  <!-- The following two equivalent examples illustrate   -->
+  <!-- the "local-or-truststore-certs-grouping" grouping: -->
+
+  <cert>
+    <name>example 1a</name>
+    <truststore-reference>trusted-client-ca-certs</truststore-reference>
+  </cert>
+
+  <cert>
+    <name>example 1b</name>
+    <local-definition>
+      <name>my-trusted-client-ca-certs</name>
+      <certificate>
+        <name>Client Identity Issuer #1</name>
+        <cert>base64encodedvalue==</cert>
+      </certificate>
+      <certificate>
+        <name>Client Identity Issuer #2</name>
+        <cert>base64encodedvalue==</cert>
+      </certificate>
+    </local-definition>
+  </cert>
+
+
+  <!-- The following two equivalent examples illustrate the -->
+  <!-- "local-or-truststore-public-keys-grouping" grouping: -->
+
+  <public-key>
+    <name>example 2a</name>
+    <truststore-reference>trusted-ssh-public-keys</truststore-reference>
+  </public-key>
+
+  <public-key>
+    <name>example 2b</name>
+    <local-definition>
+      <name>trusted-ssh-public-keys</name>
+      <public-key>
+        <name>corp-fw1</name>
+        <public-key-format>
+          ct:ssh-public-key-format
+        </public-key-format>
+        <public-key>base64encodedvalue==</public-key>
+      </public-key>
+      <public-key>
+        <name>corp-fw2</name>
+        <public-key-format>
+          ct:ssh-public-key-format
+        </public-key-format>
+        <public-key>base64encodedvalue==</public-key>
+      </public-key>
+    </local-definition>
+  </public-key>
+
+</truststore-usage>

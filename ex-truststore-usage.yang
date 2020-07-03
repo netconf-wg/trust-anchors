@@ -1,0 +1,60 @@
+module ex-truststore-usage {
+  yang-version 1.1;
+
+  namespace "http://example.com/ns/example-truststore-usage";
+  prefix "etu";
+
+  import ietf-truststore {
+    prefix ts;
+    reference 
+      "RFC BBBB: A YANG Data Model for a Truststore";
+  }
+
+  organization
+   "Example Corporation";
+
+  contact
+   "Author: YANG Designer <mailto:yang.designer@example.com>";
+
+  description
+   "This module illustrates notable groupings defined in
+    the 'ietf-truststore' module.";
+
+  revision "YYYY-MM-DD" {
+    description
+     "Initial version";
+    reference
+      "RFC BBBB: A YANG Data Model for a Truststore";
+  }
+
+  container truststore-usage {
+    description
+      "An illustration of the various truststore groupings.";
+
+    list cert {
+      key name;
+      leaf name {
+        type string;
+        description
+          "An arbitrary name for this cert.";
+      }
+      uses ts:local-or-truststore-certs-grouping;
+      description
+        "An cert that may be configured locally or be
+         a reference to a cert in the truststore.";
+    }
+
+    list public-key {
+      key name;
+      leaf name {
+        type string;
+        description
+          "An arbitrary name for this cert.";
+      }
+      uses ts:local-or-truststore-public-keys-grouping;
+      description
+        "An public key that may be configured locally or be
+         a reference to a public key in the truststore.";
+    }
+  }
+}

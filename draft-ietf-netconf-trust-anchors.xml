@@ -102,29 +102,75 @@ INSERT_TEXT_FROM_FILE(../client-server-overview-snippet.xml,148)
         </section>
   
         <section title="Example Usage" anchor="examples">
-          <t>The following example illustrates trust anchors in &lt;intended&gt;.
-            Please see <xref target="built-ins"/> for an example illustrating
-            built-in values in &lt;operational&gt;.</t>
-          <t>
-            <figure>
-              <artwork><![CDATA[
+
+          <t>The examples in this section are encoded using XML, such as might
+            be the case when using the NETCONF protocol. Other encodings MAY
+            be used, such as JSON when using the RESTCONF protocol.</t>
+
+          <section title="A Truststore Instance" anchor="ts-inst">
+            <t>The following example illustrates trust anchors in &lt;intended&gt;.
+              Please see <xref target="built-ins"/> for an example illustrating
+              built-in values in &lt;operational&gt;.</t>
+            <t>
+              <figure>
+                <artwork><![CDATA[
   INSERT_TEXT_FROM_FILE(refs/ex-truststore.xml)
   ]]></artwork>
-            </figure>
-          </t>
+              </figure>
+            </t>
+          </section>
   
-          <t>The following example illustrates the "certificate-expiration"
-          notification in use with the NETCONF protocol.</t>
-          <t>
-            <figure>
-              <artwork><![CDATA[
+          <section title="A Certificate Expiration Notification">
+            <t>The following example illustrates the "certificate-expiration"
+              notification for a certificate configured in the truststore.</t>
+            <t>
+              <figure>
+                <artwork><![CDATA[
   INSERT_TEXT_FROM_FILE(refs/ex-notification-ce.xml)
   ]]></artwork>
-            </figure>
-          </t>
-  
+              </figure>
+            </t>
+          </section>
+
+          <section title="The &quot;Local or Truststore&quot; Groupings">
+            <t>This section illustrates the various "local-or-truststore" groupings
+              defined in the "ietf-truststore" module.</t>
+            <t>The following non-normative module is defined in illustrate these
+              groupings:</t>
+            <t>
+              <figure>
+                <artwork><![CDATA[
+INSERT_TEXT_FROM_FILE(ex-truststore-usage.yang)
+]]></artwork>
+              </figure>
+            </t>
+            <t>The tree diagram <xref target="RFC8340"/> for this example
+                module follows:</t>
+            <t>
+              <figure>
+                <artwork><![CDATA[
+INSERT_TEXT_FROM_FILE(refs/ex-truststore-usage-tree.txt)
+]]></artwork>
+              </figure>
+            </t>
+            <t>The following example provides two equivalent instances of
+              each grouping, the first being a reference to a truststore
+              and the second being locally-defined.  The instance having
+              a reference to a truststore is consistent with the truststore
+              defined in <xref target="ts-inst"/>.  The two instances are
+              equivalent, as the locally-defined instance example contains
+              the same values defined by the truststore instance referenced
+              by its sibling example.</t>
+            <t>
+              <figure>
+                <artwork><![CDATA[
+INSERT_TEXT_FROM_FILE(refs/ex-truststore-usage.xml)
+]]></artwork>
+              </figure>
+            </t>
+          </section>
         </section>
-  
+
         <section title="YANG Module" anchor="yang-module">
           <t>This YANG module imports modules from <xref target="RFC8341"/>
           and <xref target="I-D.ietf-netconf-crypto-types"/>.</t>
@@ -161,14 +207,24 @@ INSERT_TEXT_FROM_FILE(refs/ex-truststore-default-operational.xml)
           </figure>
         </t>
         <t>In order for the built-in trust anchors to be referenced by configuration,
-          the referenced nodes MUST first be copied into &lt;running&gt;.  They SHOULD
-          be copied into &lt;running&gt; using the same "key" values, so that the
-          system can bind the references to the built-in entries.  Only the referenced
-          nodes need to be copied.  When using the same key values as in &lt;operational&gt;
-          no new values can be added and no existing values can be changed; that which
-          is in &lt;running&gt; can only be a subset of that which is in &lt;operational&gt;.</t>  
-        <t>For instance, the following example illustrates how a single built-in public
-          CA certificate from the previous example has been propagated to &lt;running&gt;:</t>
+          the referenced certificates MUST first be copied into &lt;running&gt;.  The
+          certificates SHOULD be copied into &lt;running&gt; using the same "key"
+          values, so that the server can bind them to the built-in entries.</t>
+        <t>Built-in certificates MAY be copied into other parts of the configuration
+          but, by doing so, they lose their association to the built-in entries and
+          any assurances afforded by knowing they are the built-in certificates.</t>
+        <t>Only the referenced certificates need to be copied; that is, the certificates
+          in &lt;running&gt; MAY be a subset of the built-in certificates define in
+          &lt;operational&gt;.  No certificates may be added or changed; that is,
+          the certificates in &lt;running&gt; MUST be a subset (which includes the
+          whole of the set) of the built-in certificates define in &lt;operational&gt;.</t>
+        <t>A server MUST reject attempts to modify any aspect of built-in trust anchors,
+          both the certificates themselves and the bags that contain them.  That
+          these certificates are "configured" in &lt;running&gt; is an illusion,
+          as they are strictly a read-only subset of that which must already exist
+          in &lt;operational&gt;.</t>
+        <t>The following example illustrates how a single built-in public CA
+          certificate from the previous example has been propagated to &lt;running&gt;:</t>
         <t>
           <figure>
             <artwork><![CDATA[
@@ -365,6 +421,9 @@ INSERT_TEXT_FROM_FILE(refs/ex-truststore-default-running.xml)
           <t>
             <list style="symbols">
               <t>Corrected module prefix registered in the IANA Considerations section.</t>
+              <t>Modified 'local-or-truststore-certs-grouping' to use a list (not a leaf-list).</t>
+              <t>Added new example section "The Local or Truststore Groupings".</t>
+              <t>Clarified expected behavior for "built-in" certificates in &lt;operational&gt;</t>
             </list>
           </t>
         </section>
@@ -379,12 +438,13 @@ INSERT_TEXT_FROM_FILE(refs/ex-truststore-default-running.xml)
           thru Henk's initiative that the WG was able to come to that result.</t>
 
         <t>The authors additionally thank the following for helping give shape
-          to this work (ordered by last name):
-          Martin Bjorklund,
-          Nick Hancock,
+          to this work (ordered by first name):
           Balázs Kovács,
           Eric Voit,
-          and Liang Xia.
+          Juergen Schoenwaelder,
+          Liang Xia,
+          Martin Bjorklund,
+          and Nick Hancock.
         </t>
       </section>
 
