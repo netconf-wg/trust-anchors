@@ -146,6 +146,7 @@ module ietf-truststore {
        configured locally, within the using data model, or be a
        reference to a certificate bag stored in the Truststore.";
     choice local-or-truststore {
+      nacm:default-deny-write;
       mandatory true;
       case local {
         if-feature "local-definitions-supported";
@@ -164,7 +165,7 @@ module ietf-truststore {
                 "An arbitrary name for this certificate.";
             }
             uses ct:trust-anchor-cert-grouping {
-              refine "cert" {
+              refine "cert-data" {
                 mandatory true;
               }
             }
@@ -194,6 +195,7 @@ module ietf-truststore {
        configured locally, within the using data model, or be a
        reference to a public key bag stored in the Truststore.";
     choice local-or-truststore {
+      nacm:default-deny-write;
       mandatory true;
       case local {
         if-feature "local-definitions-supported";
@@ -236,6 +238,7 @@ module ietf-truststore {
        into the local-or-truststore 'choice' statements to supply
        leafrefs to the model-specific location.";
     container certificate-bags {
+      nacm:default-deny-write;
       if-feature "certificates";
       presence
         "Indicates that certificate bags have been configured.";
@@ -272,7 +275,7 @@ module ietf-truststore {
               "An arbitrary name for this certificate.";
           }
           uses ct:trust-anchor-cert-grouping {
-            refine "cert" {
+            refine "cert-data" {
               mandatory true;
             }
           }
@@ -280,6 +283,7 @@ module ietf-truststore {
       }
     }
     container public-key-bags {
+      nacm:default-deny-write;
       if-feature "public-keys";
       presence
         "Indicates that public keys have been configured.";

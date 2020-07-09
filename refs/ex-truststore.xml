@@ -16,15 +16,15 @@
       </description>
       <certificate>
         <name>Server Cert Issuer #1</name>
-        <cert>base64encodedvalue==</cert>
+        <cert-data>base64encodedvalue==</cert-data>
       </certificate>
       <certificate>
         <name>Server Cert Issuer #2</name>
-        <cert>base64encodedvalue==</cert>
+        <cert-data>base64encodedvalue==</cert-data>
       </certificate>
     </certificate-bag>
   
-    <!-- Pinned End Entity Certs for Authenticating Servers -->
+    <!-- End Entity Certs for Authenticating Servers -->
     <certificate-bag>
       <name>trusted-server-ee-certs</name>
       <description>
@@ -35,11 +35,11 @@
       </description>
       <certificate>
         <name>My Application #1</name>
-        <cert>base64encodedvalue==</cert>
+        <cert-data>base64encodedvalue==</cert-data>
       </certificate>
       <certificate>
         <name>My Application #2</name>
-        <cert>base64encodedvalue==</cert>
+        <cert-data>base64encodedvalue==</cert-data>
       </certificate>
     </certificate-bag>
   
@@ -54,15 +54,15 @@
       </description>
       <certificate>
         <name>Client Identity Issuer #1</name>
-        <cert>base64encodedvalue==</cert>
+        <cert-data>base64encodedvalue==</cert-data>
       </certificate>
       <certificate>
         <name>Client Identity Issuer #2</name>
-        <cert>base64encodedvalue==</cert>
+        <cert-data>base64encodedvalue==</cert-data>
       </certificate>
     </certificate-bag>
   
-    <!-- Pinned End Entity Certs for Authenticating Clients -->
+    <!-- Entity Certs for Authenticating Clients -->
     <certificate-bag>
       <name>trusted-client-ee-certs</name>
       <description>
@@ -73,11 +73,11 @@
       </description>
       <certificate>
         <name>George Jetson</name>
-        <cert>base64encodedvalue==</cert>
+        <cert-data>base64encodedvalue==</cert-data>
       </certificate>
       <certificate>
         <name>Fred Flintstone</name>
-        <cert>base64encodedvalue==</cert>
+        <cert-data>base64encodedvalue==</cert-data>
       </certificate>
     </certificate-bag>
   </certificate-bags>
@@ -98,58 +98,40 @@
       </description>
       <public-key>
         <name>corp-fw1</name>
-        <public-key-format>ct:ssh-public-key-format</public-key-format>
+        <public-key-format>
+          ct:ssh-public-key-format
+        </public-key-format>
         <public-key>base64encodedvalue==</public-key>
       </public-key>
       <public-key>
         <name>corp-fw2</name>
-        <public-key-format>ct:ssh-public-key-format</public-key-format>
+        <public-key-format>
+          ct:ssh-public-key-format
+        </public-key-format>
         <public-key>base64encodedvalue==</public-key>
       </public-key>
     </public-key-bag>
 
-    <!-- SSH Public Keys for Authenticating User A -->
+    <!-- SSH Public Keys for Authenticating Application A -->
     <public-key-bag>
-      <name>SSH Public Keys for User A</name>
+      <name>SSH Public Keys for Application A</name>
       <description>
-        SSH public keys used to authenticate a user A's SSH public
-        keys.  An SSH public key is authenticated if it is an exact
-        match to one of these public keys.
-
-        This list of public keys is analogous to OpenSSH's
-        "~A/.ssh/authorized_keys" file.
+        SSH public keys used to authenticate application A's SSH
+        public keys.  An SSH public key is authenticated if it
+        is an exact match to one of these public keys.
       </description>
       <public-key>
-        <name>From Source #1</name>
-        <public-key-format>ct:ssh-public-key-format</public-key-format>
+        <name>Application Instance #1</name>
+        <public-key-format>
+          ct:ssh-public-key-format
+        </public-key-format>
         <public-key>base64encodedvalue==</public-key>
       </public-key>
       <public-key>
-        <name>From Source #2</name>
-        <public-key-format>ct:ssh-public-key-format</public-key-format>
-        <public-key>base64encodedvalue==</public-key>
-      </public-key>
-    </public-key-bag>
-
-    <!-- SSH Public Keys for Authenticating User B -->
-    <public-key-bag>
-      <name>SSH Public Keys for User B</name>
-      <description>
-        SSH public keys used to authenticate a user B's SSH public
-        keys.  An SSH public key is authenticated if it is an exact
-        match to one of these public keys.
-
-        This list of public keys is analogous to OpenSSH's
-        "~B/.ssh/authorized_keys" file.
-      </description>
-      <public-key>
-        <name>From Source #1</name>
-        <public-key-format>ct:ssh-public-key-format</public-key-format>
-        <public-key>base64encodedvalue==</public-key>
-      </public-key>
-      <public-key>
-        <name>From Source #2</name>
-        <public-key-format>ct:ssh-public-key-format</public-key-format>
+        <name>Application Instance #2</name>
+        <public-key-format>
+          ct:ssh-public-key-format
+        </public-key-format>
         <public-key>base64encodedvalue==</public-key>
       </public-key>
     </public-key-bag>
@@ -159,12 +141,15 @@
       <name>Raw Public Keys for TLS Servers</name>
       <public-key>
         <name>Raw Public Key #1</name>
-        <public-key-format>ct:subject-public-key-info-format</public-key-format>
+        <public-key-format>
+          ct:subject-public-key-info-format</public-key-format>
         <public-key>base64encodedvalue==</public-key>
       </public-key>
       <public-key>
         <name>Raw Public Key #2</name>
-        <public-key-format>ct:subject-public-key-info-format</public-key-format>
+        <public-key-format>
+          ct:subject-public-key-info-format
+        </public-key-format>
         <public-key>base64encodedvalue==</public-key>
       </public-key>
     </public-key-bag>
@@ -174,12 +159,16 @@
       <name>Raw Public Keys for TLS Clients</name>
       <public-key>
         <name>Raw Public Key #1</name>
-        <public-key-format>ct:subject-public-key-info-format</public-key-format>
+        <public-key-format>
+          ct:subject-public-key-info-format
+        </public-key-format>
         <public-key>base64encodedvalue==</public-key>
       </public-key>
       <public-key>
         <name>Raw Public Key #2</name>
-        <public-key-format>ct:subject-public-key-info-format</public-key-format>
+        <public-key-format>
+          ct:subject-public-key-info-format
+      </public-key-format>
         <public-key>base64encodedvalue==</public-key>
       </public-key>
     </public-key-bag>

@@ -14,7 +14,7 @@
       </description>
       <certificate>
         <name>Manufacturer Root CA Cert</name>
-        <cert>base64encodedvalue==</cert>
+        <cert-data>base64encodedvalue==</cert-data>
       </certificate>
     </certificate-bag>
 
@@ -27,15 +27,15 @@
       </description>
       <certificate>
         <name>Public Root CA Cert 1</name>
-        <cert>base64encodedvalue==</cert>
+        <cert-data>base64encodedvalue==</cert-data>
       </certificate>
       <certificate>
         <name>Public Root CA Cert 2</name>
-        <cert>base64encodedvalue==</cert>
+        <cert-data>base64encodedvalue==</cert-data>
       </certificate>
       <certificate>
         <name>Public Root CA Cert 3</name>
-        <cert>base64encodedvalue==</cert>
+        <cert-data>base64encodedvalue==</cert-data>
       </certificate>
     </certificate-bag>
 

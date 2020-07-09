@@ -4,7 +4,7 @@
   <truststore xmlns="urn:ietf:params:xml:ns:yang:ietf-truststore">
     <certificate-bags>
       <certificate-bag>
-        <name>explicitly-trusted-client-certs</name>
+        <name>trusted-client-ee-certs</name>
         <certificate>
           <name>George Jetson</name>
           <certificate-expiration>

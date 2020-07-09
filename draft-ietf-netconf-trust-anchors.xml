@@ -15,7 +15,9 @@
 <?rfc-ext include-index="no" ?>
 <!--<?rfc strict="no"?> -->
 
-<rfc category="std"
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude"
+     category="std"
+     consensus="true"
      ipr="trust200902"
      docName="draft-ietf-netconf-trust-anchors-latest" >
     <front>
@@ -54,11 +56,10 @@
         </t>
         <t>The following Appendix section is to be removed prior to publication:
           <list  style="symbols">
-            <t>Appendix A.  Change Log</t>
+            <t><xref target="change-log"/>.  Change Log</t>
           </list>
         </t>
       </note>
-INSERT_TEXT_FROM_FILE(../client-server-overview-snippet.xml,148)
     </front>
     <middle>
       <section title="Introduction">
@@ -67,38 +68,196 @@ INSERT_TEXT_FROM_FILE(../client-server-overview-snippet.xml,148)
           globally-accessible bags of certificates and public keys that can be referenced by
           other data models for trust.</t>
 
-        <t>This document in compliant with Network Management Datastore Architecture
-          (NMDA) <xref target="RFC8342"/>.  For instance, trust anchors installed
-          during manufacturing (e.g., for trusted well-known services), are expected
-          to appear in &lt;operational&gt; (see <xref target="built-ins"/>).</t>
+INSERT_TEXT_FROM_FILE(../common-intro-snippet.xml,150)
 
-        <section title="Requirements Language" anchor="requirements-language">
-          <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL
-          NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED",
-          "MAY", and "OPTIONAL" in this document are to be interpreted as
-          described in BCP 14 <xref target="RFC2119"/> <xref target="RFC8174"/>
-          when, and only when, they appear in all capitals, as shown here.</t>
-        </section>
-
-        <section title="Tree Diagram Notation">
-          <t>Tree diagrams used in this document follow the notation
-          defined in <xref target="RFC8340"/>.</t>
+        <section title="Adherence to the NMDA">
+          <t>This document in compliant with the Network Management Datastore Architecture
+            (NMDA) <xref target="RFC8342"/>.  For instance, trust anchors installed
+            during manufacturing (e.g., for trusted well-known services), are expected
+            to appear in &lt;operational&gt; (see <xref target="built-ins"/>).</t>
         </section>
 
       </section>
 
-      <section title="The Trust Anchors Model">
-  
-        <section title="Tree Diagram">
-          <t>The following tree diagram provides an overview of the
-          "ietf-truststore" module.</t>
-          <t>
-            <figure>
-              <artwork><![CDATA[
-  INSERT_TEXT_FROM_FILE(refs/ietf-truststore-tree.txt)
-  ]]></artwork>
-            </figure>
-          </t>
+      <section title="The &quot;ietf-truststore&quot; Module">
+
+       <t>This section defines a YANG 1.1 <xref target="RFC7950"/> module
+         that defines a "truststore" and groupings supporting downstream
+         modules to reference the truststore or have locally-defined definitions.</t>
+
+       <section title="Data Model Overview">
+
+          <section title="Features" anchor="features" toc="exclude">
+            <t>The following diagram lists all the "feature" statements
+              defined in the "ietf-truststore" module:</t>
+            <t>
+              <figure>
+                <artwork><![CDATA[
+Features:
+  +-- truststore-supported
+  +-- local-definitions-supported
+  +-- certificates
+  +-- public-keys
+]]></artwork>
+              </figure>
+            </t>
+          </section>
+
+          <section title="Typedefs" anchor="typedefs" toc="exclude">
+            <t>The following diagram lists the "typedef" statements defined in
+              the "ietf-truststore" module:</t>
+            <t>
+              <figure>
+               <artwork><![CDATA[
+Typedefs:
+  leafref
+    +-- certificate-bag-ref
+    +-- certificate-ref
+    +-- public-key-bag-ref
+    +-- public-key-ref
+]]></artwork>
+              </figure>
+            </t>
+            <t>Comments:</t>
+            <ul>
+              <li>All of the typedefs defined in the "ietf-truststore" module
+                extend the base "leafref" type defined in <xref target="RFC7950"/>.</li>
+              <li>The leafrefs refer to certificates, public keys, and bags.
+                These typedefs are provided primarily as an aid to downstream
+                modules that import the "ietf-truststore" module.</li>
+            </ul>
+          </section>
+
+          <section title="Groupings" toc="exclude">
+            <t>The following diagram lists all the "grouping" statements
+              defined in the "ietf-truststore" module:</t>
+            <t>
+              <figure>
+                <artwork><![CDATA[
+Groupings:
+  +-- local-or-truststore-certs-grouping
+  +-- local-or-truststore-public-keys-grouping
+  +-- truststore-grouping
+]]></artwork>
+              </figure>
+            </t>
+            <t>Each of these groupings are presented in the following subsections.</t>
+
+            <section title="The &quot;local-or-truststore-certs-grouping&quot; Grouping" anchor="local-or-truststore-certs-grouping">
+              <t>The following tree diagram <xref target="RFC8340"/> illustrates the
+                "local-or-truststore-certs-grouping" grouping:</t>
+              <t>
+                <figure>
+                 <artwork><![CDATA[
+INSERT_TEXT_FROM_FILE(refs/tree-local-or-truststore-certs-grouping.no-expand.txt)
+]]></artwork>
+                </figure>
+              </t>
+              <t>Comments:</t>
+              <ul>
+                <li>The "local-or-truststore-certs-grouping" grouping is provided
+                  soley as convenience to downstream modules that wish to offer
+                  an option as to if a bag of certificates can be defined locally
+                  or as a reference to a bag in the truststore.</li>
+                <li>A "choice" statement is used to expose the various options.
+                  Each option is enabled by a "feature" statement.  Additional
+                  "case" statements MAY be augmented in if, e.g., there is a
+                  need to reference a bag in an alternate location.</li>
+                <li>For the "local-definition" option, the "certificate" node
+                  uses the "trust-anchor-cert-grouping" grouping discussed in 
+                  <relref section="2.1.3.6" target="I-D.ietf-netconf-crypto-types"/>.</li>
+                <li>For the "truststore" option, the "truststore-reference" is an
+                  instance of the "certificate-bag-ref" discussed in <xref target="typedefs"/>.</li>
+              </ul>
+            </section>
+
+            <section title="The &quot;local-or-truststore-public-keys-grouping&quot; Grouping" anchor="local-or-truststore-public-keys-grouping">
+              <t>The following tree diagram <xref target="RFC8340"/> illustrates the
+                "local-or-truststore-public-keys-grouping" grouping:</t>
+              <t>
+                <figure>
+                 <artwork><![CDATA[
+INSERT_TEXT_FROM_FILE(refs/tree-local-or-truststore-public-keys-grouping.no-expand.txt)
+]]></artwork>
+                </figure>
+              </t>
+              <t>Comments:</t>
+              <ul>
+                <li>The "local-or-truststore-public-keys-grouping" grouping is provided
+                  soley as convenience to downstream modules that wish to offer
+                  an option as to if a bag of public keys can be defined locally
+                  or as a reference to a bag in the truststore.</li>
+                <li>A "choice" statement is used to expose the various options.
+                  Each option is enabled by a "feature" statement.  Additional
+                  "case" statements MAY be augmented in if, e.g., there is a
+                  need to reference a bag in an alternate location.</li>
+                <li>For the "local-definition" option, the "public-key" node uses the
+                  "public-key-grouping" grouping discussed in <relref section="2.1.3.3"
+                  target="I-D.ietf-netconf-crypto-types"/>.</li>
+                <li>For the "truststore" option, the "truststore-reference" is an
+                  instance of the "certificate-bag-ref" discussed in <xref target="typedefs"/>.</li>
+              </ul>
+            </section>
+
+            <section title="The &quot;truststore-grouping&quot; Grouping" anchor="truststore-grouping">
+              <t>The following tree diagram <xref target="RFC8340"/> illustrates the
+                "truststore-grouping" grouping:</t>
+              <t>
+                <figure>
+                 <artwork><![CDATA[
+INSERT_TEXT_FROM_FILE(refs/tree-truststore-grouping.no-expand.txt)
+]]></artwork>
+                </figure>
+              </t>
+              <t>Comments:</t>
+              <ul>
+                <li>The "truststore-grouping" grouping is defines a truststore instance
+                  as being composed of certificates and/or public keys, both of which
+                  are enabled by "feature" statements.  The stucture supporting
+                  certificates and public keys is essentially the same, having an
+                  outer list of "bags" containing in inner list of objects
+                  (certificates or public keys).  The bags enable trust anchors
+                  serving a common purpose to be grouped referenced together.</li>
+                <li>For certificates, each certificate is defined by the
+                  "trust-anchor-cert-grouping" grouping <relref section="2.1.3.6"
+                  target="I-D.ietf-netconf-crypto-types"/>.  Thus the "cert-data"
+                  node is a CMS structure that can be composed of a chain of one or
+                  more certificates.  Additionally, the "certificate-expiration"
+                  notification enables the server to alert clients when certificates
+                  are nearing or have already expired.</li>
+                <li>For public keys, each public key is defined by the
+                  "public-key-grouping" grouping <relref section="2.1.3.3"
+                  target="I-D.ietf-netconf-crypto-types"/>.  Thus the "public-key"
+                  node can be one of any number of structures specified by the
+                  "public-key-format" identity node.</li>
+              </ul>
+            </section>
+          </section>
+
+          <section title="Protocol-accessible Nodes" anchor="proto-access-nodes" toc="exclude">
+            <t>The following diagram lists all the protocol-accessible nodes
+              defined in the "ietf-truststore" module:</t>
+            <t>
+              <figure>
+                <artwork><![CDATA[
+INSERT_TEXT_FROM_FILE(refs/ietf-truststore-tree.txt)
+]]></artwork>
+              </figure>
+            </t>
+            <t>Comments:</t>
+            <ul>
+              <li>Protocol-accessible nodes are those nodes that are accessible
+                when the module is "implemented", as described in <relref
+                section="5.6.5" target="RFC7950"/>.</li>
+              <li>For the "ietf-truststore" module, the protcol-accessible nodes
+                are an instance of the "truststore-grouping" discussed in
+                <xref target="truststore-grouping"/> grouping.</li>
+              <li>The reason for why "truststore-grouping" exists separate from
+                the protocol-accessible nodes definition is so as to enable
+                instances of the truststore to be instantiated in other
+                locations, as may be needed or desired by some modules.</li>
+            </ul>
+          </section>
         </section>
   
         <section title="Example Usage" anchor="examples">
@@ -107,10 +266,33 @@ INSERT_TEXT_FROM_FILE(../client-server-overview-snippet.xml,148)
             be the case when using the NETCONF protocol. Other encodings MAY
             be used, such as JSON when using the RESTCONF protocol.</t>
 
-          <section title="A Truststore Instance" anchor="ts-inst">
-            <t>The following example illustrates trust anchors in &lt;intended&gt;.
+          <section title="A Truststore Instance" anchor="ts-inst" toc="exclude">
+            <t>This section presents an example illustrating trust anchors
+              in &lt;intended&gt;, as per <xref target="proto-access-nodes"/>.
               Please see <xref target="built-ins"/> for an example illustrating
               built-in values in &lt;operational&gt;.</t>
+            <t>The example contained in this secton defines eight bags of trust
+              anchors.  There are four certificate-based bags and four public
+              key based bags.  The following diagram provides an overview of
+              contents in the example:</t>
+            <t>
+              <figure>
+                <artwork><![CDATA[
+Certificate Bags
+  +-- CA certificates for authenticating a set a remote servers
+  +-- EE certificates for authenticating a set a remote servers
+  +-- CA certificates for authenticating a set a remote clients
+  +-- EE certificates for authenticating a set a remote clients
+                  
+Public Key Bags
+  +-- SSH keys to authenticate a set of remote SSH server
+  +-- SSH keys to authenticate a set of remote SSH clients
+  +-- Raw public keys to authenticate a set of remote SSH server
+  +-- Raw public keys to authenticate a set of remote SSH clients
+]]></artwork>
+              </figure>
+            </t>
+            <t>Following is the full example:</t>
             <t>
               <figure>
                 <artwork><![CDATA[
@@ -120,27 +302,33 @@ INSERT_TEXT_FROM_FILE(../client-server-overview-snippet.xml,148)
             </t>
           </section>
   
-          <section title="A Certificate Expiration Notification">
+          <section title="A Certificate Expiration Notification" toc="exclude">
             <t>The following example illustrates the "certificate-expiration"
-              notification for a certificate configured in the truststore.</t>
+              notification (per <relref section="2.1.3.4" target="I-D.ietf-netconf-crypto-types"/>)
+              for a certificate configured in the truststore in <xref target="ts-inst"/>.</t>
             <t>
               <figure>
                 <artwork><![CDATA[
-  INSERT_TEXT_FROM_FILE(refs/ex-notification-ce.xml)
-  ]]></artwork>
+INSERT_TEXT_FROM_FILE(refs/ex-notification-ce.xml)
+]]></artwork>
               </figure>
             </t>
           </section>
 
-          <section title="The &quot;Local or Truststore&quot; Groupings">
+          <section title="The &quot;Local or Truststore&quot; Groupings" toc="exclude">
             <t>This section illustrates the various "local-or-truststore" groupings
-              defined in the "ietf-truststore" module.</t>
-            <t>The following non-normative module is defined in illustrate these
+              defined in the "ietf-truststore" module, specifically the
+              "local-or-truststore-certs-grouping"
+              (<xref target="local-or-truststore-certs-grouping"/>) and
+              "local-or-truststore-public-keys-grouping"
+              (<xref target="local-or-truststore-public-keys-grouping"/>),
+              groupings.</t>
+            <t>The following non-normative module is defined to illustrate these
               groupings:</t>
             <t>
               <figure>
                 <artwork><![CDATA[
-INSERT_TEXT_FROM_FILE(ex-truststore-usage.yang)
+INSERT_TEXT_FROM_FILE(ex-truststore-usage@YYYY-MM-DD.yang)
 ]]></artwork>
               </figure>
             </t>
@@ -236,34 +424,43 @@ INSERT_TEXT_FROM_FILE(refs/ex-truststore-default-running.xml)
 
       <section title="Security Considerations">
 
-        <t>The YANG module defined in this document is designed to be accessed via YANG
-        based management protocols, such as NETCONF <xref target="RFC6241"/> and
-        RESTCONF <xref target="RFC8040"/>.  Both of these protocols have mandatory-to-implement
-        secure transport layers (e.g., SSH, TLS) with mutual authentication.</t>
- 
-        <t>The NETCONF access control model (NACM) <xref target="RFC8341"/> provides the means
-        to restrict access for particular users to a pre-configured subset of all available
-        protocol operations and content.</t>
- 
-        <t>There are a number of data nodes defined in this YANG module that are 
-        writable/creatable/deletable (i.e., config true, which is the default). These data
-        nodes may be considered sensitive or vulnerable in some network environments. Write
-        operations (e.g., edit-config) to these data nodes without proper protection can
-        have a negative effect on network operations. These are the subtrees and data nodes
-        and their sensitivity/vulnerability:
-          <list style="hanging" hangIndent="6">
-            <t hangText="   /:">The entire data tree defined by this module is sensitive to
-              write operations.  For instance, the addition or removal of any trust anchor
-              may dramatically alter the implemented security policy.  For this reason, the
-              NACM extension "default-deny-write" has been set for the entire data tree.</t>
-          </list>
-        </t>
- 
-        <t>None of the readable data nodes in this YANG module are considered sensitive
-        or vulnerable in network environments.</t>
- 
-        <t>This module does not define any RPCs, actions, or notifications, and thus the
-        security consideration for such is not provided here.</t>
+        <section title="Data at Rest">
+          <t>The YANG module defined in this document defines a mechanism called a
+            "keystore" that, by its name, suggests that it will protect its
+            contents from unauthorized disclosure and modification.</t>
+          <t>Security controls for the API (i.e., data in motion) are
+            discussed in <xref target="sec-mod"/>, but controls for the
+            data at rest cannot be specified by the YANG module.</t>
+          <t>In order to satisfy the expectations of a "keystore", it
+            is RECOMMENDED that implementations ensure that the keystore
+            contents are encrypted when persisted to non-volatile memory.</t>
+        </section>
+
+        <section title="The &quot;ietf-truststore&quot; YANG Module" anchor="sec-mod">
+          <t>The YANG module defined in this document is designed to be accessed via YANG
+            based management protocols, such as NETCONF <xref target="RFC6241"/> and
+            RESTCONF <xref target="RFC8040"/>.  Both of these protocols have mandatory-to-implement
+            secure transport layers (e.g., SSH, TLS) with mutual authentication.</t>
+   
+          <t>The NETCONF access control model (NACM) <xref target="RFC8341"/> provides the means
+            to restrict access for particular users to a pre-configured subset of all available
+            protocol operations and content.</t>
+   
+          <t>None of the readable data nodes defined in this YANG module are considered sensitive
+            or vulnerable in network environments. The NACM "default-deny-all" extension
+            has not been set for any data nodes defined in this module.</t>
+   
+          <t>All of the writable data nodes defined by this module, both in the
+            "grouping" statements as well as the protocol-accessible "truststore"
+            instance, may be considered sensitive or vulnerable in some network
+            environments. For instance, any modification to a trust anchor or
+            reference to a trust anchor  may dramatically alter the implemented
+            security policy.  For this reason, the NACM extension "default-deny-write"
+            has been set for all data nodes defined in this module.</t>
+   
+          <t>This module does not define any RPCs, actions, or notifications, and thus the
+            security consideration for such is not provided here.</t>
+        </section>
       </section>
 
       <section title="IANA Considerations">
@@ -310,7 +507,7 @@ INSERT_TEXT_FROM_FILE(refs/ex-truststore-default-running.xml)
         <?rfc include="reference.RFC.7950.xml"?>
         <?rfc include="reference.RFC.8174.xml"?>
         <?rfc include="reference.RFC.8341.xml"?>
-        <?rfc include="reference.I-D.ietf-netconf-crypto-types"?>
+        <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-netconf-crypto-types.xml"/>
       </references>
       <references title="Informative References">
         <?rfc include="reference.RFC.3688.xml"?>
@@ -320,9 +517,17 @@ INSERT_TEXT_FROM_FILE(refs/ex-truststore-default-running.xml)
         <?rfc include="reference.RFC.8340.xml"?>
         <?rfc include="reference.RFC.8342.xml"?>
         <?rfc include="reference.RFC.8572.xml"?>
+        <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-netconf-trust-anchors.xml"/>
+        <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-netconf-keystore.xml"/>
+        <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-netconf-tcp-client-server.xml"/>
+        <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-netconf-ssh-client-server.xml"/>
+        <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-netconf-tls-client-server.xml"/>
+        <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-netconf-http-client-server.xml"/>
+        <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-netconf-netconf-client-server.xml"/>
+        <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-netconf-restconf-client-server.xml"/>
       </references>
 
-      <section title="Change Log">
+      <section title="Change Log" removeInRFC="true" anchor="change-log">
         <section title="00 to 01">
           <t>
             <list style="symbols">
@@ -424,6 +629,8 @@ INSERT_TEXT_FROM_FILE(refs/ex-truststore-default-running.xml)
               <t>Modified 'local-or-truststore-certs-grouping' to use a list (not a leaf-list).</t>
               <t>Added new example section "The Local or Truststore Groupings".</t>
               <t>Clarified expected behavior for "built-in" certificates in &lt;operational&gt;</t>
+              <t>Expanded "Data Model Overview section(s) [remove "wall" of tree diagrams].</t>
+              <t>Updated the Security Considerations section.</t>
             </list>
           </t>
         </section>
