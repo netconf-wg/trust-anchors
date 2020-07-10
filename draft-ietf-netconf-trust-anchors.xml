@@ -426,14 +426,15 @@ INSERT_TEXT_FROM_FILE(refs/ex-truststore-default-running.xml)
 
         <section title="Data at Rest">
           <t>The YANG module defined in this document defines a mechanism called a
-            "keystore" that, by its name, suggests that it will protect its
-            contents from unauthorized disclosure and modification.</t>
+            "truststore" that, by its name, suggests that it will protect its
+            contents from unauthorized modification.</t>
           <t>Security controls for the API (i.e., data in motion) are
             discussed in <xref target="sec-mod"/>, but controls for the
             data at rest cannot be specified by the YANG module.</t>
-          <t>In order to satisfy the expectations of a "keystore", it
-            is RECOMMENDED that implementations ensure that the keystore
-            contents are encrypted when persisted to non-volatile memory.</t>
+          <t>In order to satisfy the expectations of a "truststore", it
+            is RECOMMENDED that implementations ensure that the truststore
+            contents are signed when persisted to non-volatile memory, to
+            prevent unauthorized modifications from being made undetected.</t>
         </section>
 
         <section title="The &quot;ietf-truststore&quot; YANG Module" anchor="sec-mod">
@@ -464,7 +465,7 @@ INSERT_TEXT_FROM_FILE(refs/ex-truststore-default-running.xml)
       </section>
 
       <section title="IANA Considerations">
-        <section title="The IETF XML Registry">
+        <section title='The "IETF XML" Registry'>
           <t>This document registers one URI in the "ns" subregistry of
           the IETF XML Registry <xref target="RFC3688"/>.  Following the
           format in <xref target="RFC3688"/>, the following registration
@@ -479,7 +480,7 @@ INSERT_TEXT_FROM_FILE(refs/ex-truststore-default-running.xml)
             </figure>
           </t>
         </section>
-        <section title="The YANG Module Names Registry">
+        <section title='The "YANG Module Names" Registry'>
           <t>This document registers one YANG module in the
           YANG Module Names registry <xref target="RFC6020"/>.
           Following the format in <xref target="RFC6020"/>, the
@@ -631,6 +632,13 @@ INSERT_TEXT_FROM_FILE(refs/ex-truststore-default-running.xml)
               <t>Clarified expected behavior for "built-in" certificates in &lt;operational&gt;</t>
               <t>Expanded "Data Model Overview section(s) [remove "wall" of tree diagrams].</t>
               <t>Updated the Security Considerations section.</t>
+            </list>
+          </t>
+        </section>
+        <section title="11 to 12">
+          <t>
+            <list style="symbols">
+              <t>Fixed a copy/paste issue in the "Data at Rest" Security Considerations section.</t>
             </list>
           </t>
         </section>
