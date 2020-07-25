@@ -642,6 +642,14 @@ INSERT_TEXT_FROM_FILE(refs/ex-truststore-default-running.xml)
             </list>
           </t>
         </section>
+        <section title="12 to 13">
+          <t>
+            <list style="symbols">
+
+              <t>SUBMISSION PENDING!...</t>
+            </list>
+          </t>
+        </section>
       </section>
 
       <section title="Acknowledgements" numbered="no">
