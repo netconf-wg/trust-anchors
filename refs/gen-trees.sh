@@ -1,7 +1,11 @@
 echo "Generating tree diagrams..."
 
-pyang -p ../ -f tree --tree-line-length 69 ../ietf-truststore@*.yang > ietf-truststore-tree.txt
-pyang -p ../ -f tree --tree-line-length 69 ../ex-truststore-usage@*.yang > ex-truststore-usage-tree.txt
+pyang -p ../ -f tree --tree-line-length 69 --tree-print-groupings ../ietf-truststore@*.yang > ietf-truststore-tree.txt
+pyang -p ../ -f tree --tree-line-length 69 --tree-print-groupings --tree-no-expand-uses ../ietf-truststore@*.yang > ietf-truststore-tree-no-expand.txt
+
+pyang -p ../ -f tree --tree-line-length 69 --tree-print-groupings ../ex-truststore-usage@*.yang > ex-truststore-usage-tree.txt
+pyang -p ../ -f tree --tree-line-length 69 --tree-print-groupings --tree-no-expand-uses  ../ex-truststore-usage@*.yang > ex-truststore-usage-tree-no-expand.txt
+
 
 extract_grouping_with_params() {
   # $1 name of grouping

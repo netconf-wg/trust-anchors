@@ -58,7 +58,7 @@ $(next).xml: $(draft).xml
 	sed -e"s/YYYY-MM-DD/$(shell date +%Y-%m-%d)/" ../crypto-types/ietf-crypto-types.yang > ietf-crypto-types\@$(shell date +%Y-%m-%d).yang
 	cd refs && ./validate-all.sh && ./gen-trees.sh && cd ..
 	./.insert-figures.sh $@ > tmp && mv tmp $@
-	rm refs/*-tree.txt refs/tree-*.txt
+	rm refs/*-tree.txt refs/*-tree-*expand*.txt refs/tree-*.txt
 	xml2rfc --v2v3 $@
 
 .INTERMEDIATE: $(draft).xml
