@@ -6,7 +6,7 @@
   <certificate-bags>
 
     <certificate-bag or:origin="or:system">
-      <name>Built-In Manufacturer CA Certificates</name>
+      <name>Built-In Manufacturer Trust Anchor Certificates</name>
       <description>
         Certificates built into the device for authenticating
         manufacturer-signed objects, such as TLS server certificates,
@@ -19,7 +19,7 @@
     </certificate-bag>
 
     <certificate-bag or:origin="or:system">
-      <name>Built-In Public CA Certificates</name>
+      <name>Built-In Public Trust Anchor Certificates</name>
       <description>
         Certificates built into the device for authenticating
         certificates issued by public certificate authorities,

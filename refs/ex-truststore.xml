@@ -5,7 +5,7 @@
   <!-- A bag of Certificate Bags -->
   <certificate-bags>
 
-    <!-- CA Certs for Authenticating Servers Using Private PKIs -->
+    <!-- Trust Anchor Certs for Authenticating Servers -->
     <certificate-bag>
       <name>trusted-server-ca-certs</name>
       <description>
@@ -43,7 +43,7 @@
       </certificate>
     </certificate-bag>
   
-    <!-- CA Certs for Authenticating Clients -->
+    <!-- Trust Anchor Certs for Authenticating Clients -->
     <certificate-bag>
       <name>trusted-client-ca-certs</name>
       <description>
@@ -62,7 +62,7 @@
       </certificate>
     </certificate-bag>
   
-    <!-- Entity Certs for Authenticating Clients -->
+    <!-- End Entity Certs for Authenticating Clients -->
     <certificate-bag>
       <name>trusted-client-ee-certs</name>
       <description>

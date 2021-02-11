@@ -29,7 +29,7 @@ extract_grouping() {
 }
 
 extract_grouping local-or-truststore-certs-grouping
-extract_grouping local-or-truststore-public-keys-grouping {
+extract_grouping local-or-truststore-public-keys-grouping
 extract_grouping truststore-grouping
 
 

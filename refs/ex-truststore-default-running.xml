@@ -4,7 +4,7 @@
   <certificate-bags>
 
     <certificate-bag>
-      <name>Built-In Public CA Certificates</name>
+      <name>Built-In Public Trust Anchor Certificates</name>
       <description>
         Certificates built into the device for authenticating
         certificates issued by public certificate authorities,
