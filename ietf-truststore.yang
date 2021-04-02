@@ -100,8 +100,9 @@ module ietf-truststore {
 
   typedef certificate-ref {
     type leafref {
-      path "/ts:truststore/certificate-bags/certificate-bag" +
-           "[name = current()/../certificate-bag]/certificate/name";
+      path "/ts:truststore/ts:certificate-bags/ts:certificate-bag"
+           + "[ts:name = current()/../ts:certificate-bag]/"
+           + "ts:certificate/ts:name";
     }
     description
       "This typedef defines a reference to a specific certificate
@@ -123,9 +124,9 @@ module ietf-truststore {
 
   typedef public-key-ref {
     type leafref {
-      path "/ts:truststore/public-key-bags/public-key-bag" +
-           "[name = current()/../public-key-bag]/" +
-           "public-key/name";
+      path "/ts:truststore/ts:public-key-bags/ts:public-key-bag"
+           + "[ts:name = current()/../ts:public-key-bag]/"
+           + "ts:public-key/ts:name";
     }
     description
       "This typedef defines a reference to a specific public key

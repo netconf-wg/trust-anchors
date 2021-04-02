@@ -20,9 +20,9 @@ run_unix_cmd() {
 }
 
 printf "Testing ietf-truststore.yang (pyang)..."
-command="pyang -Werror --ietf --max-line-length=69 -p ../ ../ietf-truststore\@*.yang"
+command="pyang --strict -Werror --ietf --max-line-length=69 -p ../ ../ietf-truststore\@*.yang"
 run_unix_cmd $LINENO "$command" 0
-command="pyang --canonical -p ../ ../ietf-truststore\@*.yang"
+command="pyang --strict --canonical -p ../ ../ietf-truststore\@*.yang"
 run_unix_cmd $LINENO "$command" 0
 printf "okay.\n"
 
