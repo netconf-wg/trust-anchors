@@ -84,7 +84,7 @@
 INSERT_TEXT_FROM_FILE(../common-intro-snippet.xml,150)
 
         <section title="Adherence to the NMDA">
-          <t>This document in compliant with the Network Management Datastore Architecture
+          <t>This document is compliant with the Network Management Datastore Architecture
             (NMDA) <xref target="RFC8342"/>.  For instance, trust anchors installed
             during manufacturing (e.g., for trusted well-known services), are expected
             to appear in &lt;operational&gt; (see <xref target="built-ins"/>).</t>
@@ -100,7 +100,7 @@ INSERT_TEXT_FROM_FILE(../common-intro-snippet.xml,150)
 
         <t>This section defines a YANG 1.1 <xref target="RFC7950"/> module called
           "ietf-truststore".  A high-level overview of the module is provided in
-          <xref target="truststore-verview"/>. Examples illustatrating the module's use
+          <xref target="truststore-verview"/>. Examples illustrating the module's use
           are provided in <xref target="truststore-examples">Examples</xref>. The YANG
           module itself is defined in <xref target="truststore-yang-module"/>.</t>
 
@@ -117,7 +117,7 @@ INSERT_TEXT_FROM_FILE(../common-intro-snippet.xml,150)
               <figure>
                 <artwork><![CDATA[
 Features:
-  +-- truststore-supported
+  +-- central-truststore-supported
   +-- local-definitions-supported
   +-- certificates
   +-- public-keys
@@ -154,7 +154,7 @@ Typedefs:
               <li>All of the typedefs defined in the "ietf-truststore" module
                 extend the base "leafref" type defined in <xref target="RFC7950"/>.</li>
               <li>The leafrefs refer to certificates, public keys, and bags
-                in the truststore, when the truststore module is implemented.</li>
+                in the central truststore, when this module is implemented.</li>
               <li>These typedefs are provided as an aid to downstream
                 modules that import the "ietf-truststore" module.</li>
             </ul>
@@ -239,7 +239,7 @@ INSERT_TEXT_FROM_FILE(refs/tree-truststore-grouping.no-expand.txt)
               <ul>
                 <li>The "truststore-grouping" grouping defines a truststore instance
                   as being composed of certificates and/or public keys, both of which
-                  are enabled by "feature" statements.  The stucture supporting
+                  are enabled by "feature" statements.  The structure supporting
                   certificates and public keys is essentially the same, having an
                   outer list of "bags" containing in inner list of objects
                   (certificates or public keys).  The bags enable trust anchors
@@ -309,7 +309,7 @@ INSERT_TEXT_FROM_FILE(refs/ietf-truststore-tree.txt)
               in &lt;intended&gt;, as per <xref target="proto-access-nodes"/>.
               Please see <xref target="built-ins"/> for an example illustrating
               built-in values in &lt;operational&gt;.</t>
-            <t>The example contained in this secton defines eight bags of trust
+            <t>The example contained in this section defines eight bags of trust
               anchors.  There are four certificate-based bags and four public
               key based bags.  The following diagram provides an overview of the
               contents in the example:</t>
@@ -715,8 +715,20 @@ INSERT_TEXT_FROM_FILE(refs/ex-truststore-default-running.xml)
             </list>
           </t>
         </section>
-        <!--
         <section title="14 to 15">
+          <t>
+            <list style="symbols">
+              <t>Added prefixes to 'path' statements per trust-anchors/issues/1</t>
+              <t>Renamed feature "truststore-supported" to "central-truststore-supported".</t>
+              <t>Associated with above, generally moved text to refer to a "central" truststore.</t>
+              <t>Removed two unecessary/unwanted "min-elements 1" and associated "presence" statements.</t>
+              <t>Aligned modules with `pyang -f` formatting.</t>
+              <t>Fixed nits found by YANG Doctor reviews.</t>
+            </list>
+          </t>
+        </section>
+        <!--
+        <section title="15 to 16">
           <t>
             <list style="symbols">
               <t>SUBMISSION PENDING</t>
@@ -740,7 +752,7 @@ INSERT_TEXT_FROM_FILE(refs/ex-truststore-default-running.xml)
           Eric Voit,
           Juergen Schoenwaelder,
           Liang Xia,
-          Martin Bjorklund,
+          Martin Björklund,
           Nick Hancock,
           and Yoav Nir.
         </t>
