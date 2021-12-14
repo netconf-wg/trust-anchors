@@ -16,11 +16,11 @@
       </description>
       <certificate>
         <name>Server Cert Issuer #1</name>
-        <cert-data>base64encodedvalue==</cert-data>
+        <cert-data>BASE64VALUE=</cert-data>
       </certificate>
       <certificate>
         <name>Server Cert Issuer #2</name>
-        <cert-data>base64encodedvalue==</cert-data>
+        <cert-data>BASE64VALUE=</cert-data>
       </certificate>
     </certificate-bag>
   
@@ -35,11 +35,11 @@
       </description>
       <certificate>
         <name>My Application #1</name>
-        <cert-data>base64encodedvalue==</cert-data>
+        <cert-data>BASE64VALUE=</cert-data>
       </certificate>
       <certificate>
         <name>My Application #2</name>
-        <cert-data>base64encodedvalue==</cert-data>
+        <cert-data>BASE64VALUE=</cert-data>
       </certificate>
     </certificate-bag>
   
@@ -54,11 +54,11 @@
       </description>
       <certificate>
         <name>Client Identity Issuer #1</name>
-        <cert-data>base64encodedvalue==</cert-data>
+        <cert-data>BASE64VALUE=</cert-data>
       </certificate>
       <certificate>
         <name>Client Identity Issuer #2</name>
-        <cert-data>base64encodedvalue==</cert-data>
+        <cert-data>BASE64VALUE=</cert-data>
       </certificate>
     </certificate-bag>
   
@@ -73,11 +73,11 @@
       </description>
       <certificate>
         <name>George Jetson</name>
-        <cert-data>base64encodedvalue==</cert-data>
+        <cert-data>BASE64VALUE=</cert-data>
       </certificate>
       <certificate>
         <name>Fred Flintstone</name>
-        <cert-data>base64encodedvalue==</cert-data>
+        <cert-data>BASE64VALUE=</cert-data>
       </certificate>
     </certificate-bag>
   </certificate-bags>
@@ -101,14 +101,14 @@
         <public-key-format>
           ct:ssh-public-key-format
         </public-key-format>
-        <public-key>base64encodedvalue==</public-key>
+        <public-key>BASE64VALUE=</public-key>
       </public-key>
       <public-key>
         <name>corp-fw2</name>
         <public-key-format>
           ct:ssh-public-key-format
         </public-key-format>
-        <public-key>base64encodedvalue==</public-key>
+        <public-key>BASE64VALUE=</public-key>
       </public-key>
     </public-key-bag>
 
@@ -125,14 +125,14 @@
         <public-key-format>
           ct:ssh-public-key-format
         </public-key-format>
-        <public-key>base64encodedvalue==</public-key>
+        <public-key>BASE64VALUE=</public-key>
       </public-key>
       <public-key>
         <name>Application Instance #2</name>
         <public-key-format>
           ct:ssh-public-key-format
         </public-key-format>
-        <public-key>base64encodedvalue==</public-key>
+        <public-key>BASE64VALUE=</public-key>
       </public-key>
     </public-key-bag>
 
@@ -143,14 +143,14 @@
         <name>Raw Public Key #1</name>
         <public-key-format>
           ct:subject-public-key-info-format</public-key-format>
-        <public-key>base64encodedvalue==</public-key>
+        <public-key>BASE64VALUE=</public-key>
       </public-key>
       <public-key>
         <name>Raw Public Key #2</name>
         <public-key-format>
           ct:subject-public-key-info-format
         </public-key-format>
-        <public-key>base64encodedvalue==</public-key>
+        <public-key>BASE64VALUE=</public-key>
       </public-key>
     </public-key-bag>
 
@@ -162,14 +162,14 @@
         <public-key-format>
           ct:subject-public-key-info-format
         </public-key-format>
-        <public-key>base64encodedvalue==</public-key>
+        <public-key>BASE64VALUE=</public-key>
       </public-key>
       <public-key>
         <name>Raw Public Key #2</name>
         <public-key-format>
           ct:subject-public-key-info-format
       </public-key-format>
-        <public-key>base64encodedvalue==</public-key>
+        <public-key>BASE64VALUE=</public-key>
       </public-key>
     </public-key-bag>
   </public-key-bags>

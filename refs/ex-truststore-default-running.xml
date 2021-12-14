@@ -20,7 +20,7 @@
       </description>
       <certificate>
         <name>Public Root CA Cert 3</name>
-        <cert-data>base64encodedvalue==</cert-data>
+        <cert-data>BASE64VALUE=</cert-data>
       </certificate>
     </certificate-bag>
 

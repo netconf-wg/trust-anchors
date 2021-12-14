@@ -16,11 +16,11 @@
       <name>my-trusted-client-ca-certs</name>
       <certificate>
         <name>Client Identity Issuer #1</name>
-        <cert>base64encodedvalue==</cert>
+        <cert>BASE64VALUE=</cert>
       </certificate>
       <certificate>
         <name>Client Identity Issuer #2</name>
-        <cert>base64encodedvalue==</cert>
+        <cert>BASE64VALUE=</cert>
       </certificate>
     </local-definition>
   </cert>
@@ -43,14 +43,14 @@
         <public-key-format>
           ct:ssh-public-key-format
         </public-key-format>
-        <public-key>base64encodedvalue==</public-key>
+        <public-key>BASE64VALUE=</public-key>
       </public-key>
       <public-key>
         <name>corp-fw2</name>
         <public-key-format>
           ct:ssh-public-key-format
         </public-key-format>
-        <public-key>base64encodedvalue==</public-key>
+        <public-key>BASE64VALUE=</public-key>
       </public-key>
     </local-definition>
   </public-key>
