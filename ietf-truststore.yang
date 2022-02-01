@@ -19,8 +19,8 @@ module ietf-truststore {
     "IETF NETCONF (Network Configuration) Working Group";
 
   contact
-    "WG Web  : <http://datatracker.ietf.org/wg/netconf/>
-     WG List : <mailto:netconf@ietf.org>
+    "WG Web  : https://datatracker.ietf.org/wg/netconf
+     WG List : NETCONF WG list <mailto:netconf@ietf.org>
      Author  : Kent Watsen <kent+ietf@watsen.net>";
 
   description
