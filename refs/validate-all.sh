@@ -48,7 +48,7 @@ printf "okay.\n"
 
 printf "Testing ex-notification-ce.xml..."
 echo -e 'setns a=urn:ietf:params:xml:ns:netconf:notification:1.0\nsetns b=urn:ietf:params:xml:ns:yang:ietf-truststore\ncat //a:notification/b:truststore' | xmllint --shell ex-notification-ce.xml | sed -e '/^\/.*/d' -e '/^ *$/d' > yanglint-notification.xml
-command="yanglint -t notif -r ex-truststore.xml ../ietf-*\@*.yang yanglint-notification.xml"
+command="yanglint -t notif ex-truststore.xml ../ietf-*\@*.yang yanglint-notification.xml"
 run_unix_cmd $LINENO "$command" 0
 printf "okay.\n"
 rm yanglint-notification.xml
