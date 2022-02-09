@@ -743,8 +743,17 @@ INSERT_TEXT_FROM_FILE(refs/ex-truststore-default-running.xml)
             </list>
           </t>
         </section>
-        <!--
         <section title="16 to 17">
+          <t>
+            <list style="symbols">
+              <t>fixup the 'WG Web' and 'WG List' lines in YANG module(s)</t>
+              <t>fixup copyright (i.e., s/Simplified/Revised/) in YANG module(s)</t>
+              <t>SUBMISSION PENDING</t>
+            </list>
+          </t>
+        </section>
+        <!--
+        <section title="17 to 18">
           <t>
             <list style="symbols">
               <t>SUBMISSION PENDING</t>
