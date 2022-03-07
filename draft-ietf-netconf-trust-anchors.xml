@@ -446,9 +446,9 @@ INSERT_TEXT_FROM_FILE(ietf-truststore@YYYY-MM-DD.yang)
           Any ability for operators to modify built-in trust anchors is outside the
           scope of this document.</t>
         <t>As built-in trust anchors are provided by the server, they are present in
-          &lt;operational&gt;, if used. The example below illustrates what the truststore in
-          &lt;operational&gt; might look like for a server in its factory default
-          state.</t>
+          &lt;operational&gt; (and &lt;system&gt; <xref target="I-D.ma-netmod-with-system"/>,
+          if used). The example below illustrates what the truststore in &lt;operational&gt;
+          might look like for a server in its factory default state.</t>
         <t>
           <figure>
             <artwork><![CDATA[
@@ -591,6 +591,7 @@ INSERT_TEXT_FROM_FILE(refs/ex-truststore-default-running.xml)
         <xi:include href="https://datatracker.ietf.org/doc/bibxml3/reference.I-D.ietf-netconf-http-client-server.xml"/>
         <xi:include href="https://datatracker.ietf.org/doc/bibxml3/reference.I-D.ietf-netconf-netconf-client-server.xml"/>
         <xi:include href="https://datatracker.ietf.org/doc/bibxml3/reference.I-D.ietf-netconf-restconf-client-server.xml"/>
+        <xi:include href="https://datatracker.ietf.org/doc/bibxml3/reference.I-D.ma-netmod-with-system.xml"/>
       </references>
 
       <section title="Change Log" removeInRFC="true" anchor="change-log">
@@ -748,7 +749,7 @@ INSERT_TEXT_FROM_FILE(refs/ex-truststore-default-running.xml)
             <list style="symbols">
               <t>fixup the 'WG Web' and 'WG List' lines in YANG module(s)</t>
               <t>fixup copyright (i.e., s/Simplified/Revised/) in YANG module(s)</t>
-              <t>SUBMISSION PENDING</t>
+              <t>Added Informative reference to ma-netmod-with-system</t>
             </list>
           </t>
         </section>
