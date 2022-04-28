@@ -498,9 +498,13 @@ INSERT_TEXT_FROM_FILE(refs/ex-truststore-default-running.xml)
           <t>This module enables the configuration of public keys without
             constraints on their usage, e.g., what operations the key is
             allowed to be used for (encryption, verification, both).</t>
-          <t>This module also enables the configuration of certificates,
-            where each certificate may constrain the usage of the public
-            key according to local policy.</t>
+          <t>Trust anchors configured via this module are implicitly trusted
+            to validate certification paths that may include any name, be
+            used for any purpose and etc., subject to constraints imposed
+            by an intermediate CA or by context in which the truststore is
+            used. Implementations are free to use alternative or auxiliary
+            structures and validation rules to define constraints that
+            limit the applicability of any trust anchor.</t>
         </section>
 
         <section title="The &quot;ietf-truststore&quot; YANG Module" anchor="sec-mod">
@@ -753,6 +757,15 @@ INSERT_TEXT_FROM_FILE(refs/ex-truststore-default-running.xml)
             </list>
           </t>
         </section>
+        <section title="17 to 18">
+          <t>
+            <list style="symbols">
+              <t>Updated Security Considerations section to address comment 
+                received from Carl Wallace.</t>
+              <t>SUBMISSION PENDING</t>
+            </list>
+          </t>
+        </section>
         <!--
         <section title="17 to 18">
           <t>
@@ -775,6 +788,7 @@ INSERT_TEXT_FROM_FILE(refs/ex-truststore-default-running.xml)
         <t>The authors additionally thank the following for helping give shape
           to this work (ordered by first name):
           Balázs Kovács,
+          Carl Wallace,
           Eric Voit,
           Juergen Schoenwaelder,
           Liang Xia,
