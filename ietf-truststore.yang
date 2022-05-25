@@ -27,7 +27,7 @@ module ietf-truststore {
     "This module defines a 'truststore' to centralize management
      of trust anchors including certificates and public keys.
 
-     Copyright (c) 2021 IETF Trust and the persons identified
+     Copyright (c) 2022 IETF Trust and the persons identified
      as authors of the code. All rights reserved.
 
      Redistribution and use in source and binary forms, with
@@ -331,6 +331,7 @@ module ietf-truststore {
   /*********************************/
 
   container truststore {
+    if-feature central-truststore-supported;
     nacm:default-deny-write;
     description
       "The truststore contains bags of certificates and

@@ -298,8 +298,12 @@ INSERT_TEXT_FROM_FILE(refs/ietf-truststore-tree.txt)
               <li>The protcol-accessible nodes for the "ietf-truststore" module
                 are an instance of the "truststore-grouping" grouping discussed in
                 <xref target="truststore-grouping"/>.</li>
-              <li>The reason for why the "truststore-grouping" exists separate from
-                the protocol-accessible nodes definition is to enable
+              <li>The top-level node "truststore" is additionally constrained
+                by the feature "central-truststore-supported".</li>
+              <li>The "truststore-grouping" grouping is discussed in
+                <xref target="truststore-grouping"/>.</li>
+              <li>The reason for why the "truststore-grouping" exists separate
+                from the protocol-accessible nodes definition is to enable
                 instances of the truststore to be instantiated in other
                 locations, as may be needed or desired by some modules.</li>
             </ul>
@@ -762,7 +766,9 @@ INSERT_TEXT_FROM_FILE(refs/ex-truststore-default-running.xml)
             <list style="symbols">
               <t>Updated Security Considerations section to address comment 
                 received from Carl Wallace.</t>
-              <t>SUBMISSION PENDING</t>
+              <t>Fixed examples to not have line-returns around "identity" encodings.</t>
+              <t>Fixed a couple tree diagrams to not create diagrams for "groupings" too.</t>
+              <t>Added "if-feature central-truststore-supported" to top-level "trustore" container.</t>
             </list>
           </t>
         </section>
