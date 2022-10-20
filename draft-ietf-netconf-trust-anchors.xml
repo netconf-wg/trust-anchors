@@ -55,6 +55,14 @@
             <t><spanx style="verb">YYYY-MM-DD</spanx> --&gt; the publication date of this draft</t>
           </list>
         </t>
+        <t>The "Relation to other RFCs" section <xref target="collective-effort"/> contains
+          the text "one or more YANG modules" and, later, "modules".  This text is sourced
+          from a file in a context where it is unknown how many modules a draft defines.
+          The text is not wrong as is, but it may be improved by stating more directly how
+          many modules are defined.</t>
+        <t>The "Relation to other RFCs" section <xref target="collective-effort"/> contains
+          a self-reference to this draft, along with a corresponding Informative Reference in
+          the Appendix.</t>
         <t>The following Appendix section is to be removed prior to publication:
           <list  style="symbols">
             <t><xref target="change-log"/>.  Change Log</t>
@@ -76,7 +84,7 @@
           <t>Provide groupings that enable raw public keys and certificates to be
             configured locally or as references truststore instances.</t>
           <t>Enable the truststore to be instantiated in other data models, in addition
-            to or in lieu of the central trusttore instance.</t>
+            to or in lieu of the central truststore instance.</t>
         </list>
       </t>
 
@@ -101,10 +109,6 @@ INSERT_TEXT_FROM_FILE(../common-intro-snippet.xml,150)
       </section>
 
       <section title="The &quot;ietf-truststore&quot; Module">
-
-       <t>This section defines a YANG 1.1 <xref target="RFC7950"/> module
-         that defines a "truststore" and groupings supporting downstream
-         modules to reference the truststore or have locally-defined definitions.</t>
 
         <t>This section defines a YANG 1.1 <xref target="RFC7950"/> module called
           "ietf-truststore".  A high-level overview of the module is provided in
@@ -491,7 +495,7 @@ INSERT_TEXT_FROM_FILE(refs/ex-truststore-default-running.xml)
             from unauthorized modification.</t>
           <t>Security controls for the API (i.e., data in motion) are
             discussed in <xref target="sec-mod"/>, but controls for the
-            data at rest cannot be specified by the YANG module.</t>
+            data at rest (e.g., on disk) cannot be specified by the YANG module.</t>
           <t>In order to satisfy the expectations of a "truststore", it
             is RECOMMENDED that implementations ensure that the truststore
             contents are protected from unauthorized modifications when
@@ -517,7 +521,7 @@ INSERT_TEXT_FROM_FILE(refs/ex-truststore-default-running.xml)
             RESTCONF <xref target="RFC8040"/>.  Both of these protocols have mandatory-to-implement
             secure transport layers (e.g., SSH, TLS) with mutual authentication.</t>
 
-          <t>The NETCONF access control model (NACM) <xref target="RFC8341"/> provides the means
+          <t>The Network Access Control Model (NACM) <xref target="RFC8341"/> provides the means
             to restrict access for particular users to a pre-configured subset of all available
             protocol operations and content.</t>
 
@@ -772,15 +776,13 @@ INSERT_TEXT_FROM_FILE(refs/ex-truststore-default-running.xml)
             </list>
           </t>
         </section>
-        <!--
-        <section title="17 to 18">
+        <section title="18 to 19">
           <t>
             <list style="symbols">
-              <t>SUBMISSION PENDING</t>
+              <t>Updated per Shepherd reviews.</t>
             </list>
           </t>
         </section>
-        -->
       </section>
 
       <section title="Acknowledgements" numbered="no">
@@ -800,6 +802,7 @@ INSERT_TEXT_FROM_FILE(refs/ex-truststore-default-running.xml)
           Liang Xia,
           Martin Björklund,
           Nick Hancock,
+          Qin Wu,
           and Yoav Nir.
         </t>
       </section>
