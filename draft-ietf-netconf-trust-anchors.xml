@@ -136,10 +136,10 @@ Features:
 ]]></artwork>
               </figure>
             </t>
-            <aside>
+            <!--<aside>-->
               <t>The diagram above uses syntax that is similar to but not
                 defined in <xref target="RFC8340"/>.</t>
-            </aside>
+            <!--</aside>-->
           </section>
 
           <section title="Typedefs" anchor="typedefs" toc="exclude">
@@ -157,10 +157,10 @@ Typedefs:
 ]]></artwork>
               </figure>
             </t>
-            <aside>
+            <!--<aside>-->
               <t>The diagram above uses syntax that is similar to but not
                 defined in <xref target="RFC8340"/>.</t>
-            </aside>
+            <!--</aside>-->
             <t>Comments:</t>
             <ul>
               <li>All the typedefs defined in the "ietf-truststore" module
@@ -779,7 +779,14 @@ INSERT_TEXT_FROM_FILE(refs/ex-truststore-default-running.xml)
         <section title="18 to 19">
           <t>
             <list style="symbols">
-              <t>Updated per Shepherd reviews.</t>
+              <t>Updated per Shepherd reviews impacting the suite of drafts.</t>
+            </list>
+          </t>
+        </section>
+        <section title="19 to 20">
+          <t>
+            <list style="symbols">
+              <t>Updated per Shepherd reviews impacting the suite of drafts.</t>
             </list>
           </t>
         </section>
