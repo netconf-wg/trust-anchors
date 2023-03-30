@@ -3,7 +3,7 @@
   xmlns:ct="urn:ietf:params:xml:ns:yang:ietf-crypto-types">
 
   <!-- The following two equivalent examples illustrate   -->
-  <!-- the "local-or-truststore-certs-grouping" grouping: -->
+  <!-- the "inline-or-truststore-certs-grouping" grouping: -->
 
   <cert>
     <name>example 1a</name>
@@ -12,7 +12,7 @@
 
   <cert>
     <name>example 1b</name>
-    <local-definition>
+    <inline-definition>
       <name>my-trusted-client-ca-certs</name>
       <certificate>
         <name>Client Identity Issuer #1</name>
@@ -22,12 +22,12 @@
         <name>Client Identity Issuer #2</name>
         <cert>BASE64VALUE=</cert>
       </certificate>
-    </local-definition>
+    </inline-definition>
   </cert>
 
 
   <!-- The following two equivalent examples illustrate the -->
-  <!-- "local-or-truststore-public-keys-grouping" grouping: -->
+  <!-- "inline-or-truststore-public-keys-grouping" grouping: -->
 
   <public-key>
     <name>example 2a</name>
@@ -36,7 +36,7 @@
 
   <public-key>
     <name>example 2b</name>
-    <local-definition>
+    <inline-definition>
       <name>trusted-ssh-public-keys</name>
       <public-key>
         <name>corp-fw1</name>
@@ -52,7 +52,7 @@
         </public-key-format>
         <public-key>BASE64VALUE=</public-key>
       </public-key>
-    </local-definition>
+    </inline-definition>
   </public-key>
 
 </truststore-usage>

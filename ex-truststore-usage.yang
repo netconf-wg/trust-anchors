@@ -16,8 +16,8 @@ module ex-truststore-usage {
     "Author: YANG Designer <mailto:yang.designer@example.com>";
 
   description
-    "This module illustrates notable groupings defined in
-     the 'ietf-truststore' module.";
+    "This example module illustrates notable groupings defined
+     in the 'ietf-truststore' module.";
 
   revision YYYY-MM-DD {
     description
@@ -36,7 +36,7 @@ module ex-truststore-usage {
         description
           "An arbitrary name for this cert.";
       }
-      uses ts:local-or-truststore-certs-grouping;
+      uses ts:inline-or-truststore-certs-grouping;
       description
         "An cert that may be configured locally or be
          a reference to a cert in the truststore.";
@@ -48,7 +48,7 @@ module ex-truststore-usage {
         description
           "An arbitrary name for this cert.";
       }
-      uses ts:local-or-truststore-public-keys-grouping;
+      uses ts:inline-or-truststore-public-keys-grouping;
       description
         "An public key that may be configured locally or be
          a reference to a public key in the truststore.";

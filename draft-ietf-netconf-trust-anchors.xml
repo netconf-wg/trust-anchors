@@ -1,5 +1,4 @@
 <?xml version='1.0'?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 
 <?rfc toc="yes"?>
 <?rfc symrefs="yes"?>
@@ -18,6 +17,7 @@
 <rfc xmlns:xi="http://www.w3.org/2001/XInclude"
      category="std"
      consensus="true"
+     submissionType="IETF"
      ipr="trust200902"
      docName="draft-ietf-netconf-trust-anchors-latest" >
     <front>
@@ -130,7 +130,7 @@ INSERT_TEXT_FROM_FILE(../common-intro-snippet.xml,150)
                 <artwork><![CDATA[
 Features:
   +-- central-truststore-supported
-  +-- local-definitions-supported
+  +-- inline-definitions-supported
   +-- certificates
   +-- public-keys
 ]]></artwork>
@@ -167,7 +167,7 @@ Typedefs:
                 extend the base "leafref" type defined in <xref target="RFC7950"/>.</li>
               <li>The leafrefs refer to certificates, public keys, and bags
                 in the central truststore, when this module is implemented.</li>
-              <li>These typedefs are provided as an aid to downstream
+              <li>These typedefs are provided as an aid to consuming
                 modules that import the "ietf-truststore" module.</li>
             </ul>
           </section>
@@ -175,33 +175,33 @@ Typedefs:
           <section title="Groupings" toc="exclude">
             <t>The "ietf-truststore" module defines the following "grouping" statements:</t>
             <ul spacing="compact">
-              <li>local-or-truststore-certs-grouping</li>
-              <li>local-or-truststore-public-keys-grouping</li>
+              <li>inline-or-truststore-certs-grouping</li>
+              <li>inline-or-truststore-public-keys-grouping</li>
               <li>truststore-grouping</li>
             </ul>
             <t>Each of these groupings are presented in the following subsections.</t>
 
-            <section title="The &quot;local-or-truststore-certs-grouping&quot; Grouping" anchor="local-or-truststore-certs-grouping">
+            <section title="The &quot;inline-or-truststore-certs-grouping&quot; Grouping" anchor="inline-or-truststore-certs-grouping">
               <t>The following tree diagram <xref target="RFC8340"/> illustrates the
-                "local-or-truststore-certs-grouping" grouping:</t>
+                "inline-or-truststore-certs-grouping" grouping:</t>
               <t>
                 <figure>
                  <artwork><![CDATA[
-INSERT_TEXT_FROM_FILE(refs/tree-local-or-truststore-certs-grouping.no-expand.txt)
+INSERT_TEXT_FROM_FILE(refs/tree-inline-or-truststore-certs-grouping.no-expand.txt)
 ]]></artwork>
                 </figure>
               </t>
               <t>Comments:</t>
               <ul>
-                <li>The "local-or-truststore-certs-grouping" grouping is provided
-                  soley as convenience to downstream modules that wish to offer
+                <li>The "inline-or-truststore-certs-grouping" grouping is provided
+                  soley as convenience to consuming modules that wish to offer
                   an option whether a bag of certificates can be defined locally
                   or as a reference to a bag in the truststore.</li>
                 <li>A "choice" statement is used to expose the various options.
                   Each option is enabled by a "feature" statement.  Additional
                   "case" statements MAY be augmented in if, e.g., there is a
                   need to reference a bag in an alternate location.</li>
-                <li>For the "local-definition" option, the "certificate" node
+                <li>For the "inline-definition" option, the "certificate" node
                   uses the "trust-anchor-cert-grouping" grouping discussed in
                   <relref section="2.1.4.7" target="I-D.ietf-netconf-crypto-types"/>.</li>
                 <li>For the "truststore" option, the "truststore-reference" is an
@@ -209,27 +209,27 @@ INSERT_TEXT_FROM_FILE(refs/tree-local-or-truststore-certs-grouping.no-expand.txt
               </ul>
             </section>
 
-            <section title="The &quot;local-or-truststore-public-keys-grouping&quot; Grouping" anchor="local-or-truststore-public-keys-grouping">
+            <section title="The &quot;inline-or-truststore-public-keys-grouping&quot; Grouping" anchor="inline-or-truststore-public-keys-grouping">
               <t>The following tree diagram <xref target="RFC8340"/> illustrates the
-                "local-or-truststore-public-keys-grouping" grouping:</t>
+                "inline-or-truststore-public-keys-grouping" grouping:</t>
               <t>
                 <figure>
                  <artwork><![CDATA[
-INSERT_TEXT_FROM_FILE(refs/tree-local-or-truststore-public-keys-grouping.no-expand.txt)
+INSERT_TEXT_FROM_FILE(refs/tree-inline-or-truststore-public-keys-grouping.no-expand.txt)
 ]]></artwork>
                 </figure>
               </t>
               <t>Comments:</t>
               <ul>
-                <li>The "local-or-truststore-public-keys-grouping" grouping is provided
-                  soley as convenience to downstream modules that wish to offer
+                <li>The "inline-or-truststore-public-keys-grouping" grouping is provided
+                  soley as convenience to consuming modules that wish to offer
                   an option whether a bag of public keys can be defined locally
                   or as a reference to a bag in the truststore.</li>
                 <li>A "choice" statement is used to expose the various options.
                   Each option is enabled by a "feature" statement.  Additional
                   "case" statements MAY be augmented in if, e.g., there is a
                   need to reference a bag in an alternate location.</li>
-                <li>For the "local-definition" option, the "public-key" node uses the
+                <li>For the "inline-definition" option, the "public-key" node uses the
                   "public-key-grouping" grouping discussed in <relref section="2.1.4.4"
                   target="I-D.ietf-netconf-crypto-types"/>.</li>
                 <li>For the "truststore" option, the "truststore-reference" is an
@@ -370,19 +370,19 @@ INSERT_TEXT_FROM_FILE(refs/ex-notification-ce.xml)
           </section>
 
           <section title="The &quot;Local or Truststore&quot; Groupings" toc="exclude">
-            <t>This section illustrates the various "local-or-truststore" groupings
+            <t>This section illustrates the various "inline-or-truststore" groupings
               defined in the "ietf-truststore" module, specifically the
-              "local-or-truststore-certs-grouping"
-              (<xref target="local-or-truststore-certs-grouping"/>) and
-              "local-or-truststore-public-keys-grouping"
-              (<xref target="local-or-truststore-public-keys-grouping"/>)
+              "inline-or-truststore-certs-grouping"
+              (<xref target="inline-or-truststore-certs-grouping"/>) and
+              "inline-or-truststore-public-keys-grouping"
+              (<xref target="inline-or-truststore-public-keys-grouping"/>)
               groupings.</t>
 
             <t>These examples assume the existence of an example module called "ex-truststore-usage"
               having the namespace "http://example.com/ns/example-truststore-usage".</t>
             <t>The ex-truststore-usage module is first presented using tree diagrams
               <xref target="RFC8340"/>, followed by an instance example illustrating
-              all the "local-or-truststore" groupings in use, followed by the YANG
+              all the "inline-or-truststore" groupings in use, followed by the YANG
               module itself.</t>
             <t>The following tree diagram illustrates "ex-truststore-usage" without
               expanding the "grouping" statements:</t>
@@ -454,8 +454,8 @@ INSERT_TEXT_FROM_FILE(ietf-truststore@YYYY-MM-DD.yang)
           Any ability for operators to modify built-in trust anchors is outside the
           scope of this document.</t>
         <t>As built-in trust anchors are provided by the server, they are present in
-          &lt;operational&gt; (and &lt;system&gt; <xref target="I-D.ma-netmod-with-system"/>,
-          if used). The example below illustrates what the truststore in &lt;operational&gt;
+          &lt;operational&gt; (and &lt;system&gt; <xref target="I-D.ietf-netmod-system-config"/>,
+          if implemented). The example below illustrates what the truststore in &lt;operational&gt;
           might look like for a server in its factory default state.</t>
         <t>
           <figure>
@@ -464,8 +464,13 @@ INSERT_TEXT_FROM_FILE(refs/ex-truststore-default-operational.xml)
 ]]></artwork>
           </figure>
         </t>
-        <t>In order for the built-in bags of trust anchors and/or their trust anchors to
-          be referenced by configuration, they MUST first be copied into &lt;running&gt;.</t>
+        <t>Built-in bags of trust anchors and/or specific trust anchors, that are
+          referenced by configutation (e.g., a "leafref"), MUST be present in a
+          datastore in order for the datastore to be valid.  For instance, built-in
+          nodes originating in &lt;system&gt; (from <xref target="I-D.ietf-netmod-system-config"/>)
+          will (per <xref target="RFC8342"/>) implicitly propogate to &lt;intended&gt;,
+          ensuring references to them will be resolved in &lt;intended&gt;.</t>
+     
         <t>The built-in bags and/or their trust anchors MUST be copied into &lt;running&gt;
           using the same "key" values if it is desired for the server to maintain/update
           them (e.g., a software update may update a bag of trusted public CA
@@ -477,7 +482,7 @@ INSERT_TEXT_FROM_FILE(refs/ex-truststore-default-operational.xml)
           operations.  Servers MUST ignore attempts to modify any aspect of built-in
           bags and/or their trust anchors from &lt;running&gt;.</t>
         <t>The following example illustrates how a single built-in public CA
-          certificate from the previous example has been propagated to &lt;running&gt;:</t>
+          certificate from the previous example has been propagated to &lt;intended&gt;:</t>
         <t>
           <figure>
             <artwork><![CDATA[
@@ -603,7 +608,7 @@ INSERT_TEXT_FROM_FILE(refs/ex-truststore-default-running.xml)
         <xi:include href="https://datatracker.ietf.org/doc/bibxml3/reference.I-D.ietf-netconf-http-client-server.xml"/>
         <xi:include href="https://datatracker.ietf.org/doc/bibxml3/reference.I-D.ietf-netconf-netconf-client-server.xml"/>
         <xi:include href="https://datatracker.ietf.org/doc/bibxml3/reference.I-D.ietf-netconf-restconf-client-server.xml"/>
-        <xi:include href="https://datatracker.ietf.org/doc/bibxml3/reference.I-D.ma-netmod-with-system.xml"/>
+        <xi:include href="https://datatracker.ietf.org/doc/bibxml3/reference.I-D.ietf-netmod-system-config.xml"/>
       </references>
 
       <section title="Change Log" removeInRFC="true" anchor="change-log">
@@ -635,8 +640,8 @@ INSERT_TEXT_FROM_FILE(refs/ex-truststore-default-running.xml)
         <section title="03 to 04">
           <t>
             <list style="symbols">
-              <t>Added groupings 'local-or-truststore-certs-grouping'
-                and 'local-or-truststore-host-keys-grouping', matching
+              <t>Added groupings 'inline-or-truststore-certs-grouping'
+                and 'inline-or-truststore-host-keys-grouping', matching
                 similar definitions in the keystore draft.  Note new
                 (and incomplete) "truststore" usage!</t>
               <t>Related to above, also added features 'truststore-supported'
@@ -650,7 +655,7 @@ INSERT_TEXT_FROM_FILE(refs/ex-truststore-default-running.xml)
               <t>Renamed "trust-anchors" to "truststore"</t>
               <t>Removed "pinned." prefix everywhere, to match truststore rename</t>
               <t>Moved everything under a top-level 'grouping' to enable use in other contexts.</t>
-              <t>Renamed feature from 'local-trust-anchors-supported' to 'local-definitions-supported' (same name used in keystore)</t>
+              <t>Renamed feature from 'local-trust-anchors-supported' to 'inline-definitions-supported' (same name used in keystore)</t>
               <t>Removed the "require-instance false" statement from the "*-ref" typedefs.</t>
               <t>Added missing "ssh-host-keys" and "x509-certificates" if-feature statements</t>
             </list>
@@ -705,7 +710,7 @@ INSERT_TEXT_FROM_FILE(refs/ex-truststore-default-running.xml)
           <t>
             <list style="symbols">
               <t>Corrected module prefix registered in the IANA Considerations section.</t>
-              <t>Modified 'local-or-truststore-certs-grouping' to use a list (not a leaf-list).</t>
+              <t>Modified 'inline-or-truststore-certs-grouping' to use a list (not a leaf-list).</t>
               <t>Added new example section "The Local or Truststore Groupings".</t>
               <t>Clarified expected behavior for "built-in" certificates in &lt;operational&gt;</t>
               <t>Expanded "Data Model Overview section(s) [remove "wall" of tree diagrams].</t>
@@ -787,6 +792,16 @@ INSERT_TEXT_FROM_FILE(refs/ex-truststore-default-running.xml)
           <t>
             <list style="symbols">
               <t>Updated per Shepherd reviews impacting the suite of drafts.</t>
+            </list>
+          </t>
+        </section>
+        <section title="20 to 21">
+          <t>
+            <list style="symbols">
+              <t>Updated (implicitly) per Tom Petch review.</t>
+              <t>Updated per AD's review.</t>
+              <t>s/local/inline/ in feature names, grouping names, and node names.</t>
+              <t>Updated ref from 'ma-netmod-with-system' to 'ietf-netmod-system-config'.</t>
             </list>
           </t>
         </section>

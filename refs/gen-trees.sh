@@ -28,8 +28,8 @@ extract_grouping() {
   extract_grouping_with_params "$1" "--tree-no-expand-uses" "tree-$1.no-expand.txt"
 }
 
-extract_grouping local-or-truststore-certs-grouping
-extract_grouping local-or-truststore-public-keys-grouping
+extract_grouping inline-or-truststore-certs-grouping
+extract_grouping inline-or-truststore-public-keys-grouping
 extract_grouping truststore-grouping
 
 
