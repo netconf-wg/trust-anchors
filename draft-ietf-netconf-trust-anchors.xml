@@ -82,7 +82,7 @@
           <t>Provide types that can be used to reference raw public keys or certificates
             stored in the central truststore.</t>
           <t>Provide groupings that enable raw public keys and certificates to be
-            configured locally or as references truststore instances.</t>
+            configured inline or as references truststore instances.</t>
           <t>Enable the truststore to be instantiated in other data models, in addition
             to or in lieu of the central truststore instance.</t>
         </list>
@@ -195,7 +195,7 @@ INSERT_TEXT_FROM_FILE(refs/tree-inline-or-truststore-certs-grouping.no-expand.tx
               <ul>
                 <li>The "inline-or-truststore-certs-grouping" grouping is provided
                   soley as convenience to consuming modules that wish to offer
-                  an option whether a bag of certificates can be defined locally
+                  an option whether a bag of certificates can be defined inline
                   or as a reference to a bag in the truststore.</li>
                 <li>A "choice" statement is used to expose the various options.
                   Each option is enabled by a "feature" statement.  Additional
@@ -223,7 +223,7 @@ INSERT_TEXT_FROM_FILE(refs/tree-inline-or-truststore-public-keys-grouping.no-exp
               <ul>
                 <li>The "inline-or-truststore-public-keys-grouping" grouping is provided
                   soley as convenience to consuming modules that wish to offer
-                  an option whether a bag of public keys can be defined locally
+                  an option whether a bag of public keys can be defined inline
                   or as a reference to a bag in the truststore.</li>
                 <li>A "choice" statement is used to expose the various options.
                   Each option is enabled by a "feature" statement.  Additional
@@ -405,10 +405,10 @@ INSERT_TEXT_FROM_FILE(refs/ex-truststore-usage-tree.txt)
             </t>
             <t>The following example provides two equivalent instances of
               each grouping, the first being a reference to a truststore
-              and the second being locally-defined.  The instance having
+              and the second being defined inline.  The instance having
               a reference to a truststore is consistent with the truststore
               defined in <xref target="ts-inst"/>.  The two instances are
-              equivalent, as the locally-defined instance example contains
+              equivalent, as the inlined instance example contains
               the same values defined by the truststore instance referenced
               by its sibling example.</t>
             <t>
@@ -448,15 +448,18 @@ INSERT_TEXT_FROM_FILE(ietf-truststore@YYYY-MM-DD.yang)
         <t>In some implementations, a server may define some built-in trust anchors.
           For instance, there may be built-in trust anchors enabling the server to
           securely connect to well-known services (e.g., an SZTP <xref target="RFC8572"/>
-          bootstrap server) or public CA certificates to connect to arbitrary services
-          using public PKI.</t>
+          bootstrap server) or public CA certificates to connect to arbitrary Web
+          services using public PKI.</t>
         <t>Built-in trust anchors are expected to be set by a vendor-specific process.
-          Any ability for operators to modify built-in trust anchors is outside the
+          Any ability for operators to set and/or modify built-in trust anchors is outside the
           scope of this document.</t>
-        <t>As built-in trust anchors are provided by the server, they are present in
-          &lt;operational&gt; (and &lt;system&gt; <xref target="I-D.ietf-netmod-system-config"/>,
-          if implemented). The example below illustrates what the truststore in &lt;operational&gt;
-          might look like for a server in its factory default state.</t>
+        <t>The primary characteristic of the built-in trust anchors is that they are
+          provided by the server, as opposed to configuration.  As such, they are present in
+          &lt;operational&gt;, and &lt;system&gt; <xref target="I-D.ietf-netmod-system-config"/>,
+          if implemented.</t>
+        <t>The example below illustrates what the truststore in &lt;operational&gt;
+          might look like for a server in its factory default state.  Note that the
+          built-in trust anchor bags have the "or:origin" annotation value "or:system".</t>
         <t>
           <figure>
             <artwork><![CDATA[
@@ -802,6 +805,9 @@ INSERT_TEXT_FROM_FILE(refs/ex-truststore-default-running.xml)
               <t>Updated per AD's review.</t>
               <t>s/local/inline/ in feature names, grouping names, and node names.</t>
               <t>Updated ref from 'ma-netmod-with-system' to 'ietf-netmod-system-config'.</t>
+              <t>Removed special handling text for built-in certs</t>
+              <t>Updated section on built-in trust anchors to read almost
+                the same as the section in the keystore draft.</t>
             </list>
           </t>
         </section>
