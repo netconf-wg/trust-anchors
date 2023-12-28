@@ -7,7 +7,7 @@
 
   <cert>
     <name>example 1a</name>
-    <truststore-reference>trusted-client-ca-certs</truststore-reference>
+    <central-truststore-reference>trusted-client-ca-certs</central-truststore-reference>
   </cert>
 
   <cert>
@@ -31,7 +31,7 @@
 
   <public-key>
     <name>example 2a</name>
-    <truststore-reference>trusted-ssh-public-keys</truststore-reference>
+    <central-truststore-reference>trusted-ssh-public-keys</central-truststore-reference>
   </public-key>
 
   <public-key>
