@@ -65,10 +65,10 @@
           the Appendix.  Please replace the self-reference in this section with "This RFC"
           (or similar) and remove the self-reference in the "Normative/Informative References"
           section, whichever it is in.</t>
-        <t>Tree-diagrams in this draft may use the '/' line-folding mode defined in RFC 8792.
-          However, nicer-to-the-eye is when the '//' line-folding mode is used.  The AD suggested
-          suggested putting a request here for the RFC Editor to help convert "ugly" '/' folded
-          examples to use the '//' folding mode.  "Help convert" may be interpreted as, identify
+        <t>Tree-diagrams in this draft may use the '&#92;' line-folding mode defined in RFC 8792.
+          However, nicer-to-the-eye is when the '&#92;&#92;' line-folding mode is used.  The AD suggested
+          suggested putting a request here for the RFC Editor to help convert "ugly" '&#92;' folded
+          examples to use the '&#92;&#92;' folding mode.  "Help convert" may be interpreted as, identify
           what looks ugly and ask the authors to make the adjustment.</t>
         <t>The following Appendix section is to be removed prior to publication:
           <list  style="symbols">
@@ -106,11 +106,17 @@ INSERT_TEXT_FROM_FILE(../common-intro-snippet.xml,150)
         </section>
 
         <section title="Conventions">
-          <t>Various examples used in this document use a placeholder
-            value for binary data that has been base64 encoded (e.g.,
-            "BASE64VALUE=").  This placeholder value is used as real
+          <t>Various examples in this document use "BASE64VALUE=" as a
+            placeholder value for binary data has has been base64
+            encoded.  This placeholder value is used as real
             base64 encoded structures are often many lines long and
             hence distracting to the example being presented.</t>
+          <t>This document uses the adjective "central" to the word "truststore" 
+            to refer to the top-level instance of the "truststore-grouping", when 
+            the "central-truststore-supported" feature is enabled.  Please be 
+            aware that consuming YANG modules MAY instantiate the "truststore-grouping" 
+            in other locations.  All such other instances are not the "central" 
+            instance.</t> 
         </section>
 
       </section>
@@ -157,10 +163,10 @@ Features:
                <artwork><![CDATA[
 Typedefs:
   leafref
-    +-- certificate-bag-ref
-    +-- certificate-ref
-    +-- public-key-bag-ref
-    +-- public-key-ref
+    +-- central-certificate-bag-ref
+    +-- central-certificate-ref
+    +-- central-public-key-bag-ref
+    +-- central-public-key-ref
 ]]></artwork>
               </figure>
             </t>
@@ -182,51 +188,51 @@ Typedefs:
           <section title="Groupings" toc="exclude">
             <t>The "ietf-truststore" module defines the following "grouping" statements:</t>
             <ul spacing="compact">
-              <li>certificate-ref-grouping</li>
-              <li>public-key-ref-grouping</li>
+              <li>central-certificate-ref-grouping</li>
+              <li>central-public-key-ref-grouping</li>
               <li>inline-or-truststore-certs-grouping</li>
               <li>inline-or-truststore-public-keys-grouping</li>
               <li>truststore-grouping</li>
             </ul>
             <t>Each of these groupings are presented in the following subsections.</t>
 
-            <section title="The &quot;certificate-ref-grouping&quot; Grouping" anchor="certificate-ref-grouping">
+            <section title="The &quot;central-certificate-ref-grouping&quot; Grouping" anchor="central-certificate-ref-grouping">
               <t>The following tree diagram <xref target="RFC8340"/> illustrates the
-                "certificate-ref-grouping" grouping:</t>
+                "central-certificate-ref-grouping" grouping:</t>
               <t>
                 <figure>
                  <artwork><![CDATA[
-INSERT_TEXT_FROM_FILE(refs/tree-certificate-ref-grouping.no-expand.txt)
+INSERT_TEXT_FROM_FILE(refs/tree-central-certificate-ref-grouping.no-expand.txt)
 ]]></artwork>
                 </figure>
               </t>
               <t>Comments:</t>
               <ul>
-                <li>The "certificate-ref-grouping" grouping is provided
-                  soley as convenience to consuming modules that wish to
+                <li>The "central-certificate-ref-grouping" grouping is provided
+                  solely as convenience to consuming modules that wish to
                   enable the configuration of a reference to a certificate
                   in a certificate-bag in the truststore.</li>
-                <li>The "certificate-bag" leaf uses the "certificate-bag-ref"
+                <li>The "certificate-bag" leaf uses the "central-certificate-bag-ref"
                   typedef defined in <xref target="typedefs"/>.</li>
-                <li>The "certificate" leaf uses the "certificate-ref"
+                <li>The "certificate" leaf uses the "central-certificate-ref"
                   typedef defined in <xref target="typedefs"/>.</li>
               </ul>
             </section>
 
-            <section title="The &quot;public-key-ref-grouping&quot; Grouping" anchor="public-key-ref-grouping">
+            <section title="The &quot;central-public-key-ref-grouping&quot; Grouping" anchor="central-public-key-ref-grouping">
               <t>The following tree diagram <xref target="RFC8340"/> illustrates the
-                "public-key-ref-grouping" grouping:</t>
+                "central-public-key-ref-grouping" grouping:</t>
               <t>
                 <figure>
                  <artwork><![CDATA[
-INSERT_TEXT_FROM_FILE(refs/tree-public-key-ref-grouping.no-expand.txt)
+INSERT_TEXT_FROM_FILE(refs/tree-central-public-key-ref-grouping.no-expand.txt)
 ]]></artwork>
                 </figure>
               </t>
               <t>Comments:</t>
               <ul>
-                <li>The "public-key-ref-grouping" grouping is provided
-                  soley as convenience to consuming modules that wish to
+                <li>The "central-public-key-ref-grouping" grouping is provided
+                  solely as convenience to consuming modules that wish to
                   enable the configuration of a reference to a public-key
                   in a public-key-bag in the truststore.</li>
                 <li>The "public-key-bag" leaf uses the "public-key-bag-ref"
@@ -249,7 +255,7 @@ INSERT_TEXT_FROM_FILE(refs/tree-inline-or-truststore-certs-grouping.no-expand.tx
               <t>Comments:</t>
               <ul>
                 <li>The "inline-or-truststore-certs-grouping" grouping is provided
-                  soley as convenience to consuming modules that wish to offer
+                  solely as convenience to consuming modules that wish to offer
                   an option whether a bag of certificates can be defined inline
                   or as a reference to a bag in the truststore.</li>
                 <li>A "choice" statement is used to expose the various options.
@@ -277,7 +283,7 @@ INSERT_TEXT_FROM_FILE(refs/tree-inline-or-truststore-public-keys-grouping.no-exp
               <t>Comments:</t>
               <ul>
                 <li>The "inline-or-truststore-public-keys-grouping" grouping is provided
-                  soley as convenience to consuming modules that wish to offer
+                  solely as convenience to consuming modules that wish to offer
                   an option whether a bag of public keys can be defined inline
                   or as a reference to a bag in the truststore.</li>
                 <li>A "choice" statement is used to expose the various options.
@@ -308,7 +314,7 @@ INSERT_TEXT_FROM_FILE(refs/tree-truststore-grouping.no-expand.txt)
                   as being composed of certificates and/or public keys, both of which
                   are enabled by "feature" statements.  The structure supporting
                   certificates and public keys is essentially the same, having an
-                  outer list of "bags" containing in inner list of objects
+                  outer list of "bags" containing an inner list of objects
                   (certificates or public keys).  The bags enable trust anchors
                   serving a common purpose to be grouped and referenced together.</li>
                 <li>For certificates, each certificate is defined by the
@@ -354,7 +360,7 @@ INSERT_TEXT_FROM_FILE(refs/ietf-truststore-tree.txt)
               <li>Protocol-accessible nodes are those nodes that are accessible
                 when the module is "implemented", as described in <relref
                 section="5.6.5" target="RFC7950"/>.</li>
-              <li>The protcol-accessible nodes for the "ietf-truststore" module
+              <li>The protocol-accessible nodes for the "ietf-truststore" module
                 are an instance of the "truststore-grouping" grouping discussed in
                 <xref target="truststore-grouping"/>.</li>
               <li>The top-level node "truststore" is additionally constrained
@@ -576,6 +582,13 @@ INSERT_TEXT_FROM_FILE(refs/ex-truststore-default-running.xml)
           <t>The Network Access Control Model (NACM) <xref target="RFC8341"/> provides the means
             to restrict access for particular users to a pre-configured subset of all available
             protocol operations and content.</t>
+
+          <t>Please be aware that this YANG module uses groupings from
+            other YANG modules that define nodes that may be considered
+            sensitive or vulnerable in network environments.  Please
+            review the Security Considerations for dependent YANG modules
+            for information as to which nodes may be considered sensitive
+            or vulnerable in network environments.</t>
 
           <t>None of the readable data nodes defined in this YANG module are considered sensitive
             or vulnerable in network environments. The NACM "default-deny-all" extension
@@ -870,6 +883,14 @@ INSERT_TEXT_FROM_FILE(refs/ex-truststore-default-running.xml)
             </list>
           </t>
         </section>
+        <section title="22 to 23">
+          <t>
+            <list style="symbols">
+              <t>Addresses Gen-ART review by Dale Worley.</t>
+              <t>Addresses review by Tom Petch.</t>
+            </list>
+          </t>
+        </section>
       </section>
 
       <section title="Acknowledgements" numbered="no">
@@ -885,11 +906,14 @@ INSERT_TEXT_FROM_FILE(refs/ex-truststore-default-running.xml)
           Balázs Kovács,
           Carl Wallace,
           Eric Voit,
+          Jensen Zhang,
           Juergen Schoenwaelder,
           Liang Xia,
           Martin Björklund,
           Nick Hancock,
           Qin Wu,
+          Rob Wilton,
+          Robert Varga,
           and Yoav Nir.
         </t>
       </section>
