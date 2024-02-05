@@ -177,7 +177,7 @@ module ietf-truststore {
       if-feature "public-keys";
       type ts:central-public-key-bag-ref;
       description
-        "Reference of a public key bag in the truststore inlucding
+        "Reference of a public key bag in the truststore including
          the certificate to authenticate the TLS client.";
     }
     leaf public-key {
@@ -200,7 +200,7 @@ module ietf-truststore {
        reference to a certificate bag in the central truststore.
 
        Servers that wish to define alternate truststore locations
-       SHOULD augment in custom 'case' statements enabling
+       MUST augment in custom 'case' statements enabling
        references to those alternate truststore locations.";
     choice inline-or-truststore {
       nacm:default-deny-write;
@@ -218,7 +218,7 @@ module ietf-truststore {
             key "name";
             min-elements 1;
             description
-              "A trust anchor certificate.";
+              "A trust anchor certificate or chain of certificates.";
             leaf name {
               type string;
               description
@@ -328,7 +328,7 @@ module ietf-truststore {
         list certificate {
           key "name";
           description
-            "A trust anchor certificate.";
+            "A trust anchor certificate or chain of certificates.";
           leaf name {
             type string;
             description
@@ -363,7 +363,7 @@ module ietf-truststore {
           type string;
           description
             "A description for this bag public keys.  The
-             intended purpose for the bag SHOULD be described.";
+             intended purpose for the bag MUST be described.";
         }
         list public-key {
           key "name";

@@ -89,7 +89,7 @@
           <t>Provide types that can be used to reference raw public keys or certificates
             stored in the central truststore.</t>
           <t>Provide groupings that enable raw public keys and certificates to be
-            configured inline or as references truststore instances.</t>
+            configured inline or as references to truststore instances.</t>
           <t>Enable the truststore to be instantiated in other data models, in addition
             to or in lieu of the central truststore instance.</t>
         </list>
@@ -107,10 +107,11 @@ INSERT_TEXT_FROM_FILE(../common-intro-snippet.xml,150)
 
         <section title="Conventions">
           <t>Various examples in this document use "BASE64VALUE=" as a
-            placeholder value for binary data has has been base64
-            encoded.  This placeholder value is used as real
-            base64 encoded structures are often many lines long and
-            hence distracting to the example being presented.</t>
+            placeholder value for binary data that has been base64
+            encoded (see Section 4 in <xref target="RFC4648"/>).  This
+            placeholder value is used because real base64 encoded structures
+            are often many lines long and hence distracting to the example
+            being presented.</t>
           <t>This document uses the adjective "central" to the word "truststore" 
             to refer to the top-level instance of the "truststore-grouping", when 
             the "central-truststore-supported" feature is enabled.  Please be 
@@ -319,14 +320,14 @@ INSERT_TEXT_FROM_FILE(refs/tree-truststore-grouping.no-expand.txt)
                   serving a common purpose to be grouped and referenced together.</li>
                 <li>For certificates, each certificate is defined by the
                   "trust-anchor-cert-grouping" grouping <relref section="2.1.4.7"
-                  target="I-D.ietf-netconf-crypto-types"/>.  Thus the "cert-data"
+                  target="I-D.ietf-netconf-crypto-types"/>.  The "cert-data"
                   node is a CMS structure that can be composed of a chain of one or
                   more certificates.  Additionally, the "certificate-expiration"
                   notification enables the server to alert clients when certificates
                   are nearing or have already expired.</li>
                 <li>For public keys, each public key is defined by the
                   "public-key-grouping" grouping <relref section="2.1.4.4"
-                  target="I-D.ietf-netconf-crypto-types"/>.  Thus the "public-key"
+                  target="I-D.ietf-netconf-crypto-types"/>.  The "public-key"
                   node can be one of any number of structures specified by the
                   "public-key-format" identity node.</li>
               </ul>
@@ -440,7 +441,7 @@ INSERT_TEXT_FROM_FILE(refs/ex-notification-ce.xml)
               groupings.</t>
 
             <t>These examples assume the existence of an example module called "ex-truststore-usage"
-              having the namespace "http://example.com/ns/example-truststore-usage".</t>
+              having the namespace "https://example.com/ns/example-truststore-usage".</t>
             <t>The ex-truststore-usage module is first presented using tree diagrams
               <xref target="RFC8340"/>, followed by an instance example illustrating
               all the "inline-or-truststore" groupings in use, followed by the YANG
@@ -528,6 +529,7 @@ INSERT_TEXT_FROM_FILE(refs/ex-truststore-default-operational.xml)
 ]]></artwork>
           </figure>
         </t>
+        <!--
         <t>Built-in bags of trust anchors and/or specific trust anchors, that are
           referenced by configuration (e.g., a "leafref"), MUST be present in a
           datastore in order for the datastore to be valid.</t>
@@ -543,6 +545,7 @@ INSERT_TEXT_FROM_FILE(refs/ex-truststore-default-running.xml)
 ]]></artwork>
           </figure>
         </t>
+        -->
       </section>
 
       <section title="Security Considerations">
@@ -554,10 +557,9 @@ INSERT_TEXT_FROM_FILE(refs/ex-truststore-default-running.xml)
           <t>Security controls for the API (i.e., data in motion) are
             discussed in <xref target="sec-mod"/>, but controls for the
             data at rest (e.g., on disk) cannot be specified by the YANG module.</t>
-          <t>In order to satisfy the expectations of a "truststore", it
-            is RECOMMENDED that implementations ensure that the truststore
-            contents are protected from unauthorized modifications when
-            at rest.</t>
+          <t>In order to satisfy the expectations of a "truststore", server
+            implementations MUST ensure that the truststore contents are protected
+            from unauthorized modifications when at rest.</t>
         </section>
 
         <section title="Unconstrained Public Key Usage">
@@ -566,14 +568,16 @@ INSERT_TEXT_FROM_FILE(refs/ex-truststore-default-running.xml)
             allowed to be used for (encryption, verification, both).</t>
           <t>Trust anchors configured via this module are implicitly trusted
             to validate certification paths that may include any name, be
-            used for any purpose and etc., subject to constraints imposed
+            used for any purpose, subject to constraints imposed
             by an intermediate CA or by context in which the truststore is
             used. Implementations are free to use alternative or auxiliary
             structures and validation rules to define constraints that
-            limit the applicability of any trust anchor.</t>
+            limit the applicability of a trust anchor.</t>
         </section>
 
-        <section title="The &quot;ietf-truststore&quot; YANG Module" anchor="sec-mod">
+        <section title="Template for the &quot;ietf-truststore&quot; YANG Module" anchor="sec-mod">
+          <t>This section follows the template defined in <xref section="3.7.1" target="RFC8407"/>.</t>
+
           <t>The YANG module defined in this document is designed to be accessed via YANG
             based management protocols, such as NETCONF <xref target="RFC6241"/> and
             RESTCONF <xref target="RFC8040"/>.  Both of these protocols have mandatory-to-implement
@@ -654,11 +658,13 @@ INSERT_TEXT_FROM_FILE(refs/ex-truststore-default-running.xml)
       </references>
       <references title="Informative References">
         <?rfc include="reference.RFC.3688.xml"?>
+        <?rfc include="reference.RFC.4648.xml"?>
         <?rfc include="reference.RFC.6020.xml"?>
         <?rfc include="reference.RFC.6241.xml"?>
         <?rfc include="reference.RFC.8040.xml"?>
         <?rfc include="reference.RFC.8340.xml"?>
         <?rfc include="reference.RFC.8342.xml"?>
+        <?rfc include="reference.RFC.8407.xml"?>
         <?rfc include="reference.RFC.8572.xml"?>
         <xi:include href="https://datatracker.ietf.org/doc/bibxml3/reference.I-D.ietf-netconf-trust-anchors.xml"/>
         <xi:include href="https://datatracker.ietf.org/doc/bibxml3/reference.I-D.ietf-netconf-keystore.xml"/>
@@ -891,6 +897,13 @@ INSERT_TEXT_FROM_FILE(refs/ex-truststore-default-running.xml)
             </list>
           </t>
         </section>
+        <section title="23 to 24">
+          <t>  
+            <list style="symbols">
+              <t>Addresses 1st-round of IESG reviews.</t>
+            </list>
+          </t> 
+        </section>
       </section>
 
       <section title="Acknowledgements" numbered="no">
@@ -906,14 +919,20 @@ INSERT_TEXT_FROM_FILE(refs/ex-truststore-default-running.xml)
           Balázs Kovács,
           Carl Wallace,
           Eric Voit,
+          Éric Vyncke,
+          Francesca Palombini,
           Jensen Zhang,
-          Juergen Schoenwaelder,
+          Jürgen Schönwälder,
+          Lars Eggert,
           Liang Xia,
           Martin Björklund,
+          Murray Kucherawy,
           Nick Hancock,
           Qin Wu,
           Rob Wilton,
           Robert Varga,
+          Roman Danyliw,
+          Paul Kyzivat,
           and Yoav Nir.
         </t>
       </section>

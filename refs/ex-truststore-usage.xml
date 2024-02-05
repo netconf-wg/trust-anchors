@@ -1,5 +1,5 @@
 <truststore-usage
-  xmlns="http://example.com/ns/example-truststore-usage"
+  xmlns="https://example.com/ns/example-truststore-usage"
   xmlns:ct="urn:ietf:params:xml:ns:yang:ietf-crypto-types">
 
   <!-- The following two equivalent examples illustrate   -->

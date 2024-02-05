@@ -1,6 +1,6 @@
 module ex-truststore-usage {
   yang-version 1.1;
-  namespace "http://example.com/ns/example-truststore-usage";
+  namespace "https://example.com/ns/example-truststore-usage";
   prefix etu;
 
   import ietf-truststore {
