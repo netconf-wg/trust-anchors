@@ -32,7 +32,7 @@
       <area>Operations</area>
       <workgroup>NETCONF Working Group</workgroup>
       <abstract>
-        <t>This document defines a YANG module for configuring
+        <t>This document presents a YANG module for configuring
           bags of certificates and bags of public keys that can be
           referenced by other data models for trust.  Notifications
           are sent when certificates are about to expire.</t>
@@ -80,7 +80,7 @@
     <middle>
       <section title="Introduction">
 
-        <t>This document defines a YANG 1.1 <xref target="RFC7950"/> module having
+        <t>This document presents a YANG 1.1 <xref target="RFC7950"/> module having
           the following characteristics:
         <list>
           <t>Provide a central truststore for storing raw public keys and/or certificates.</t>
@@ -517,8 +517,8 @@ INSERT_TEXT_FROM_FILE(ietf-truststore@YYYY-MM-DD.yang)
           scope of this document.</t>
         <t>The primary characteristic of the built-in trust anchors is that they are
           provided by the server, as opposed to configuration.  As such, they are present in
-          &lt;operational&gt;, and &lt;system&gt; <xref target="I-D.ietf-netmod-system-config"/>,
-          if implemented.</t>
+          &lt;operational&gt; (<xref section="5.3" target="RFC8342"/>), and &lt;system&gt;
+          <xref target="I-D.ietf-netmod-system-config"/>, if implemented.</t>
         <t>The example below illustrates what the truststore in &lt;operational&gt;
           might look like for a server in its factory default state.  Note that the
           built-in trust anchor bags have the "or:origin" annotation value "or:system".</t>
@@ -575,7 +575,7 @@ INSERT_TEXT_FROM_FILE(refs/ex-truststore-default-running.xml)
             limit the applicability of a trust anchor.</t>
         </section>
 
-        <section title="Template for the &quot;ietf-truststore&quot; YANG Module" anchor="sec-mod">
+        <section title="Considerations for the &quot;ietf-truststore&quot; YANG Module" anchor="sec-mod">
           <t>This section follows the template defined in <xref section="3.7.1" target="RFC8407"/>.</t>
 
           <t>The YANG module defined in this document is designed to be accessed via YANG
@@ -594,9 +594,10 @@ INSERT_TEXT_FROM_FILE(refs/ex-truststore-default-running.xml)
             for information as to which nodes may be considered sensitive
             or vulnerable in network environments.</t>
 
-          <t>None of the readable data nodes defined in this YANG module are considered sensitive
-            or vulnerable in network environments. The NACM "default-deny-all" extension
-            has not been set for any data nodes defined in this module.</t>
+          <t>Most of the readable data nodes defined in this YANG module
+            are not considered sensitive or vulnerable in network environments.
+            However, the "cert-data" node uses the NACM "default-deny-all"
+            extension, for reasons described in <xref section="3.9" target="I-D.ietf-netconf-crypto-types"/>.</t>
 
           <t>All the writable data nodes defined by this module, both in the
             "grouping" statements as well as the protocol-accessible "truststore"
@@ -677,7 +678,7 @@ INSERT_TEXT_FROM_FILE(refs/ex-truststore-default-running.xml)
         <xi:include href="https://datatracker.ietf.org/doc/bibxml3/reference.I-D.ietf-netmod-system-config.xml"/>
       </references>
 
-      <section title="Change Log" removeInRFC="true" anchor="change-log">
+      <section title="Change Log" anchor="change-log">
         <section title="00 to 01">
           <t>
             <list style="symbols">
@@ -901,6 +902,18 @@ INSERT_TEXT_FROM_FILE(refs/ex-truststore-default-running.xml)
           <t>  
             <list style="symbols">
               <t>Addresses 1st-round of IESG reviews.</t>
+            </list>
+          </t> 
+        </section>
+        <section title="24 to 26">
+          <t>  
+            <list style="symbols">
+              <t>Addresses issues found in OpsDir review of the ssh-client-server draft.</t>
+              <t>Renamed Security Considerations section s/Template for/Considerations for/</t>
+              <t>s/defines/presents/ in a few places.</t>
+              <t>Add refs to where the 'operational' and 'system' datastores are defined.</t>
+              <t>Improved Security Consideration for 'cert-data' node.</t>
+              <t>s/should/SHOULD/ is one place</t>
             </list>
           </t> 
         </section>
