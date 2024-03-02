@@ -917,6 +917,13 @@ INSERT_TEXT_FROM_FILE(refs/ex-truststore-default-running.xml)
             </list>
           </t> 
         </section>
+        <section title="26 to 27">
+          <t>  
+            <list style="symbols">
+              <t>Nothing added.  Only bumped for automation...</t>
+            </list>
+          </t>
+        </section>
       </section>
 
       <section title="Acknowledgements" numbered="no">
