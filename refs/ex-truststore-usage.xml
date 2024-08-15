@@ -13,14 +13,13 @@
   <cert>
     <name>example 1b</name>
     <inline-definition>
-      <name>my-trusted-client-ca-certs</name>
       <certificate>
         <name>Client Identity Issuer #1</name>
-        <cert>BASE64VALUE=</cert>
+        <cert-data>BASE64VALUE=</cert-data>
       </certificate>
       <certificate>
         <name>Client Identity Issuer #2</name>
-        <cert>BASE64VALUE=</cert>
+        <cert-data>BASE64VALUE=</cert-data>
       </certificate>
     </inline-definition>
   </cert>
@@ -37,19 +36,14 @@
   <public-key>
     <name>example 2b</name>
     <inline-definition>
-      <name>trusted-ssh-public-keys</name>
       <public-key>
         <name>corp-fw1</name>
-        <public-key-format>
-          ct:ssh-public-key-format
-        </public-key-format>
+        <public-key-format>ct:ssh-public-key-format</public-key-format>
         <public-key>BASE64VALUE=</public-key>
       </public-key>
       <public-key>
         <name>corp-fw2</name>
-        <public-key-format>
-          ct:ssh-public-key-format
-        </public-key-format>
+        <public-key-format>ct:ssh-public-key-format</public-key-format>
         <public-key>BASE64VALUE=</public-key>
       </public-key>
     </inline-definition>

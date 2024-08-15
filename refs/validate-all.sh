@@ -53,3 +53,8 @@ run_unix_cmd $LINENO "$command" 0
 printf "okay.\n"
 rm yanglint-notification.xml
 
+printf "Testing ex-truststore-usage.xml..."
+command="yanglint -m --features=ietf-truststore:central-truststore-supported,certificates,public-keys,inline-definitions-supported ../ex-truststore-usage\@*.yang ../ietf-truststore\@*.yang ../ietf-crypto-types\@*.yang ex-truststore-usage.xml ex-truststore.xml"
+run_unix_cmd $LINENO "$command" 0
+printf "okay.\n"
+
